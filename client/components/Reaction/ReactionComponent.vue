@@ -1,16 +1,16 @@
-<!-- Reusable component representing a single freet and its actions -->
+<!-- Reusable component representing a single reaction and its actions -->
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
   <article
-    class="freet"
+    class="reaction"
   >
     <header>
       <h3 class="author">
-        @{{ freet.author }}
+        @{{ reaction.author }}
       </h3>
       <div
-        v-if="$store.state.username === freet.author"
+        v-if="$store.state.username === reaction.author"
         class="actions"
       >
         <button
@@ -31,7 +31,7 @@
         >
           ✏️ Edit
         </button>
-        <button @click="deleteFreet">
+        <button @click="deleteReaction">
           🗑️ Delete
         </button>
       </div>
@@ -46,11 +46,11 @@
       v-else
       class="content"
     >
-      {{ freet.content }}
+      {{ reaction.content }}
     </p>
     <p class="info">
-      Posted at {{ freet.dateModified }}
-      <i v-if="freet.edited">(edited)</i>
+      Posted at {{ reaction.dateModified }}
+      <i v-if="reaction.edited">(edited)</i>
     </p>
     <section class="alerts">
       <article
@@ -66,45 +66,45 @@
 
 <script>
 export default {
-  name: 'FreetComponent',
+  name: 'ReactionComponent',
   props: {
-    // Data from the stored freet
-    freet: {
+    // Data from the stored reaction
+    reaction: {
       type: Object,
       required: true
     }
   },
   data() {
     return {
-      editing: false, // Whether or not this freet is in edit mode
-      draft: this.freet.content, // Potentially-new content for this freet
-      alerts: {} // Displays success/error messages encountered during freet modification
+      editing: false, // Whether or not this reaction is in edit mode
+      draft: this.reaction.content, // Potentially-new content for this reaction
+      alerts: {} // Displays success/error messages encountered during reaction modification
     };
   },
   methods: {
     startEditing() {
       /**
-       * Enables edit mode on this freet.
+       * Enables edit mode on this reaction.
        */
-      this.editing = true; // Keeps track of if a freet is being edited
-      this.draft = this.freet.content; // The content of our current "draft" while being edited
+      this.editing = true; // Keeps track of if a reaction is being edited
+      this.draft = this.reaction.content; // The content of our current "draft" while being edited
     },
     stopEditing() {
       /**
-       * Disables edit mode on this freet.
+       * Disables edit mode on this reaction.
        */
       this.editing = false;
-      this.draft = this.freet.content;
+      this.draft = this.reaction.content;
     },
-    deleteFreet() {
+    deleteReaction() {
       /**
-       * Deletes this freet.
+       * Deletes this reaction.
        */
       const params = {
         method: 'DELETE',
         callback: () => {
           this.$store.commit('alert', {
-            message: 'Successfully deleted freet!', status: 'success'
+            message: 'Successfully deleted reaction!', status: 'success'
           });
         }
       };
@@ -112,10 +112,10 @@ export default {
     },
     submitEdit() {
       /**
-       * Updates freet to have the submitted draft content.
+       * Updates reaction to have the submitted draft content.
        */
-      if (this.freet.content === this.draft) {
-        const error = 'Error: Edited freet content should be different than current freet content.';
+      if (this.reaction.content === this.draft) {
+        const error = 'Error: Edited reaction content should be different than current reaction content.';
         this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
         setTimeout(() => this.$delete(this.alerts, error), 3000);
         return;
@@ -123,7 +123,7 @@ export default {
 
       const params = {
         method: 'PATCH',
-        message: 'Successfully edited freet!',
+        message: 'Successfully edited reaction!',
         body: JSON.stringify({content: this.draft}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
@@ -134,7 +134,7 @@ export default {
     },
     async request(params) {
       /**
-       * Submits a request to the freet's endpoint
+       * Submits a request to the reaction's endpoint
        * @param params - Options for the request
        * @param params.body - Body for the request, if it exists
        * @param params.callback - Function to run if the the request succeeds
@@ -147,14 +147,14 @@ export default {
       }
 
       try {
-        const r = await fetch(`/api/freets/${this.freet._id}`, options);
+        const r = await fetch(`/api/reactions/${this.reaction._id}`, options);
         if (!r.ok) {
           const res = await r.json();
           throw new Error(res.error);
         }
 
         this.editing = false;
-        this.$store.commit('refreshFreets');
+        this.$store.commit('refreshReactions');
 
         params.callback();
       } catch (e) {
@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style scoped>
-.freet {
+.reaction {
     border: 1px solid #111;
     padding: 20px;
     position: relative;

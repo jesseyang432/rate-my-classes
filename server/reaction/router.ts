@@ -42,8 +42,8 @@ router.get(
     userValidator.isAuthorExists
   ],
   async (req: Request, res: Response) => {
-    const authorFreets = await ReactionCollection.findAllByUsername(req.query.student as string);
-    const response = authorFreets.map(util.constructReactionResponse);
+    const studentReactions = await ReactionCollection.findAllByUsername(req.query.student as string);
+    const response = studentReactions.map(util.constructReactionResponse);
     res.status(200).json(response);
   }
 );
@@ -110,7 +110,7 @@ router.delete(
  * @return {ReactionResponse} - the updated Reaction
  * @throws {403} - if the user is not logged in or not the student of
  *                 of the Reaction
- * @throws {404} - If the freetId is not valid
+ * @throws {404} - If the reactionId is not valid
  * @throws {400} - If the Reaction content is empty or a stream of empty spaces
  * @throws {413} - If the Reaction content is more than 140 characters long
  */
@@ -131,4 +131,4 @@ router.patch(
   }
 );
 
-export {router as freetRouter};
+export {router as reactionRouter};

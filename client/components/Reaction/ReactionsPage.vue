@@ -1,4 +1,4 @@
-<!-- Default page that also displays freets -->
+<!-- Default page that also displays reactions -->
 
 <template>
   <main>
@@ -6,7 +6,7 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateFreetForm />
+      <CreateReactionForm />
     </section>
     <section v-else>
       <header>
@@ -17,7 +17,7 @@
           <router-link to="/login">
             Sign in
           </router-link>
-          to create, edit, and delete freets.
+          to create, edit, and delete reactions.
         </h3>
       </article>
     </section>
@@ -25,49 +25,49 @@
       <header>
         <div class="left">
           <h2>
-            Viewing all freets
+            Viewing all reactions
             <span v-if="$store.state.filter">
               by @{{ $store.state.filter }}
             </span>
           </h2>
         </div>
         <div class="right">
-          <GetFreetsForm
-            ref="getFreetsForm"
+          <GetReactionsForm
+            ref="getReactionsForm"
             value="author"
             placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get freets"
+            button="🔄 Get reactions"
           />
         </div>
       </header>
       <section
-        v-if="$store.state.freets.length"
+        v-if="$store.state.reactions.length"
       >
-        <FreetComponent
-          v-for="freet in $store.state.freets"
-          :key="freet.id"
-          :freet="freet"
+        <ReactionComponent
+          v-for="reaction in $store.state.reactions"
+          :key="reaction.id"
+          :reaction="reaction"
         />
       </section>
       <article
         v-else
       >
-        <h3>No freets found.</h3>
+        <h3>No reactions found.</h3>
       </article>
     </section>
   </main>
 </template>
 
 <script>
-import FreetComponent from '@/components/Freet/FreetComponent.vue';
-import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
-import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
+import ReactionComponent from '@/components/Reaction/ReactionComponent.vue';
+import CreateReactionForm from '@/components/Reaction/CreateReactionForm.vue';
+import GetReactionsForm from '@/components/Reaction/GetReactionsForm.vue';
 
 export default {
-  name: 'FreetPage',
-  components: {FreetComponent, GetFreetsForm, CreateFreetForm},
+  name: 'ReactionPage',
+  components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
   mounted() {
-    this.$refs.getFreetsForm.submit();
+    this.$refs.getReactionsForm.submit();
   }
 };
 </script>

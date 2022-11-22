@@ -23,7 +23,6 @@ const EnrollSchema = new Schema<Enroll>({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  // The date the freet was created
   toClass: {
     type: Schema.Types.ObjectId,
     required: true

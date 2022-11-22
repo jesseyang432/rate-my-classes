@@ -1,17 +1,17 @@
-<!-- Form for getting freets (all, from user) (inline style) -->
+<!-- Form for getting Reactions (all, from user) (inline style) -->
 
 <script>
 import InlineForm from '@/components/common/InlineForm.vue';
 
 export default {
-  name: 'GetFreetsForm',
+  name: 'GetReactionsForm',
   mixins: [InlineForm],
   data() {
     return {value: this.$store.state.filter};
   },
   methods: {
     async submit() {
-      const url = this.value ? `/api/freets?author=${this.value}` : '/api/freets';
+      const url = this.value ? `/api/reactions?author=${this.value}` : '/api/reactions';
       try {
         const r = await fetch(url);
         const res = await r.json();
@@ -20,14 +20,14 @@ export default {
         }
 
         this.$store.commit('updateFilter', this.value);
-        this.$store.commit('updateFreets', res);
+        this.$store.commit('updateReactions', res);
       } catch (e) {
         if (this.value === this.$store.state.filter) {
           // This section triggers if you filter to a user but they
           // change their username when you refresh
           this.$store.commit('updateFilter', null);
-          this.value = ''; // Clear filter to show all users' freets
-          this.$store.commit('refreshFreets');
+          this.value = ''; // Clear filter to show all users' Reactions
+          this.$store.commit('refreshReactions');
         } else {
           // Otherwise reset to previous fitler
           this.value = this.$store.state.filter;

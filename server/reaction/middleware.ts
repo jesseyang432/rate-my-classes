@@ -49,7 +49,7 @@ const isValidReactionModifier = async (req: Request, res: Response, next: NextFu
   const userId = Reaction.student._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
-      error: 'Cannot modify other users\' freets.'
+      error: 'Cannot modify other users\' reactions.'
     });
     return;
   }

@@ -6,7 +6,7 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateFreetForm />
+      <CreateReactionForm />
     </section>
     <section v-else>
       <header>
@@ -29,11 +29,11 @@
           </h2>
         </div>
         <!-- <div class="right">
-          <GetFreetsForm
-            ref="getFreetsForm"
+          <GetReactionsForm
+            ref="getReactionsForm"
             value="author"
             placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get freets"
+            button="🔄 Get reaction"
           />
         </div> -->
       </header>

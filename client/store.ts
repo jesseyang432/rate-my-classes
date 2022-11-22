@@ -9,8 +9,8 @@ Vue.use(Vuex);
  */
 const store = new Vuex.Store({
   state: {
-    filter: null, // Username to filter shown freets by (null = show all)
-    freets: [], // All freets created in the app
+    filter: null, // Username to filter shown reactions by (null = show all)
+    reactions: [], // All reactions created in the app
     courses: [], // All courses in the app
     username: null, // Username of the logged in user
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
@@ -34,25 +34,25 @@ const store = new Vuex.Store({
     },
     updateFilter(state, filter) {
       /**
-       * Update the stored freets filter to the specified one.
-       * @param filter - Username of the user to fitler freets by
+       * Update the stored reactions filter to the specified one.
+       * @param filter - Username of the user to fitler reactions by
        */
       state.filter = filter;
     },
-    updateFreets(state, freets) {
+    updateReactions(state, reactions) {
       /**
-       * Update the stored freets to the provided freets.
-       * @param freets - Freets to store
+       * Update the stored reactions to the provided reactions.
+       * @param reactions - Reactions to store
        */
-      state.freets = freets;
+      state.reactions = reactions;
     },
-    async refreshFreets(state) {
+    async refreshReactions(state) {
       /**
-       * Request the server for the currently available freets.
+       * Request the server for the currently available reactions.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      const url = state.filter ? `/api/users/${state.filter}/reactions` : '/api/reactions';
       const res = await fetch(url).then(async r => r.json());
-      state.freets = res;
+      state.reactions = res;
     },
     async refreshCourses(state) {
       /**
