@@ -7,7 +7,7 @@
     <div class="left">
       <img src="../../public/logo.svg">
       <h1 class="title">
-        Fritter
+        RateMyClasses
       </h1>
     </div>
     <div class="right">
