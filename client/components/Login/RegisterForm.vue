@@ -14,7 +14,9 @@ export default {
       setUsername: true,
       fields: [
         {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'Password', value: ''},
+        {id: 'classYear', label: 'Class Year', value: ''},
+        {id: 'major', label: 'Major', value: ''},
       ],
       title: 'Create account',
       callback: () => {
