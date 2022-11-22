@@ -6,7 +6,6 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm />
     </section>
     <section v-else>
       <header>
@@ -56,10 +55,11 @@
 
 <script>
 import CourseComponent from '@/components/Course/CourseComponent.vue';
+import CreateReactionForm from '@/components/Reaction/CreateReactionForm.vue';
 
 export default {
   name: 'HomePage',
-  components: {CourseComponent},
+  components: {CourseComponent, CreateReactionForm},
   mounted() {
     this.$store.commit('refreshCourses');
   },

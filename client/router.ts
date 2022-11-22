@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ReactionsPage from './components/Reaction/ReactionsPage.vue';
-import HomePage from './components/Home/HomePage.vue';
+import CoursesPage from './components/Course/CoursesPage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
 import NotFound from './NotFound.vue';
@@ -9,7 +9,8 @@ import NotFound from './NotFound.vue';
 Vue.use(VueRouter);
 
 const routes = [
-  {path: '/', name: 'Home', component: HomePage},
+  {path: '/', name: 'Reactions', component: ReactionsPage},
+  {path: '/courses', name: 'Courses', component: CoursesPage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '*', name: 'Not Found', component: NotFound}
