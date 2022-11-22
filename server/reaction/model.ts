@@ -3,11 +3,11 @@ import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
 
 /**
- * This file defines the properties stored in a Freet
+ * This file defines the properties stored in a Reaction
  * DO NOT implement operations here ---> use collection file
  */
 
-// Type definition for Freet on the backend
+// Type definition for Reactions on the backend
 export type Reaction = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   student: User;
@@ -17,7 +17,7 @@ export type Reaction = {
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
-// Freets stored in this table will have these fields, with the
+// Reactions stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB
 const ReactionSchema = new Schema<Reaction>({
   // The author userId
@@ -35,7 +35,7 @@ const ReactionSchema = new Schema<Reaction>({
     type: String,
     required: true
   },
-  // The date the freet was created
+  // The date the reaction was created
   dateCreated: {
     type: Date,
     required: true
