@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import * as userValidator from '../server/user/middleware';
 import {userRouter} from '../server/user/router';
-import {freetRouter} from '../server/freet/router';
+import {freetRouter} from '../server/reaction/router';
 import {courseRouter} from '../server/course/router';
 import MongoStore from 'connect-mongo';
 

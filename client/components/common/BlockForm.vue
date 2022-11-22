@@ -34,7 +34,9 @@
           @input="field.value = $event.target.value">
           <option value="6-3">6-3 Computer Science</option>
           <option value="6-2">6-2 EE and Computer Science</option>
+          <option value="17">17 Basket Weaving</option>
           <option value="18">18 Mathematics</option>
+          <option value="29">29 Bicycle Making</option>
         </select>
         <input
           v-else
