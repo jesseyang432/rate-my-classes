@@ -11,6 +11,7 @@ const store = new Vuex.Store({
   state: {
     filter: null, // Username to filter shown freets by (null = show all)
     freets: [], // All freets created in the app
+    courses: [], // All courses in the app
     username: null, // Username of the logged in user
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
   },
@@ -52,6 +53,14 @@ const store = new Vuex.Store({
       const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
+    },
+    async refreshCourses(state) {
+      /**
+       * Request the server for all courses.
+       */
+      const url = '/api/courses';
+      const res = await fetch(url).then(async r => r.json());
+      state.courses = res;
     }
   },
   // Store data across page refreshes, only discard on browser close
