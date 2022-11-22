@@ -20,6 +20,10 @@ class CourseCollection {
     // Retrieves courses and sorts them alphabetically
     return CourseModel.find({}).sort({name: 1});
   }
+
+  static async findOne(name: string): Promise<HydratedDocument<Course>> {
+    return CourseModel.findOne({ name: name });
+  }
 }
 
 export default CourseCollection;
