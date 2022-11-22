@@ -6,7 +6,6 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm />
     </section>
     <section v-else>
       <header>

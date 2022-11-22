@@ -9,6 +9,7 @@ import NotFound from './NotFound.vue';
 Vue.use(VueRouter);
 
 const routes = [
+  {path: '/', name: 'Reactions', component: ReactionsPage},
   {path: '/courses', name: 'Courses', component: CoursesPage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
