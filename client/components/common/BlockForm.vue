@@ -18,6 +18,24 @@
           :value="field.value"
           @input="field.value = $event.target.value"
         />
+        <select v-else-if="field.id === 'classYear'"
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value">
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+
+        <select v-else-if="field.id === 'major'"
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value">
+          <option value="6-3">6-3 Computer Science</option>
+          <option value="6-2">6-2 EE and Computer Science</option>
+          <option value="18">18 Mathematics</option>
+        </select>
         <input
           v-else
           :type="field.id === 'password' ? 'password' : 'text'"
