@@ -56,10 +56,11 @@
 
 <script>
 import CourseComponent from '@/components/Course/CourseComponent.vue';
+import CreateReactionForm from '@/components/Reaction/CreateReactionForm.vue';
 
 export default {
   name: 'HomePage',
-  components: {CourseComponent},
+  components: {CourseComponent, CreateReactionForm},
   mounted() {
     this.$store.commit('refreshCourses');
   },
