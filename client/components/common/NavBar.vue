@@ -5,7 +5,6 @@
 <template>
   <nav>
     <div class="left">
-      <img src="../../public/logo.svg">
       <h1 class="title">
         RateMyClasses
       </h1>
