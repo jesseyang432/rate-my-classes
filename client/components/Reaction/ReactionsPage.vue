@@ -10,7 +10,7 @@
     </section>
     <section v-else>
       <header>
-        <h2>Welcome to Fritter!</h2>
+        <h2>Welcome to Rate My Classes!</h2>
       </header>
       <article>
         <h3>
