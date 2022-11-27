@@ -10,7 +10,7 @@ class EnrollCollection {
             toCourse: toCourse
         });
         await bond.save();
-        return bond;
+        return bond.populate('fromStudent toCourse');
     }
 
     static async deleteOne(fromStudent: Types.ObjectId | string, toCourse: Types.ObjectId | string): Promise<Boolean> {
@@ -25,19 +25,19 @@ class EnrollCollection {
         return EnrollModel.findOne({
             fromStudent: fromStudent,
             toCourse: toCourse
-        });
+        }).populate('fromStudent toCourse');
     }
 
     static async findAllbyStudent(fromStudent: Types.ObjectId | string): Promise<Array<HydratedDocument<Enroll>>> {
         return EnrollModel.find({
             fromStudent: fromStudent
-        });
+        }).populate('fromStudent toCourse');
     }
 
     static async findAllbyCourse(toCourse: Types.ObjectId | string): Promise<Array<HydratedDocument<Enroll>>> {
         return EnrollModel.find({
             toCourse: toCourse
-        });
+        }).populate('fromStudent toCourse');
     }
 }
 export default EnrollCollection;

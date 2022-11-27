@@ -4,10 +4,14 @@ import EnrollCollection from './collection';
 import CourseCollection from '../course/collection';
 import * as userValidator from '../user/middleware';
 import * as enrollValidator from '../enroll/middleware';
+import { constructEnrollResponse } from './util';
 
 
 const router = express.Router();
 
+/**
+ * Attempts to enroll logged in user in course `req.body.courseToEnroll`
+ */
 router.post(
   '/',
   [
@@ -15,7 +19,7 @@ router.post(
     enrollValidator.isEnrollNotExists
   ],
   async (req: Request, res: Response) => {
-      const toCourse = await CourseCollection.findOneByName(req.body.course as string);
+      const toCourse = await CourseCollection.findOneByName(req.body.courseToEnroll as string);
       const enrollment = await EnrollCollection.addOne(req.session.userId, toCourse._id);
 
       res.status(201).json({
