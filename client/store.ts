@@ -12,8 +12,9 @@ const store = new Vuex.Store({
     filter: null, // Username to filter shown reactions by (null = show all)
     reactions: [], // All reactions created in the app
     courses: [], // All courses in the app
+    enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
-    alerts: {} // global success/error messages encountered during submissions to non-visible forms
+    alerts: {}, // global success/error messages encountered during submissions to non-visible forms
   },
   mutations: {
     alert(state, payload) {
@@ -61,6 +62,14 @@ const store = new Vuex.Store({
       const url = '/api/courses';
       const res = await fetch(url).then(async r => r.json());
       state.courses = res;
+    },
+    async refreshEnrollments(state) {
+      /**
+       * Request the server for all enrollments of the logged in user.
+       */
+      const url = '/api/enroll';
+      const res = await fetch(url).then(async r => r.json());
+      state.enrollments = res;
     }
   },
   // Store data across page refreshes, only discard on browser close
