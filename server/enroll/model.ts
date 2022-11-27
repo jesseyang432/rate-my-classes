@@ -10,7 +10,7 @@ import {Schema, model} from 'mongoose';
 export type Enroll = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   fromStudent: Types.ObjectId;
-  toClass: Types.ObjectId;
+  toCourse: Types.ObjectId;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -23,7 +23,7 @@ const EnrollSchema = new Schema<Enroll>({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  toClass: {
+  toCourse: {
     type: Schema.Types.ObjectId,
     required: true
   }

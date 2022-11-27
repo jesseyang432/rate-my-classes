@@ -15,8 +15,8 @@ router.post(
     enrollValidator.isEnrollNotExists
   ],
   async (req: Request, res: Response) => {
-      const toClass = await CourseCollection.findOne(req.params.course as string);
-      const enrollment = await EnrollCollection.addOne(req.session.userId, toClass._id);
+      const toCourse = await CourseCollection.findOneByName(req.params.course as string);
+      const enrollment = await EnrollCollection.addOne(req.session.userId, toCourse._id);
 
       res.status(201).json({
         message: `Your enrollment was created successfully.`,
@@ -32,8 +32,8 @@ router.post(
     enrollValidator.isEnrollExists
   ],
   async (req: Request, res: Response) => {
-    const toClass = await CourseCollection.findOne(req.params.course as string);
-    const enrollment = await EnrollCollection.deleteOne(req.session.userId, toClass._id);
+    const toCourse = await CourseCollection.findOneByName(req.params.course as string);
+    const enrollment = await EnrollCollection.deleteOne(req.session.userId, toCourse._id);
 
     res.status(201).json({
       message: 'Your enrollement was deleted successfully.',

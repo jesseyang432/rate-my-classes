@@ -4,16 +4,16 @@ import EnrollCollection from '../enroll/collection';
 import CourseCollection from '../course/collection';
 
 /**
- * Checks if a user is following the other
+ * Checks if a user is enrolled in course `req.params.course`
  */
 
 const isEnrollExists = async (req: Request, res: Response, next: NextFunction) => {
-    const toClass = await CourseCollection.findOne(req.params.author as string);
-    const enroll = await EnrollCollection.findOne(req.session.userId, toClass._id);
+    const toCourse = await CourseCollection.findOneByName(req.params.course as string);
+    const enroll = await EnrollCollection.findOne(req.session.userId, toCourse._id);
     if (!enroll) {
         res.status(404).json({
         error: {
-            followNotFound: `Enroll from USER ID ${req.session.userId} to ${toClass._id} does not exist.`
+            followNotFound: `Enroll from USER ID ${req.session.userId} to ${toCourse._id} does not exist.`
         }
         });
         return;
@@ -23,16 +23,16 @@ const isEnrollExists = async (req: Request, res: Response, next: NextFunction) =
 
 
 /**
- * Checks if a user is not following the other
+ * Checks if a user is not enrolled in course `req.params.course`
  */
 
 const isEnrollNotExists = async (req: Request, res: Response, next: NextFunction) => {
-    const toClass = await CourseCollection.findOne(req.params.author as string);
-    const follow = await EnrollCollection.findOne(req.session.userId, toClass._id);
+    const toCourse = await CourseCollection.findOneByName(req.params.course as string);
+    const follow = await EnrollCollection.findOne(req.session.userId, toCourse._id);
     if (follow) {
         res.status(409).json({
         error: {
-            followAlreadyExists: `Follow from USER ID ${req.session.userId} to ${toClass._id} already exists.`
+            followAlreadyExists: `Follow from USER ID ${req.session.userId} to ${toCourse._id} already exists.`
         }
         });
         return;

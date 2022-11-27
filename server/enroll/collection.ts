@@ -4,40 +4,40 @@ import EnrollModel from './model';
 
 class EnrollCollection {
 
-    static async addOne(fromStudent: Types.ObjectId | string, toClass: Types.ObjectId | string): Promise<HydratedDocument<Enroll>> {
+    static async addOne(fromStudent: Types.ObjectId | string, toCourse: Types.ObjectId | string): Promise<HydratedDocument<Enroll>> {
         const bond = new EnrollModel({
             fromStudent: fromStudent,
-            toClass: toClass
+            toCourse: toCourse
         });
         await bond.save();
         return bond;
     }
 
-    static async deleteOne(fromStudent: Types.ObjectId | string, toClass: Types.ObjectId | string): Promise<Boolean> {
+    static async deleteOne(fromStudent: Types.ObjectId | string, toCourse: Types.ObjectId | string): Promise<Boolean> {
         const bond = await EnrollModel.deleteOne({
             fromStudent: fromStudent,
-            toClass: toClass
-        })
+            toCourse: toCourse
+        });
         return bond !== null;
     }
 
-     static async findOne(fromStudent: Types.ObjectId | string, toClass: Types.ObjectId | string): Promise<HydratedDocument<Enroll>> {
+     static async findOne(fromStudent: Types.ObjectId | string, toCourse: Types.ObjectId | string): Promise<HydratedDocument<Enroll>> {
         return EnrollModel.findOne({
             fromStudent: fromStudent,
-            toClass: toClass
-        })
+            toCourse: toCourse
+        });
     }
 
     static async findAllbyStudent(fromStudent: Types.ObjectId | string): Promise<Array<HydratedDocument<Enroll>>> {
         return EnrollModel.find({
             fromStudent: fromStudent
-        })
+        });
     }
 
-    static async findAllbyClass(toClass: Types.ObjectId | string): Promise<Array<HydratedDocument<Enroll>>> {
+    static async findAllbyCourse(toCourse: Types.ObjectId | string): Promise<Array<HydratedDocument<Enroll>>> {
         return EnrollModel.find({
-            toClass: toClass
-        })
+            toCourse: toCourse
+        });
     }
 }
 export default EnrollCollection;
