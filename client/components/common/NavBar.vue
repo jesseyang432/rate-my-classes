@@ -6,7 +6,7 @@
   <nav>
     <div class="left">
       <h1 class="title">
-        RateMyClasses
+        Rate My Classes
       </h1>
     </div>
     <div class="right">
@@ -44,16 +44,21 @@
 <style scoped>
 nav {
     padding: 1vw 2vw;
-    background-color: #ccc;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    border-bottom: 1px solid black;
 }
 
 .title {
-    font-size: 32px;
     margin: 0 5px;
+    font-family: 'arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 48px;
 }
 
 img {
