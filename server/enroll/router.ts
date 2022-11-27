@@ -9,13 +9,13 @@ import * as enrollValidator from '../enroll/middleware';
 const router = express.Router();
 
 router.post(
-  '/:course?',
+  '/',
   [
     userValidator.isUserLoggedIn,
     enrollValidator.isEnrollNotExists
   ],
   async (req: Request, res: Response) => {
-      const toCourse = await CourseCollection.findOneByName(req.params.course as string);
+      const toCourse = await CourseCollection.findOneByName(req.body.course as string);
       const enrollment = await EnrollCollection.addOne(req.session.userId, toCourse._id);
 
       res.status(201).json({
