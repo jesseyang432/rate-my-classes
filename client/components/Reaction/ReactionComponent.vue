@@ -7,10 +7,10 @@
   >
     <header>
       <h3 class="author">
-        @{{ reaction.author }}
+        @{{ reaction.student }}
       </h3>
       <div
-        v-if="$store.state.username === reaction.author"
+        v-if="$store.state.username === reaction.student"
         class="actions"
       >
         <button
@@ -49,7 +49,7 @@
       {{ reaction.content }}
     </p>
     <p class="info">
-      Posted at {{ reaction.dateModified }}
+      Posted at {{ reaction.dateCreated }}
       <i v-if="reaction.edited">(edited)</i>
     </p>
     <section class="alerts">

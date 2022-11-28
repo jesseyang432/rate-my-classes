@@ -51,6 +51,18 @@
             {{course.name}}
           </option>
         </select>
+        <select v-else-if="field.id === 'course'"
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value">
+          <option
+            v-for="course in $store.state.enrollments"
+            :key="course.toCourse.id"
+            :value=course.toCourse.name
+          >
+            {{course.toCourse.name}}
+          </option>
+        </select>
         <input
           v-else
           :type="field.id === 'password' ? 'password' : 'text'"

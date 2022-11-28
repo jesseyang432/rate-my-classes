@@ -12,8 +12,8 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'content', label: 'Content', value: ''},
-        {id: 'course', label: 'Course', value: ''}
+        {id: 'course', label: 'Course', value: ''},
+        {id: 'content', label: 'Content', value: ''}
       ],
       title: 'Create a Reaction',
       refreshReactions: true,
