@@ -25,13 +25,20 @@
         <section
           v-if="$store.state.courses.length"
         >
-          <a href="test" v-for="course in $store.state.courses" class="course-page-link">
-            <CourseComponent
+        <router-link v-for="course in $store.state.courses" class="course-page-link" :to="`course/${course.name}`">
+          <CourseComponent
             :key="course.id"
             :course="course"
             :enrolled="isEnrolled(course.name)"
-            />
-          </a>
+          />
+        </router-link>
+          <!-- <a href="test" v-for="course in $store.state.courses" class="course-page-link"> -->
+            <!-- <CourseComponent
+            :key="course.id"
+            :course="course"
+            :enrolled="isEnrolled(course.name)"
+            /> -->
+          <!-- </a> -->
         </section>
         <article
           v-else

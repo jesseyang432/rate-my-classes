@@ -8,8 +8,8 @@
         </h3>
         <span style="text-align:right;" class="header-interact"> 
           <span class="greenDot"></span> &nbsp; 4.2
-          <EnrollButton v-if="!enrolled" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name"/>
+          <!-- <EnrollButton v-if="!enrolled" :course="course.name"/>
+          <EnrollStatus v-else :course="course.name"/> -->
         </span>
       </header>
       <p class="description">
