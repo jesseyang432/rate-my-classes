@@ -52,5 +52,12 @@ import EnrollButton from '@/components/Enroll/EnrollButton.vue';
       padding: 20px;
       position: relative;
   }
+
+  header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
   </style>
   

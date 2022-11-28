@@ -2,7 +2,7 @@
 
 <template>
     <section>
-        <button @click="() => {modalOpen = true;}">
+        <button id="join-button" @click="() => {modalOpen = true;}">
             Join
         </button>
         <section v-if="modalOpen" class="modal-mask">
@@ -16,15 +16,18 @@
               </button>
             </header>
             <div>
-              <input type="checkbox" :onclick="myFunction"> Currently Enrolled
+              <input type="radio" v-model="joiningAs" value="current">
+              <label for="current"> Currently Enrolled</label>
             </div>
             <div>
-              <input type="checkbox" :onclick="myFunction"> Previously Enrolled
+              <input type="radio" v-model="joiningAs" value="previous">
+              <label for="previous"> Previously Enrolled</label>
             </div>
             <div>
-              <input type="checkbox" :onclick="myFunction"> Interested
+              <input type="radio" v-model="joiningAs" value="interested">
+              <label for="interested"> Interested</label>
             </div>
-            <button>
+            <button @click="test()">
               Join Class
             </button>
           </section>
@@ -38,35 +41,39 @@
 // import ButtonForm from '@/components/common/ButtonForm.vue';
 
 export default {
-  name: 'UpvoteForm',
+  name: 'EnrollButton',
   props: {
-    upvoted: {
-        type: Boolean,
-        required: true,
-    },
-    freetId: {
-      type: String,
-      required: true,
-    },
-    numUpvotes: {
-        type: Number,
-        required: true,
-    }
+    // upvoted: {
+    //     type: Boolean,
+    //     required: true,
+    // },
+    // freetId: {
+    //   type: String,
+    //   required: true,
+    // },
+    // numUpvotes: {
+    //     type: Number,
+    //     required: true,
+    // }
   },
   data() {
     return {
       modalOpen: false,
+      joiningAs: 'current',
       url: `/api/upvotes/${this.freetId}`,
       method: 'POST',
       hasBody: false,
-      title: 'Upvote',
+      title: 'Enroll',
       //numUpvotes: 0,
-      callback: () => {
-        this.$emit('upvote');
-      }
+      // callback: () => {
+      //   this.$emit('upvote');
+      // }
     };
   },
   methods: {
+      test() {
+        console.log(this.joiningAs);
+      },
       async submit() {
         /**
           * Submits a form with the specified options from data().
@@ -116,6 +123,19 @@ section {
 button {
   /* background: none; */
   border-radius: 8px;
+}
+
+#join-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  margin-right: 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .modal-mask {
