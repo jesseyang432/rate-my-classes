@@ -33,6 +33,21 @@ export default {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "Inter";
+  font-weight: normal;
+  src: local("Inter"),
+   url(./../fonts/Inter/static/Inter-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: bold;
+  src: local("Inter"),
+   url(./../fonts/Inter/static/Inter-SemiBold.ttf) format("truetype");
+}
+
+
 body {
   height: 100vh;
   flex-direction: column;
