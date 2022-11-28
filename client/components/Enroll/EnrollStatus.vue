@@ -35,8 +35,6 @@
             </button>
           </section>
         </section>
-        <section v-else>
-        </section>
     </section>
 </template>
 

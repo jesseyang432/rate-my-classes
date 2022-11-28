@@ -25,11 +25,13 @@
         <section
           v-if="$store.state.courses.length"
         >
-          <CourseComponent v-for="course in $store.state.courses"
+          <a href="test" v-for="course in $store.state.courses" class="course-page-link">
+            <CourseComponent
             :key="course.id"
             :course="course"
             :enrolled="isEnrolled(course.name)"
-          />
+            />
+          </a>
         </section>
         <article
           v-else
@@ -64,8 +66,6 @@ export default {
   mounted() {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
-    console.log(this.$store.state.enrollments);
-    console.log(this.$store.state.courses);
   },
   methods: {
     isEnrolled(course) {
@@ -89,6 +89,12 @@ header, header > * {
 
 button {
     margin-right: 10px;
+}
+
+.course-page-link {
+  text-decoration: none;
+  color: black;
+  margin: 16px;
 }
 
 section .scrollbox {

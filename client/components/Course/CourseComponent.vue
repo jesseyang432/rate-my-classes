@@ -6,7 +6,7 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
-        <span style="text-align:right;"> 
+        <span style="text-align:right;" class="header-interact"> 
           <span class="greenDot"></span> &nbsp; 4.2
           <EnrollButton v-if="!enrolled" :course="course.name"/>
           <EnrollStatus v-else :course="course.name"/>
@@ -57,7 +57,6 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
   .course {
       border: 1px solid #111;
       border-radius: 16px;
-      margin: 16px;
       padding: 20px;
       position: relative;
   }
@@ -66,6 +65,12 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-interact {
+    display: flex;
+    flex-flow: row nowrap;
     align-items: center;
   }
 
