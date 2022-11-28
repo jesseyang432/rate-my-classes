@@ -4,7 +4,7 @@
   <main>
     <section v-if="$store.state.username">
       <header>
-        <h2>Welcome @{{ $store.state.username }}</h2>
+        <h3>Welcome @{{ $store.state.username }}</h3>
       </header>
       <section>
         <header>
@@ -92,6 +92,18 @@ header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+h2 {
+  font-family: 'Inter';
+  font-weight: bold;
+  font-size: 30px;
+}
+
+h3 {
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 24px;
 }
 
 button {
