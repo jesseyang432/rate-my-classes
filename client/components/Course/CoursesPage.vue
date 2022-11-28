@@ -6,6 +6,37 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
+      <section>
+        <header>
+          <div class="left">
+            <h2>
+              Viewing all courses
+            </h2>
+          </div>
+          <!-- <div class="right">
+            <GetReactionsForm
+              ref="getReactionsForm"
+              value="author"
+              placeholder="🔍 Filter by author (optional)"
+              button="🔄 Get reaction"
+            />
+          </div> -->
+        </header>
+        <section
+          v-if="$store.state.courses.length"
+        >
+          <CourseComponent v-for="course in $store.state.courses"
+            :key="course.id"
+            :course="course"
+            :enrolled="isEnrolled(course.name)"
+          />
+        </section>
+        <article
+          v-else
+        >
+          <h3>No courses found.</h3>
+        </article>
+      </section>
     </section>
     <section v-else>
       <header>
@@ -20,36 +51,6 @@
         </h3>
       </article>
     </section>
-    <section>
-      <header>
-        <div class="left">
-          <h2>
-            Viewing all courses
-          </h2>
-        </div>
-        <!-- <div class="right">
-          <GetReactionsForm
-            ref="getReactionsForm"
-            value="author"
-            placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get reaction"
-          />
-        </div> -->
-      </header>
-      <section
-        v-if="$store.state.courses.length"
-      >
-        <CourseComponent v-for="course in $store.state.courses"
-          :key="course.id"
-          :course="course"
-        />
-      </section>
-      <article
-        v-else
-      >
-        <h3>No courses found.</h3>
-      </article>
-    </section>
   </main>
 </template>
 
@@ -62,7 +63,15 @@ export default {
   components: {CourseComponent, CreateReactionForm},
   mounted() {
     this.$store.commit('refreshCourses');
+    this.$store.commit('refreshEnrollments');
+    console.log(this.$store.state.enrollments);
+    console.log(this.$store.state.courses);
   },
+  methods: {
+    isEnrolled(course) {
+      return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
+    }
+  }
 };
 </script>
 

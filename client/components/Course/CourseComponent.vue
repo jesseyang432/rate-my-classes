@@ -6,7 +6,8 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
-        <EnrollButton :course="course.name"/>
+        <EnrollButton v-if="!enrolled" :course="course.name"/>
+        <EnrollStatus v-else :course="course.name"/>
       </header>
       <p class="description">
         {{course.description}}
@@ -25,14 +26,19 @@
   
   <script>
 import EnrollButton from '@/components/Enroll/EnrollButton.vue';
+import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 
   export default {
     name: 'CourseComponent',
-    components: {EnrollButton},
+    components: {EnrollButton, EnrollStatus},
     props: {
       // Data from the stored course
       course: {
         type: Object,
+        required: true
+      },
+      enrolled: {
+        type: Boolean,
         required: true
       }
     },
