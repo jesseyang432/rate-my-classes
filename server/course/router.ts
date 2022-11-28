@@ -27,7 +27,7 @@ router.get(
  */
 router.get(
   '/:name',
-  [courseValidator.isCourseExists],
+  [courseValidator.isCourseExistsParamName],
   async (req: Request, res: Response, next: NextFunction) => {
     const course = await CourseCollection.findOneByName(req.params.name);
     const response = util.constructCourseResponse(course);

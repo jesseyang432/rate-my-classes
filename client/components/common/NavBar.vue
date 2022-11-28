@@ -11,13 +11,17 @@
     </div>
     <div class="right">
       <router-link to="/">
-        Home
+        <div class="link">
+          Home
+        </div>
       </router-link>
       <router-link to="/courses">
-        Courses
+        <div class="link">
+          Courses
+        </div>
       </router-link>
       <router-link v-if="$store.state.username" to="/profile">
-        <div @click = "setProfile">
+        <div @click = "setProfile" class="link">
           Profile
         </div>
       </router-link>
@@ -25,7 +29,9 @@
         v-else
         to="/login"
       >
-        Login
+        <div class="link">
+          Login
+        </div>
       </router-link>
     </div>
     <section class="alerts">
@@ -62,11 +68,17 @@ nav {
 
 .title {
     margin: 0 5px;
-    font-family: 'arial';
-    font-style: normal;
-    font-weight: 400;
+    font-family: 'Inter';
+    font-weight: bold;
     font-size: 40px;
     line-height: 48px;
+}
+
+.link {
+  margin: 0 5px;
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 24px;
 }
 
 img {
