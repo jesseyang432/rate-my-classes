@@ -35,8 +35,8 @@ router.get(
       return;
     }
 
-    const allReactions = await ReviewCollection.findAll();
-    const response = allReactions.map(util.constructReviewResponse);
+    const allReviews = await ReviewCollection.findAll();
+    const response = allReviews.map(util.constructReviewResponse);
     res.status(200).json(response);
   },
   [
@@ -132,4 +132,4 @@ router.patch(
   }
 );
 
-export {router as reactionRouter};
+export {router as reviewRouter};

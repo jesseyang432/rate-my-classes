@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import * as userValidator from '../server/user/middleware';
 import {userRouter} from '../server/user/router';
 import {reactionRouter} from '../server/reaction/router';
+import {reviewRouter} from '../server/review/router';
 import {courseRouter} from '../server/course/router';
 import {enrollRouter} from '../server/enroll/router';
 import MongoStore from 'connect-mongo';
@@ -72,6 +73,7 @@ app.use(userValidator.isCurrentSessionUserExists);
 // Add routers from routes folder
 app.use('/api/users', userRouter);
 app.use('/api/reactions', reactionRouter);
+app.use('/api/reviews', reviewRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/enroll', enrollRouter);
 

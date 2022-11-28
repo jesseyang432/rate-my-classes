@@ -7,6 +7,7 @@
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
       <CreateReactionForm />
+      <CreateReviewForm />
     </section>
     <section v-else>
       <header>
@@ -61,11 +62,12 @@
 <script>
 import ReactionComponent from '@/components/Reaction/ReactionComponent.vue';
 import CreateReactionForm from '@/components/Reaction/CreateReactionForm.vue';
+import CreateReviewForm from '@/components/Review/CreateReviewForm.vue';
 import GetReactionsForm from '@/components/Reaction/GetReactionsForm.vue';
 
 export default {
   name: 'ReactionPage',
-  components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
+  components: {ReactionComponent, GetReactionsForm, CreateReviewForm, CreateReactionForm},
   mounted() {
     this.$refs.getReactionsForm.submit();
   }
