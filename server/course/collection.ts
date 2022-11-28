@@ -21,7 +21,7 @@ class CourseCollection {
     return CourseModel.find({}).sort({name: 1});
   }
 
-  static async findOne(name: string): Promise<HydratedDocument<Course>> {
+  static async findOneByName(name: string): Promise<HydratedDocument<Course>> {
     return CourseModel.findOne({ name: name });
   }
 }

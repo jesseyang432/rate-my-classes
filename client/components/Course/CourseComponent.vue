@@ -6,6 +6,11 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
+        <span style="text-align:right;" class="header-interact"> 
+          <span class="greenDot"></span> &nbsp; 4.2
+          <EnrollButton v-if="!enrolled" :course="course.name"/>
+          <EnrollStatus v-else :course="course.name"/>
+        </span>
       </header>
       <p class="description">
         {{course.description}}
@@ -23,12 +28,20 @@
   </template>
   
   <script>
+import EnrollButton from '@/components/Enroll/EnrollButton.vue';
+import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
+
   export default {
     name: 'CourseComponent',
+    components: {EnrollButton, EnrollStatus},
     props: {
       // Data from the stored course
       course: {
         type: Object,
+        required: true
+      },
+      enrolled: {
+        type: Boolean,
         required: true
       }
     },
@@ -44,9 +57,29 @@
   .course {
       border: 1px solid #111;
       border-radius: 16px;
-      margin: 16px;
       padding: 20px;
       position: relative;
   }
+
+  header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-interact {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+
+.greenDot {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(20, 131, 24);
+  border-radius: 50%;
+  display: inline-block;
+}
   </style>
   
