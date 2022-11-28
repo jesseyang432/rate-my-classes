@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
+    profile: null,
   },
   mutations: {
     alert(state, payload) {
@@ -33,6 +34,10 @@ const store = new Vuex.Store({
        */
       state.username = username;
     },
+   async updateProfile(state, username) {
+      state.profile = await fetch(`/api/users/${username}`).then(async r => r.json());
+    },
+
     updateFilter(state, filter) {
       /**
        * Update the stored reactions filter to the specified one.

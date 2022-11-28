@@ -16,11 +16,10 @@
       <router-link to="/courses">
         Courses
       </router-link>
-      <router-link
-        v-if="$store.state.username"
-        to="/profile"
-      >
-        Profile
+      <router-link v-if="$store.state.username" to="/profile">
+        <div @click = "setProfile">
+          Profile
+        </div>
       </router-link>
       <router-link
         v-else
@@ -40,6 +39,15 @@
     </section>
   </nav>
 </template>
+<script>
+export default {
+  methods: {
+    async setProfile() {
+      this.$store.commit('updateProfile', this.$store.state.username);
+    }
+  }
+}
+</script>
 
 <style scoped>
 nav {

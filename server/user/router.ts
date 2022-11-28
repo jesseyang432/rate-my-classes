@@ -84,6 +84,15 @@ router.delete(
   }
 );
 
+router.get(
+  '/:username?',
+  [],
+  async (req: Request, res: Response) => {
+    const user = await UserCollection.findOneByUsername(req.params.username);
+    res.status(200).json(user);
+  }
+);
+
 /**
  * Create a user account.
  *
