@@ -6,8 +6,11 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
-        <EnrollButton v-if="!enrolled" :course="course.name"/>
-        <EnrollStatus v-else :course="course.name"/>
+        <span style="text-align:right;"> 
+          <span class="greenDot"></span> &nbsp; 4.2
+          <EnrollButton v-if="!enrolled" :course="course.name"/>
+          <EnrollStatus v-else :course="course.name"/>
+        </span>
       </header>
       <p class="description">
         {{course.description}}
@@ -65,5 +68,13 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     justify-content: space-between;
     align-items: center;
   }
+
+.greenDot {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(20, 131, 24);
+  border-radius: 50%;
+  display: inline-block;
+}
   </style>
   

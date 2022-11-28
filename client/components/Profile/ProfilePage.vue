@@ -9,15 +9,19 @@
         <article class="info">
           <p><strong>Class Year: </strong>{{$store.state.profile.classYear}}</p>
           <p><strong>Major: </strong>{{$store.state.profile.major}}</p>
+          <p><strong>Revews: </strong></p>
+          <p><strong>Reactions: </strong></p>
         </article>
       </div>
 
       <div class = "content">
         <h2>Enrolled Courses</h2>
         <section v-if="$store.state.enrollments.length">
-          <p v-for="enrollment in $store.state.enrollments" :key="enrollment.id">
-            {{enrollment.toCourse.name}}
-          </p>
+          <CourseComponent v-for="enrollment in $store.state.enrollments"
+            :key="enrollment.toCourse.id"
+            :course="enrollment.toCourse"
+            :enrolled="isEnrolled(enrollment.toCourse.name)"
+          />
         </section>
       </div>
       
@@ -31,13 +35,20 @@
 </template>
 
 <script>
+import CourseComponent from '@/components/Course/CourseComponent.vue';
 import EnrollForm from '@/components/Enroll/EnrollForm.vue';
 
 export default {
   name: 'ProfilePage',
-  components: {EnrollForm},
+  components: {CourseComponent, EnrollForm},
   mounted() {
+    this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
+  },
+  methods: {
+    isEnrolled(course) {
+      return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
+    }
   }
 };
 </script>
@@ -65,6 +76,7 @@ section .scrollbox {
     position: relative;
     flex-direction: row;
     right: 20px;
+    top: 16px;
 }
 
 .page {
@@ -76,6 +88,9 @@ section .scrollbox {
 }
 
 .content {
+  width: 300px;
   flex: 1 0 auto;
+  right: 200px;
 }
+
 </style>
