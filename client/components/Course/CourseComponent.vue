@@ -6,6 +6,7 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
+        <EnrollButton/>
       </header>
       <p class="description">
         {{course.description}}
@@ -23,8 +24,11 @@
   </template>
   
   <script>
+import EnrollButton from '@/components/Enroll/EnrollButton.vue';
+
   export default {
     name: 'CourseComponent',
+    components: {EnrollButton},
     props: {
       // Data from the stored course
       course: {
