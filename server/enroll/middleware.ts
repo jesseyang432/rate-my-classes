@@ -27,7 +27,6 @@ const isEnrollExists = async (req: Request, res: Response, next: NextFunction) =
  */
 
 const isEnrollNotExists = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.courseToEnroll);
     const toCourse = await CourseCollection.findOneByName(req.body.courseToEnroll as string);
     const follow = await EnrollCollection.findOne(req.session.userId, toCourse._id);
     if (follow) {

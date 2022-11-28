@@ -27,7 +27,7 @@
               <input type="radio" v-model="joiningAs" value="interested">
               <label for="interested"> Interested</label>
             </div>
-            <button @click="test()">
+            <button @click="test">
               Join Class
             </button>
           </section>
@@ -43,6 +43,10 @@
 export default {
   name: 'EnrollButton',
   props: {
+    course: {
+      type: String,
+      required: true,
+    }
     // upvoted: {
     //     type: Boolean,
     //     required: true,
@@ -60,19 +64,16 @@ export default {
     return {
       modalOpen: false,
       joiningAs: 'current',
-      url: `/api/upvotes/${this.freetId}`,
+      url: `/api/enroll`,
       method: 'POST',
       hasBody: false,
       title: 'Enroll',
-      //numUpvotes: 0,
-      // callback: () => {
-      //   this.$emit('upvote');
-      // }
     };
   },
   methods: {
-      test() {
+      async test() {
         console.log(this.joiningAs);
+        await this.submit();
       },
       async submit() {
         /**
@@ -83,14 +84,9 @@ export default {
           headers: {'Content-Type': 'application/json'},
           credentials: 'same-origin' // Sends express-session credentials with request
         };
-        if (this.hasBody) {
-          const optionsEntries = this.fields.map(field => {
-              const {id, value} = field;
-              field.value = '';
-              return [id, value];
-            });
-          options.body = JSON.stringify(Object.fromEntries(optionsEntries));
-        }
+        options.body = JSON.stringify(Object.fromEntries([['courseToEnroll', this.course]]));
+        console.log(options.body);
+
   
         try {
           const r = await fetch(this.url, options);

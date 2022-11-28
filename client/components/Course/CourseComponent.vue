@@ -6,7 +6,7 @@
         <h3 class="name">
           {{ course.name }}
         </h3>
-        <EnrollButton/>
+        <EnrollButton :course="course.name"/>
       </header>
       <p class="description">
         {{course.description}}
