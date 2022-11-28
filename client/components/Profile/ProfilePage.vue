@@ -82,7 +82,6 @@ section .scrollbox {
     position: relative;
     flex-direction: row;
     right: 20px;
-    top: 16px;
 }
 
 .page {

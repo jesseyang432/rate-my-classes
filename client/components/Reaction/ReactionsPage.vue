@@ -6,7 +6,9 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm />
+      <div class = "form">
+        <CreateReactionForm />
+      </div>
     </section>
     <section v-else>
       <header>
@@ -93,5 +95,9 @@ section .scrollbox {
   flex: 1 0 50vh;
   padding: 3%;
   overflow-y: scroll;
+}
+
+.form {
+  width: 500px;
 }
 </style>
