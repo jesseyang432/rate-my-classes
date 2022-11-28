@@ -4,8 +4,8 @@ import ReactionModel from './model';
 import UserCollection from '../user/collection';
 
 /**
- * This files contains a class that has the functionality to explore freets
- * stored in MongoDB, including adding, finding, updating, and deleting freets.
+ * This files contains a class that has the functionality to explore reactions
+ * stored in MongoDB, including adding, finding, updating, and deleting reactions.
  * Feel free to add additional operations in this file.
  *
  * Note: HydratedDocument<Reaction> is the output of the FreetModel() constructor,
@@ -46,18 +46,18 @@ class ReactionCollection {
   /**
    * Get all the reactions in the database
    *
-   * @return {Promise<HydratedDocument<Reaction>[]>} - An array of all of the freets
+   * @return {Promise<HydratedDocument<Reaction>[]>} - An array of all of the reactions
    */
   static async findAll(): Promise<Array<HydratedDocument<Reaction>>> {
-    // Retrieves freets and sorts them from most to least recent
+    // Retrieves reactions and sorts them from most to least recent
     return ReactionModel.find({}).sort({dateModified: -1}).populate('student');
   }
 
   /**
-   * Get all the freets in by given author
+   * Get all the reactions in by given author
    *
-   * @param {string} username - The username of author of the freets
-   * @return {Promise<HydratedDocument<Reaction>[]>} - An array of all of the freets
+   * @param {string} username - The username of author of the reactions
+   * @return {Promise<HydratedDocument<Reaction>[]>} - An array of all of the reactions
    */
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Reaction>>> {
     const student = await UserCollection.findOneByUsername(username);
@@ -90,9 +90,9 @@ class ReactionCollection {
   }
 
   /**
-   * Delete all the freets by the given author
+   * Delete all the reactions by the given author
    *
-   * @param {string} authorId - The id of author of freets
+   * @param {string} authorId - The id of author of reactions
    */
   static async deleteMany(studentId: Types.ObjectId | string): Promise<void> {
     await ReactionModel.deleteMany({studentId});
