@@ -85,6 +85,8 @@ header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Inter';
+    font-weight: normal;
 }
 
 button {

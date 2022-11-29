@@ -194,10 +194,13 @@ form > article p {
 form h3,
 form > * {
   margin: 0.3em 0;
+  font-family: 'Inter';
+  font-weight: normal;
 }
 
 form h3 {
   margin-top: 0;
+  
 }
 
 select {
