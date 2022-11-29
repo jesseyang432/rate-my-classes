@@ -13,9 +13,29 @@
           <p><strong>Reactions: </strong></p>
         </article>
         <article class="info">
-          <p><strong>Enrolled Courses: </strong></p>
-          <div v-for="enrollment in $store.state.enrollments" :key="enrollment.toCourse.id" id = "status-button">
-            {{enrollment.toCourse.name}}
+          <p><strong>Current Courses: </strong></p>
+          <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'current'" :key="enrollment.toCourse.id" id = "status-button">
+            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+              {{enrollment.toCourse.name}}
+            </router-link>
+          </div>
+        </article>
+
+        <article class="info">
+          <p><strong>Interest Courses: </strong></p>
+          <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'interested'" :key="enrollment.toCourse.id" id = "status-button">
+            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+              {{enrollment.toCourse.name}}
+            </router-link>
+          </div>
+        </article>
+
+        <article class="info">
+          <p><strong>Previous Courses: </strong></p>
+          <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'previous'" :key="enrollment.toCourse.id" id = "status-button">
+            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+              {{enrollment.toCourse.name}}
+            </router-link>
           </div>
         </article>
       </div>
@@ -30,6 +50,7 @@
           />
         </section>
       </div>
+      
       
       <div>
         <router-link to="/account">
@@ -97,6 +118,11 @@ section .scrollbox {
 
 .sideBar{
   width: 400px;
+}
+
+.course-page-link {
+  text-decoration: none;
+  color: black;
 }
 
 .content {
