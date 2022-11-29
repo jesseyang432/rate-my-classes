@@ -32,6 +32,10 @@
           {{ course.description }}
         </p>
       </section>
+
+      <section class="review-section">
+        <CourseReviewForm v-if="getEnrollment(course.name)" :course="course"/>
+      </section>
     </section>
   </main>
 </template>
@@ -39,10 +43,11 @@
   <script>
   import EnrollButton from '@/components/Enroll/EnrollButton.vue';
   import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
+  import CourseReviewForm from '@/components/Review/CourseReviewForm.vue';
   
   export default {
     name: 'CoursePage',
-    components: {EnrollButton, EnrollStatus},
+    components: {EnrollButton, EnrollStatus, CourseReviewForm},
     data() {
         return {
             loading: true,
