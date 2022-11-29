@@ -3,7 +3,7 @@
 <template>
     <section>
         <button id="status-button" @click="() => {modalOpen = true;}">
-            Enrollment Status
+            Enrolled
         </button>
         <section v-if="modalOpen" class="modal-mask">
           <section class="modal-container">
@@ -16,20 +16,20 @@
               </button>
             </header>
             <div>
-              <input type="radio" v-model="status" value="current">
+              <input type="radio" v-model="enrollmentType" value="current">
               <label for="current"> Currently Enrolled</label>
             </div>
             <div>
-              <input type="radio" v-model="status" value="previous">
+              <input type="radio" v-model="enrollmentType" value="previous">
               <label for="previous"> Previously Enrolled</label>
             </div>
             <div>
-              <input type="radio" v-model="status" value="interested">
+              <input type="radio" v-model="enrollmentType" value="interested">
               <label for="interested"> Interested</label>
             </div>
-            <!-- <button @click="Modify">
+            <button @click="modify">
               Modify Status
-            </button> -->
+            </button>
             <button @click="leave">
               Leave Class
             </button>
@@ -47,31 +47,46 @@ export default {
     course: {
       type: String,
       required: true,
+    },
+    enrollmentType: {
+        type: String,
+        required: true,
     }
-    // upvoted: {
-    //     type: Boolean,
-    //     required: true,
-    // },
-    // freetId: {
-    //   type: String,
-    //   required: true,
-    // },
-    // numUpvotes: {
-    //     type: Number,
-    //     required: true,
-    // }
   },
   data() {
     return {
       modalOpen: false,
-      status: 'current',
-      modifyUrl: '/api/enroll',
+      modifyUrl: `/api/enroll/${this.course}`,
       deleteUrl: `/api/enroll/${this.course}`,
       hasBody: false,
       title: 'Enroll',
     };
   },
   methods: {
+      async modify() {
+        const options = {
+          method: 'PATCH',
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'same-origin' // Sends express-session credentials with request
+        };
+
+        options.body = JSON.stringify(Object.fromEntries([['enrollmentType', this.enrollmentType]]));
+
+        try {
+          const r = await fetch(this.modifyUrl, options);
+          if (!r.ok) {
+            // If response is not okay, we throw an error and enter the catch block
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+
+        // Perform Callback
+        this.$store.commit('refreshEnrollments');
+        this.modalOpen = false;
+
+        } catch (e) {
+        }
+      },
       async leave() {
         const options = {
           method: 'DELETE',
@@ -89,15 +104,8 @@ export default {
 
         // Perform Callback
         this.$store.commit('refreshEnrollments');
-        this.modalOpen = true;
+        this.modalOpen = false;
 
-        //   if (this.callback) {
-        //     if (this.asyncCallback) {
-        //       await this.callback();
-        //     } else {
-        //       this.callback();
-        //     }
-        //   }
         } catch (e) {
         }
       }

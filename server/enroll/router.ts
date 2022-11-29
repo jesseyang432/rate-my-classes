@@ -4,28 +4,50 @@ import EnrollCollection from './collection';
 import CourseCollection from '../course/collection';
 import * as userValidator from '../user/middleware';
 import * as enrollValidator from '../enroll/middleware';
-import { constructEnrollResponse } from './util';
+import * as util from './util';
 
 
 const router = express.Router();
 
 /**
- * Attempts to enroll logged in user in course `req.body.courseToEnroll`
+ * Attempts to enroll logged in user in course `req.body.courseToEnroll` with enrollment type `req.body.enrollmentType`
  */
 router.post(
   '/',
   [
     userValidator.isUserLoggedIn,
-    enrollValidator.isEnrollNotExists
+    enrollValidator.isEnrollNotExists,
+    enrollValidator.isValidEnrollmentType,
   ],
   async (req: Request, res: Response) => {
       const toCourse = await CourseCollection.findOneByName(req.body.courseToEnroll as string);
-      const enrollment = await EnrollCollection.addOne(req.session.userId, toCourse._id);
+      const enrollment = await EnrollCollection.addOne(req.session.userId, toCourse._id, req.body.enrollmentType);
 
       res.status(201).json({
         message: `Your enrollment was created successfully.`,
         enroll: enrollment
       });
+  }
+);
+
+/**
+ * Modify an enrollment
+ *
+ * @name PATCH /api/enroll/:course
+ */
+ router.patch(
+  '/:course?',
+  [
+    userValidator.isUserLoggedIn,
+    enrollValidator.isEnrollExists,
+    enrollValidator.isValidEnrollmentType,
+  ],
+  async (req: Request, res: Response) => {
+    const enrollment = await EnrollCollection.updateOne(req.params.course, req.body.enrollmentType);
+    res.status(200).json({
+      message: 'Your enrollment was updated successfully.',
+      enroll: util.constructEnrollResponse(enrollment)
+    });
   }
 );
 

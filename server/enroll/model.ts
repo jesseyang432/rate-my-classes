@@ -13,12 +13,14 @@ export type Enroll = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   fromStudent: Types.ObjectId;
   toCourse: Types.ObjectId;
+  type: string;
 };
 
 export type PopulatedEnroll = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   fromStudent: User;
   toCourse: Course;
+  type: string;
 }
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -36,6 +38,10 @@ const EnrollSchema = new Schema<Enroll>({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Course'
+  },
+  type: {
+    type: String,
+    required: true,
   }
 }, {
   toObject: { virtuals: true, versionKey: false },

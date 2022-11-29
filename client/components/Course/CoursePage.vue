@@ -25,8 +25,8 @@
               {{ course.name }}
             </h2>
           </div>
-          <EnrollButton v-if="!isEnrolled(course.name)" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name"/>
+          <EnrollButton v-if="!getEnrollment(course.name)" :course="course.name"/>
+          <EnrollStatus v-else :course="course.name" :enrollmentType="enrollment ? enrollment.type : 'current'"/>
         </header>
         <p>
           {{ course.description }}
@@ -46,6 +46,8 @@
     data() {
         return {
             loading: true,
+            isEnrolled: false,
+            enrollment: null,
             pageNotFound: true,
             course: null,
             reviews: [],
@@ -54,11 +56,22 @@
     },
     async mounted() {
         await this.getCourse();
+        this.getEnrollment(this.course.name);
         this.loading = false;
     },
     methods: {
-        isEnrolled(course) {
-          return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
+        /**
+         * Assigns the type of enrollment (if there is one) to enrollmentType
+         * Returns true or false, depending on if enrolled
+         */
+        getEnrollment(courseName) {
+          for (const enrollment of this.$store.state.enrollments) {
+            if (enrollment.toCourse.name === courseName) {
+              this.enrollment = enrollment;
+              return true;
+            }
+          }
+          return false;
         },
         async getCourse() {
             const url = `/api/courses/${this.$route.params.name}`;

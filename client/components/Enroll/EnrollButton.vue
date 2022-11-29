@@ -78,7 +78,7 @@ export default {
           headers: {'Content-Type': 'application/json'},
           credentials: 'same-origin' // Sends express-session credentials with request
         };
-        options.body = JSON.stringify(Object.fromEntries([['courseToEnroll', this.course]]));
+        options.body = JSON.stringify(Object.fromEntries([['courseToEnroll', this.course], ['enrollmentType', this.joiningAs]]));
 
   
         try {

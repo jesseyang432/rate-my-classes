@@ -9,6 +9,7 @@ type EnrollResponse = {
   _id: string;
   fromStudent: User;
   toCourse: Course;
+  type: string,
 };
 
 /**

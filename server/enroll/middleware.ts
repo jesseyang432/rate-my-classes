@@ -40,7 +40,24 @@ const isEnrollNotExists = async (req: Request, res: Response, next: NextFunction
     next();
 };
 
+/**
+ * Checks that type of enrollment in `req.body.enrollmentType` is valid type
+ */
+const isValidEnrollmentType = async (req: Request, res: Response, next: NextFunction) => {
+    const isValid = (req.body.enrollmentType === 'current' || req.body.enrollmentType === 'previous' || req.body.enrollmentType === 'interested');
+    if (!isValid) {
+        res.status(400).json({
+        error: {
+            invalidEnrollmenType: `Can not enroll as type ${req.body.enrollmentType}.`
+        }
+        });
+        return;
+    }
+    next();
+};
+
 export {
     isEnrollExists,
-    isEnrollNotExists
+    isEnrollNotExists,
+    isValidEnrollmentType
 }
