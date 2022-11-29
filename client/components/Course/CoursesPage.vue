@@ -3,30 +3,21 @@
 <template>
   <main>
     <section v-if="$store.state.username">
-      <header>
-        <h3>Welcome @{{ $store.state.username }}</h3>
-      </header>
       <section>
         <header>
           <div class="left">
             <h2>
-              Viewing all courses
+              Viewing courses
             </h2>
           </div>
-          <!-- <div class="right">
-            <GetReactionsForm
-              ref="getReactionsForm"
-              value="author"
-              placeholder="🔍 Filter by author (optional)"
-              button="🔄 Get reaction"
-            />
-          </div> -->
         </header>
+        <input class="search-bar" v-model="filter" placeholder="Search by name">
         <section
           v-if="$store.state.courses.length"
         >
         <router-link
           v-for="course in $store.state.courses" class="course-page-link"
+          v-if="toDisplay(course.name)"
           :to="`course/${course.name}`"
           :key="course.id">
           <CourseComponent
@@ -35,13 +26,6 @@
             :enrolled="isEnrolled(course.name)"
           />
         </router-link>
-          <!-- <a href="test" v-for="course in $store.state.courses" class="course-page-link"> -->
-            <!-- <CourseComponent
-            :key="course.id"
-            :course="course"
-            :enrolled="isEnrolled(course.name)"
-            /> -->
-          <!-- </a> -->
         </section>
         <article
           v-else
@@ -71,13 +55,21 @@ import CourseComponent from '@/components/Course/CourseComponent.vue';
 import CreateReactionForm from '@/components/Reaction/CreateReactionForm.vue';
 
 export default {
-  name: 'HomePage',
+  name: 'CoursesPage',
   components: {CourseComponent, CreateReactionForm},
+  data() {
+    return {
+      filter: ''
+    };
+  },
   mounted() {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
   },
   methods: {
+    toDisplay(courseName) {
+      return courseName.toLowerCase().includes(this.filter.toLowerCase());
+    },
     isEnrolled(course) {
       return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
     }
@@ -111,6 +103,13 @@ h3 {
 
 button {
     margin-right: 10px;
+}
+
+.search-bar {
+  padding: 8px;
+  outline: none;
+  font-size: large;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .course-page-link {
