@@ -65,6 +65,11 @@ section {
   flex-direction: column;
 }
 
+h2 {
+  font-family: 'Inter';
+  font-weight: bold;
+}
+
 button {
     margin-right: 10px;
 }
@@ -82,6 +87,8 @@ section .scrollbox {
     position: relative;
     flex-direction: row;
     right: 20px;
+    font-family: 'Inter';
+  
 }
 
 .page {
@@ -109,7 +116,7 @@ section .scrollbox {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter'; 
   margin-top: 10px;
   text-align: left;
 }

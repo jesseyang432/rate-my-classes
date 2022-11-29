@@ -54,6 +54,9 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
       compress(description) {
         // standardizes course description length
         const words = description.split(" "); 
+        if (words.length < 30){
+          return description
+        }
         const firstWords = words.splice(0,30);
         const firstPart = firstWords.reduce(
           (accumulator, currentValue) => accumulator + " " + currentValue, 
