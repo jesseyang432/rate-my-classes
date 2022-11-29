@@ -45,18 +45,6 @@ export default {
       type: String,
       required: true,
     }
-    // upvoted: {
-    //     type: Boolean,
-    //     required: true,
-    // },
-    // freetId: {
-    //   type: String,
-    //   required: true,
-    // },
-    // numUpvotes: {
-    //     type: Number,
-    //     required: true,
-    // }
   },
   data() {
     return {
@@ -93,13 +81,6 @@ export default {
           this.$store.commit('refreshEnrollments');
           this.modalOpen = false;
 
-          // if (this.callback) {
-          //   if (this.asyncCallback) {
-          //     await this.callback();
-          //   } else {
-          //     this.callback();
-          //   }
-          // }
         } catch (e) {
         }
       }
@@ -114,7 +95,6 @@ section {
 }
 
 button {
-  /* background: none; */
   border-radius: 8px;
 }
 
