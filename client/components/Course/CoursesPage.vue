@@ -25,7 +25,10 @@
         <section
           v-if="$store.state.courses.length"
         >
-        <router-link v-for="course in $store.state.courses" class="course-page-link" :to="`course/${course.name}`">
+        <router-link
+          v-for="course in $store.state.courses" class="course-page-link"
+          :to="`course/${course.name}`"
+          :key="course.id">
           <CourseComponent
             :key="course.id"
             :course="course"
