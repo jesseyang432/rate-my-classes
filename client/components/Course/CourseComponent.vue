@@ -8,12 +8,12 @@
         </h3>
         <span style="text-align:right;" class="header-interact"> 
           <span class="greenDot"></span> &nbsp; 4.2
-          <EnrollButton v-if="!enrolled" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name"/>
+          <!-- <EnrollButton v-if="!enrolled" :course="course.name"/>
+          <EnrollStatus v-else :course="course.name"/> -->
         </span>
       </header>
       <p class="description">
-        {{course.description}}
+        {{compress(course.description)}}
       </p>
       <section class="alerts">
         <article
@@ -50,6 +50,19 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
         alerts: {} // Displays success/error messages encountered during course modification
       };
     },
+    methods: {
+      compress(description) {
+        // standardizes course description length
+        const words = description.split(" "); 
+        const firstWords = words.splice(0,30);
+        const firstPart = firstWords.reduce(
+          (accumulator, currentValue) => accumulator + " " + currentValue, 
+          ""
+        ); 
+        const output = firstPart + "..."; 
+        return output; 
+      }
+    }
   };
   </script>
   
@@ -66,8 +79,15 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Inter';
+    font-weight: bold;
   }
 
+  .description {
+    font-family: 'Inter';
+    font-weight: normal;
+    
+  }
   .header-interact {
     display: flex;
     flex-flow: row nowrap;

@@ -70,6 +70,7 @@ export default {
   components: {ReactionComponent, GetReactionsForm, CreateReviewForm, CreateReactionForm},
   mounted() {
     this.$refs.getReactionsForm.submit();
+    this.$store.commit('refreshEnrollments');
   }
 };
 </script>
@@ -94,5 +95,9 @@ section .scrollbox {
   flex: 1 0 50vh;
   padding: 3%;
   overflow-y: scroll;
+}
+
+.form {
+  width: 500px;
 }
 </style>

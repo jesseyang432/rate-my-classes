@@ -4,7 +4,7 @@
   <main>
     <section v-if="$store.state.username">
       <header>
-        <h2>Welcome @{{ $store.state.username }}</h2>
+        <h3>Welcome @{{ $store.state.username }}</h3>
       </header>
       <section>
         <header>
@@ -25,13 +25,20 @@
         <section
           v-if="$store.state.courses.length"
         >
-          <a href="test" v-for="course in $store.state.courses" class="course-page-link">
-            <CourseComponent
+        <router-link v-for="course in $store.state.courses" class="course-page-link" :to="`course/${course.name}`">
+          <CourseComponent
             :key="course.id"
             :course="course"
             :enrolled="isEnrolled(course.name)"
-            />
-          </a>
+          />
+        </router-link>
+          <!-- <a href="test" v-for="course in $store.state.courses" class="course-page-link"> -->
+            <!-- <CourseComponent
+            :key="course.id"
+            :course="course"
+            :enrolled="isEnrolled(course.name)"
+            /> -->
+          <!-- </a> -->
         </section>
         <article
           v-else
@@ -85,6 +92,18 @@ header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+h2 {
+  font-family: 'Inter';
+  font-weight: bold;
+  font-size: 30px;
+}
+
+h3 {
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 24px;
 }
 
 button {

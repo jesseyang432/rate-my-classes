@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ReactionsPage from './components/Reaction/ReactionsPage.vue';
 import CoursesPage from './components/Course/CoursesPage.vue';
+import CoursePage from './components/Course/CoursePage.vue';
 import ProfilePage from './components/Profile/ProfilePage';
 import AccountPage from './components/Account/AccountPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
@@ -12,6 +13,7 @@ Vue.use(VueRouter);
 const routes = [
   {path: '/', name: 'Reactions', component: ReactionsPage},
   {path: '/courses', name: 'Courses', component: CoursesPage},
+  {path: '/course/:name', name: 'Course', component: CoursePage},
   {path: '/profile', name: 'Profile', component: ProfilePage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},

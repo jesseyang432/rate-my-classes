@@ -12,6 +12,12 @@
           <p><strong>Revews: </strong></p>
           <p><strong>Reactions: </strong></p>
         </article>
+        <article class="info">
+          <p><strong>Enrolled Courses: </strong></p>
+          <div v-for="enrollment in $store.state.enrollments" :key="enrollment.toCourse.id" id = "status-button">
+            {{enrollment.toCourse.name}}
+          </div>
+        </article>
       </div>
 
       <div class = "content">
@@ -76,7 +82,6 @@ section .scrollbox {
     position: relative;
     flex-direction: row;
     right: 20px;
-    top: 16px;
 }
 
 .page {
@@ -84,13 +89,29 @@ section .scrollbox {
 }
 
 .sideBar{
-  width: 300px;
+  width: 400px;
 }
 
 .content {
   width: 300px;
   flex: 1 0 auto;
   right: 200px;
+}
+
+#status-button {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 10px;
+  text-align: left;
 }
 
 </style>

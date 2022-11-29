@@ -29,7 +29,9 @@
         v-else
         to="/login"
       >
-        Login
+        <div class="link">
+          Login
+        </div>
       </router-link>
     </div>
     <section class="alerts">
