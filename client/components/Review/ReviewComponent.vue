@@ -1,16 +1,20 @@
-<!-- Reusable component representing a single reaction and its actions -->
+<!-- Reusable component representing a single review and its actions -->
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
   <article
-    class="reaction"
+    class="review"
   >
     <header>
-      <h3 class="author">
-        @{{ reaction.author }}
-      </h3>
+      <section class="author-info">
+        <h3 class="author">
+          @{{ review.student.username }}
+        </h3>
+        <p><em>Similarity Score: TODO</em></p>
+      </section>
+      
       <div
-        v-if="$store.state.username === reaction.author"
+        v-if="$store.state.username === review.student.username"
         class="actions"
       >
         <button
@@ -31,7 +35,7 @@
         >
           ✏️ Edit
         </button>
-        <button @click="deleteReaction">
+        <button @click="deleteReview">
           🗑️ Delete
         </button>
       </div>
@@ -46,11 +50,11 @@
       v-else
       class="content"
     >
-      {{ reaction.content }}
+      {{ review.content }}
     </p>
     <p class="info">
-      Posted at {{ reaction.dateModified }}
-      <i v-if="reaction.edited">(edited)</i>
+      Posted at {{ review.dateCreated }}
+      <!-- <i v-if="reaction.edited">(edited)</i> -->
     </p>
     <section class="alerts">
       <article
@@ -66,45 +70,45 @@
 
 <script>
 export default {
-  name: 'ReactionComponent',
+  name: 'ReviewComponent',
   props: {
-    // Data from the stored reaction
-    reaction: {
+    // Data from the stored review
+    review: {
       type: Object,
       required: true
     }
   },
   data() {
     return {
-      editing: false, // Whether or not this reaction is in edit mode
-      draft: this.reaction.content, // Potentially-new content for this reaction
-      alerts: {} // Displays success/error messages encountered during reaction modification
+      editing: false, // Whether or not this review is in edit mode
+      draft: this.review.content, // Potentially-new content for this review
+      alerts: {} // Displays success/error messages encountered during review modification
     };
   },
   methods: {
     startEditing() {
       /**
-       * Enables edit mode on this reaction.
+       * Enables edit mode on this review.
        */
-      this.editing = true; // Keeps track of if a reaction is being edited
-      this.draft = this.reaction.content; // The content of our current "draft" while being edited
+      this.editing = true; // Keeps track of if a review is being edited
+      this.draft = this.review.content; // The content of our current "draft" while being edited
     },
     stopEditing() {
       /**
-       * Disables edit mode on this reaction.
+       * Disables edit mode on this review.
        */
       this.editing = false;
-      this.draft = this.reaction.content;
+      this.draft = this.review.content;
     },
-    deleteReaction() {
+    deleteReview() {
       /**
-       * Deletes this reaction.
+       * Deletes this review.
        */
       const params = {
         method: 'DELETE',
         callback: () => {
           this.$store.commit('alert', {
-            message: 'Successfully deleted reaction!', status: 'success'
+            message: 'Successfully deleted review!', status: 'success'
           });
         }
       };
@@ -112,10 +116,10 @@ export default {
     },
     submitEdit() {
       /**
-       * Updates reaction to have the submitted draft content.
+       * Updates review to have the submitted draft content.
        */
-      if (this.reaction.content === this.draft) {
-        const error = 'Error: Edited reaction content should be different than current reaction content.';
+      if (this.review.content === this.draft) { // TODO: Check if all other parameters remain same
+        const error = 'Error: Edited review content should be different than current review content.';
         this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
         setTimeout(() => this.$delete(this.alerts, error), 3000);
         return;
@@ -123,7 +127,7 @@ export default {
 
       const params = {
         method: 'PATCH',
-        message: 'Successfully edited reaction!',
+        message: 'Successfully edited review!',
         body: JSON.stringify({content: this.draft}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
@@ -134,7 +138,7 @@ export default {
     },
     async request(params) {
       /**
-       * Submits a request to the reaction's endpoint
+       * Submits a request to the review's endpoint
        * @param params - Options for the request
        * @param params.body - Body for the request, if it exists
        * @param params.callback - Function to run if the the request succeeds
@@ -147,14 +151,14 @@ export default {
       }
 
       try {
-        const r = await fetch(`/api/reactions/${this.reaction._id}`, options);
+        const r = await fetch(`/api/reviews/${this.review._id}`, options);
         if (!r.ok) {
           const res = await r.json();
           throw new Error(res.error);
         }
 
         this.editing = false;
-        this.$store.commit('refreshReactions');
+        this.$store.commit('refreshReviews');
 
         params.callback();
       } catch (e) {
@@ -167,7 +171,27 @@ export default {
 </script>
 
 <style scoped>
-.reaction {
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.author-info {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.author {
+  margin: 0px;
+}
+
+.author-info p {
+  margin: 0px;
+  font-size: small;
+}
+.review {
     border: 1px solid #111;
     padding: 20px;
     position: relative;

@@ -34,8 +34,16 @@
       </section>
 
       <section class="review-section">
-        <CourseReviewForm v-if="getEnrollment(course.name)" :course="course"/>
+        <section v-if="getEnrollment(course.name)" course-review-enrolled>
+          <CourseReviewForm v-if="!getReview(course.name)" :course="course"/>
+          <ReviewComponent v-else :review="userReview"/>
+        </section>
+        
         <h2>Course Reviews</h2>
+        <ReviewComponent v-for="review in $store.state.reviews"
+          v-if="review.course === course.name && review.content"
+          :key="review._id"
+          :review="review"/>
       </section>
     </section>
   </main>
@@ -45,10 +53,11 @@
   import EnrollButton from '@/components/Enroll/EnrollButton.vue';
   import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
   import CourseReviewForm from '@/components/Review/CourseReviewForm.vue';
+  import ReviewComponent from '@/components/Review/ReviewComponent.vue';
   
   export default {
     name: 'CoursePage',
-    components: {EnrollButton, EnrollStatus, CourseReviewForm},
+    components: {EnrollButton, EnrollStatus, CourseReviewForm, ReviewComponent},
     data() {
         return {
             loading: true,
@@ -56,6 +65,7 @@
             enrollment: null,
             pageNotFound: true,
             course: null,
+            userReview: null,
             reviews: [],
             reactions: [],
         };
@@ -75,6 +85,19 @@
           for (const enrollment of this.$store.state.enrollments) {
             if (enrollment.toCourse.name === courseName) {
               this.enrollment = enrollment;
+              return true;
+            }
+          }
+          return false;
+        },
+        /**
+         * Assigns the user's review of the course to userReview (if there is one)
+         * Returns true or false, depending on if there is a user review
+         */
+        getReview(courseName) {
+          for (const review of this.$store.state.reviews) {
+            if (review.course === courseName && review.student.username === this.$store.state.username) {
+              this.userReview = review;
               return true;
             }
           }

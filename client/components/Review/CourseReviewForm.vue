@@ -159,7 +159,7 @@ export default {
 
           // Perform Callback
           this.$store.commit('refreshReviews');
-          this.modalOpen = false;
+          this.formExpanded = false;
 
         } catch (e) {
         }
