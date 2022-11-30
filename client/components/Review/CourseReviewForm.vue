@@ -60,6 +60,9 @@
 
             
             <h3>Ratings</h3>
+            <p>
+                <em>A '*' rating indicates that no rating has been provided (all ratings are optional)</em>
+            </p>
             <section class="course-ratings">
                 <div class="input-elem">
                     <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
@@ -109,8 +112,8 @@ export default {
       knowledge: null,
       grade: null,
       content: '',
-      difficulty: 'Not Rated',
-      rating: 'Not Rated'
+      difficulty: '*',
+      rating: '*'
     };
   },
   methods: {
@@ -212,16 +215,20 @@ section {
 .course-info {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .course-ratings {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .course-ratings input {
     width: 200px;
+}
+
+.input-elem {
+    margin: 8px;
 }
 
 .input-elem label {
