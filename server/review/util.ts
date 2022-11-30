@@ -1,13 +1,22 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Review} from './model';
+import type {User} from '../user/model';
+import type {Course} from '../course/model';
 
 // Update this if you add a property to the Review type!
 type ReviewResponse = {
-  _id: string;
-  student: string;
-  course: string;
-  content: string;
+  _id: string; // MongoDB assigns each object this ID on creation
+  student: User,
+  course: Course, 
+  term: string, 
+  instructor: string,
+  hours: number,
+  knowledge: string,
+  grade: string,
+  content: string,
+  difficulty: number,
+  overallRating: number,
   dateCreated: string;
 };
 
@@ -23,23 +32,20 @@ const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:
  * Transform a raw Review object from the database into an object
  * with all the information needed by the frontend
  *
- * @param {HydratedDocument<Review>} Review - A Review
+ * @param {HydratedDocument<Review>} review - A review
  * @returns {ReviewResponse} - The Review object formatted for the frontend
  */
-const constructReviewResponse = (Review: HydratedDocument<Review>): ReviewResponse => {
-  const reactionCopy: Review = {
-    ...Review.toObject({
+const constructReviewResponse = (review: HydratedDocument<Review>): ReviewResponse => {
+  const reviewCopy: Review = {
+    ...review.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
 
   return {
-    ...reactionCopy,
-    _id: reactionCopy._id.toString(),
-    student: reactionCopy.student.username,
-    course: reactionCopy.course,
-    content: reactionCopy.content,
-    dateCreated: formatDate(Review.dateCreated)
+    ...reviewCopy,
+    _id: reviewCopy._id.toString(),
+    dateCreated: formatDate(review.dateCreated)
   };
 };
 

@@ -1,60 +1,50 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import ReviewCollection from './collection';
+import CourseCollection from '../course/collection';
 import * as userValidator from '../user/middleware';
 import * as courseValidator from '../course/middleware';
+import * as enrollValidator from '../enroll/middleware';
 import * as reviewValidator from './middleware';
 import * as util from './util';
 
 const router = express.Router();
 
 /**
- * Get all the reviews
- *
- * @name GET /api/reviews
- *
- * @return {ReviewResponse[]} - A list of all the reviews sorted in descending
- *                      order by date modified
- */
-/**
- * Get reviews by course.
- *
- * @name GET /api/reviews?student=username
- *
- * @return {ReviewResponse[]} - An array of reviews created for a course
- * @throws {400} - If student is not given
- * @throws {404} - If no user has given student
- *
+ * Get reviews by course name
  */
 router.get(
-  '/',
-  async (req: Request, res: Response, next: NextFunction) => {
-    // Check if student query parameter was supplied
-    if (req.query.student !== undefined) {
-      next();
-      return;
-    }
-
-    const allReviews = await ReviewCollection.findAll();
-    const response = allReviews.map(util.constructReviewResponse);
-    res.status(200).json(response);
-  },
+  '/course/:name',
   [
-    courseValidator.isCourseExists, 
+    courseValidator.isCourseExistsParamName, 
   ],
-  async (req: Request, res: Response) => {
-    const courseReviews = await ReviewCollection.findAllByCourse(req.query.course as string);
+  async (req: Request, res: Response, next: NextFunction) => {
+    const courseReviews = await ReviewCollection.findAllByCourse(req.params.name as string);
     const response = courseReviews.map(util.constructReviewResponse);
     res.status(200).json(response);
   }
 );
 
 /**
- * Create a new Review.
+ * Get reviews by student with name `student`
+ */
+ router.get(
+  '/student/:student',
+  [
+    userValidator.isParamStudentExists, 
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    const studentReviews = await ReviewCollection.findAllByUsername(req.params.student as string);
+    const response = studentReviews.map(util.constructReviewResponse);
+    res.status(200).json(response);
+  }
+);
+
+/**
+ * Create a new Review in req.params.course
  *
- * @name POST /api/reviews
+ * @name POST /api/reviews/:course
  *
- * @param {string} content - The content of the Review
  * @return {ReviewResponse} - The created Review
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the Review content is empty or a stream of empty spaces
@@ -64,15 +54,17 @@ router.post(
   '/',
   [
     userValidator.isUserLoggedIn,
+    enrollValidator.isEnrollExists,
     reviewValidator.isValidReviewContent
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const Review = await ReviewCollection.addOne(userId, req.body.course, req.body.term, req.body.instructor, req.body.hours, req.body.knowledge, req.body.grade, req.body.content, req.body.difficulty, req.body.overallRating);
+    const course = await CourseCollection.findOneByName(req.params.course);
+    const review = await ReviewCollection.addOne(userId, course._id, req.body.term, req.body.instructor, req.body.hours, req.body.knowledge, req.body.grade, req.body.content, req.body.difficulty, req.body.overallRating);
 
     res.status(201).json({
-      message: 'Your Review was created successfully.',
-      Review: util.constructReviewResponse(Review)
+      message: 'Your review was created successfully.',
+      review: util.constructReviewResponse(review)
     });
   }
 );
@@ -95,7 +87,7 @@ router.delete(
     reviewValidator.isValidReviewModifier
   ],
   async (req: Request, res: Response) => {
-    await ReviewCollection.deleteOne(req.params.reactionId);
+    await ReviewCollection.deleteOne(req.params.reviewId);
     res.status(200).json({
       message: 'Your Review was deleted successfully.'
     });
@@ -124,10 +116,10 @@ router.patch(
     reviewValidator.isValidReviewContent
   ],
   async (req: Request, res: Response) => {
-    const Review = await ReviewCollection.updateOne(req.params.reactionId,req.body.content);
+    const review = await ReviewCollection.updateOne(req.params.reviewId, req.body.term, req.body.instructor, req.body.hours, req.body.knowledge, req.body.grade, req.body.content, req.body.difficulty, req.body.overallRating);
     res.status(200).json({
       message: 'Your Review was updated successfully.',
-      Review: util.constructReviewResponse(Review)
+      review: util.constructReviewResponse(review)
     });
   }
 );
