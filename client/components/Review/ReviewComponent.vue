@@ -6,6 +6,7 @@
     class="review"
   >
     <header>
+
       <section class="author-info">
         <h3 class="author">
           @{{ review.student.username }}
@@ -13,6 +14,32 @@
         <p><em>Similarity Score: TODO</em></p>
       </section>
       
+      <section class="author-term" v-if="review.term">Term: {{review.term}}</section>
+
+      <section class="author-instructor" v-if="review.instructor">Instructor: {{review.instructor}}</section>
+
+      <section class="author-hours" v-if="review.hours">Hours/Week: {{review.hours}}</section>
+
+      <section class="author-knowledge" v-if="review.knowledge">Previous Knowledge: {{review.knowledge}}</section>
+
+      <section class="author-grade" v-if="review.grade">Grade: {{review.grade}}</section>
+      
+    </header>
+    <textarea
+      v-if="editing"
+      class="content"
+      :value="draft"
+      @input="draft = $event.target.value"
+    />
+    <p
+      v-else
+      class="content"
+    >
+      {{ review.content }}
+    </p>
+    <section class="footer">
+      <p class="date">Posted at {{ review.dateCreated }}</p>
+      <!-- <i v-if="reaction.edited">(edited)</i> -->
       <div
         v-if="$store.state.username === review.student.username"
         class="actions"
@@ -39,23 +66,7 @@
           🗑️ Delete
         </button>
       </div>
-    </header>
-    <textarea
-      v-if="editing"
-      class="content"
-      :value="draft"
-      @input="draft = $event.target.value"
-    />
-    <p
-      v-else
-      class="content"
-    >
-      {{ review.content }}
-    </p>
-    <p class="info">
-      Posted at {{ review.dateCreated }}
-      <!-- <i v-if="reaction.edited">(edited)</i> -->
-    </p>
+    </section>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -195,5 +206,15 @@ header {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+}
+
+.footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.footer .date {
+  font-size: small;
 }
 </style>

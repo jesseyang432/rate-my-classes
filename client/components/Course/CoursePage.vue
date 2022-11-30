@@ -34,9 +34,12 @@
       </section>
 
       <section class="review-section">
-        <section v-if="getEnrollment(course.name)" course-review-enrolled>
+        <section v-if="getEnrollment(course.name)" viewer-review>
           <CourseReviewForm v-if="!getReview(course.name)" :course="course"/>
-          <ReviewComponent v-else :review="userReview"/>
+          <section v-else>
+            <h2>Your Review</h2>
+            <ReviewComponent :review="userReview"/>
+          </section>
         </section>
         
         <h2>Course Reviews</h2>
