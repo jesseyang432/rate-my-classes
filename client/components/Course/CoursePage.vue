@@ -61,6 +61,7 @@
         };
     },
     async mounted() {
+        this.$store.commit('refreshReviews');
         await this.getCourse();
         this.getEnrollment(this.course.name);
         this.loading = false;

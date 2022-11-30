@@ -12,7 +12,7 @@ import type {Course} from '../course/model';
 export type Review = {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     student: User,
-    course: Course, 
+    course: string, 
     term: string, 
     instructor: string,
     hours: number,
@@ -36,9 +36,8 @@ const ReviewSchema = new Schema<Review>({
     ref: 'User'
   },
   course: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Course'
+    type: String,
+    required: true
   },
   term: {
     type: String,

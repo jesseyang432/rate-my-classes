@@ -17,13 +17,13 @@ class ReviewCollection {
    * Add a Review to the collection
    *
    * @param {string} student - The id of the author of the Review
-   * @param {string} course - The id of the class of the Review
+   * @param {string} course - The name of the class of the Review
    * @param {string} content - The id of the content of the Review
    * @return {Promise<HydratedDocument<Review>>} - The newly created Review
    */
 
   static async addOne(student: Types.ObjectId | string, 
-    course: Types.ObjectId | string,  
+    course: string,  
     term: string, 
     instructor: string,
     hours: number,
@@ -48,7 +48,7 @@ class ReviewCollection {
       dateCreated: date,
     });
     await Review.save(); // Saves Review to MongoDB
-    return Review.populate('student course');
+    return Review.populate('student');
   }
 
   /**
@@ -58,7 +58,7 @@ class ReviewCollection {
    * @return {Promise<HydratedDocument<Review>> | Promise<null> } - The Review with the given freetId, if any
    */
   static async findOne(reviewId: Types.ObjectId | string): Promise<HydratedDocument<Review>> {
-    return ReviewModel.findOne({_id: reviewId}).populate('student course');
+    return ReviewModel.findOne({_id: reviewId}).populate('student');
   }
 
   /**
@@ -68,7 +68,7 @@ class ReviewCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Review>>> {
     // Retrieves reviews and sorts them from most to least recent
-    return ReviewModel.find({}).sort({dateModified: -1}).populate('student course');
+    return ReviewModel.find({}).sort({dateModified: -1}).populate('student');
   }
 
   /**
@@ -79,7 +79,7 @@ class ReviewCollection {
    */
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Review>>> {
     const student = await UserCollection.findOneByUsername(username);
-    return ReviewModel.find({student: student._id}).sort({dateModified: -1}).populate('student course');
+    return ReviewModel.find({student: student._id}).sort({dateModified: -1}).populate('student');
   }
 
   /**
@@ -89,8 +89,8 @@ class ReviewCollection {
    * @return {Promise<HydratedDocument<Review>[]>} - An array of all of the reviews
    */
    static async findAllByCourse(courseName: string): Promise<Array<HydratedDocument<Review>>> {
-    const course = await CourseCollection.findOneByName(courseName);
-    return ReviewModel.find({course: course._id}).sort({dateModified: -1}).populate('student course');
+    // const course = await CourseCollection.findOneByName(courseName);
+    return ReviewModel.find({course: courseName}).sort({dateModified: -1}).populate('student');
   }
 
 
@@ -120,7 +120,7 @@ class ReviewCollection {
     review.difficulty = difficulty;
     review.overallRating = overallRating;
     await review.save();
-    return review.populate('student course');
+    return review.populate('student');
   }
 
   /**

@@ -8,7 +8,7 @@ import type {Course} from '../course/model';
 type ReviewResponse = {
   _id: string; // MongoDB assigns each object this ID on creation
   student: User,
-  course: Course, 
+  course: string, 
   term: string, 
   instructor: string,
   hours: number,
