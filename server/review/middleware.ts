@@ -23,7 +23,9 @@ const isReviewExists = async (req: Request, res: Response, next: NextFunction) =
 /**
  * Checks if the content of the Review in req.body is valid, i.e not a stream of empty
  * spaces and not more than 400 characters
+ * Checks that overall rating is provided (must be not '*')
  * Other checks should be enforced by the frontend submitting the form
+ * 
  */
 const isValidReviewContent = (req: Request, res: Response, next: NextFunction) => {
   const content = req.body.content;
@@ -31,6 +33,13 @@ const isValidReviewContent = (req: Request, res: Response, next: NextFunction) =
   if (content.length > 400) {
     res.status(413).json({
       error: 'Review content must be no more than 400 characters.'
+    });
+    return;
+  }
+
+  if (req.body.overallRating === '*') {
+    res.status(400).json({
+      error: 'Overall rating must be provided to leave a review.'
     });
     return;
   }

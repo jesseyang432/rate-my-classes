@@ -35,6 +35,7 @@
 
       <section class="review-section">
         <CourseReviewForm v-if="getEnrollment(course.name)" :course="course"/>
+        <h2>Course Reviews</h2>
       </section>
     </section>
   </main>

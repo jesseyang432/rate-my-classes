@@ -11,6 +11,18 @@ import * as util from './util';
 const router = express.Router();
 
 /**
+ * Get all reviews
+ */
+ router.get(
+  '/',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const allReviews = await ReviewCollection.findAll();
+    const response = allReviews.map(util.constructReviewResponse);
+    res.status(200).json(response);
+  }
+);
+
+/**
  * Get reviews by course name
  */
 router.get(
@@ -51,7 +63,7 @@ router.get(
  * @throws {413} - If the Review content is more than 140 characters long
  */
 router.post(
-  '/',
+  '/:course?',
   [
     userValidator.isUserLoggedIn,
     enrollValidator.isEnrollExists,
@@ -60,7 +72,9 @@ router.post(
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const course = await CourseCollection.findOneByName(req.params.course);
-    const review = await ReviewCollection.addOne(userId, course._id, req.body.term, req.body.instructor, req.body.hours, req.body.knowledge, req.body.grade, req.body.content, req.body.difficulty, req.body.overallRating);
+    console.log(req.body.instructor);
+    console.log(req.body.instructor ?? '');
+    const review = await ReviewCollection.addOne(userId, course._id, req.body.term ?? '', req.body.instructor ?? '', req.body.hours ?? 0, req.body.knowledge ?? '', req.body.grade ?? '', req.body.content, req.body.difficulty === '*' ? 0 : req.body.difficulty, req.body.overallRating === '*' ? 0 : req.body.overallRating);
 
     res.status(201).json({
       message: 'Your review was created successfully.',

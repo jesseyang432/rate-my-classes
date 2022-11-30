@@ -113,7 +113,9 @@ export default {
       grade: null,
       content: '',
       difficulty: '*',
-      rating: '*'
+      rating: '*',
+      method: 'POST',
+      url: `/api/reviews/${this.course.name}`
     };
   },
   methods: {
@@ -129,14 +131,22 @@ export default {
         console.log(this.content);
         console.log(this.difficulty);
         console.log(this.rating);
-        return;
+        // return;
 
         const options = {
           method: this.method,
           headers: {'Content-Type': 'application/json'},
           credentials: 'same-origin' // Sends express-session credentials with request
         };
-        options.body = JSON.stringify(Object.fromEntries([['courseToEnroll', this.course], ['enrollmentType', this.joiningAs]]));
+        options.body = JSON.stringify(Object.fromEntries([
+            ['term', this.term],
+            ['instructor', this.instructor],
+            ['hours', this.hours],
+            ['knowledge', this.knowledge],
+            ['grade', this.grade],
+            ['content', this.content],
+            ['difficulty', this.difficulty],
+            ['overallRating', this.rating]]));
 
   
         try {
@@ -148,7 +158,7 @@ export default {
           }
 
           // Perform Callback
-          this.$store.commit('refreshEnrollments');
+          this.$store.commit('refreshReviews');
           this.modalOpen = false;
 
         } catch (e) {

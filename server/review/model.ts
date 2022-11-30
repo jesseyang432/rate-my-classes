@@ -42,11 +42,11 @@ const ReviewSchema = new Schema<Review>({
   },
   term: {
     type: String,
-    required: true
+    required: false
   },
   instructor: {
     type: String,
-    required: true
+    required: false
   },
   hours: {
     type: Number,
