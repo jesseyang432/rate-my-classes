@@ -177,7 +177,6 @@ section .scrollbox {
   align-items: center;
   margin: 30px;
   gap: 20px;
-
 }
 .top {
   flex-flow: row nowrap;
@@ -186,7 +185,8 @@ section .scrollbox {
   padding: 10px;
 }
 .info {
-    border: 1px solid #111;
+    /* border: 1px solid #111; */
+    background-color: #f2f2f2;
     border-radius: 16px;
     margin-left: 150px;
     padding: 20px;

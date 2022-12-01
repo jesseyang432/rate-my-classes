@@ -217,10 +217,12 @@ header {
 }
 
 .reaction {
-    border: 1px solid #111;
+    /* border: 2px solid #111; */
+    box-shadow: 5px 10px #f2f2f2;
+    background-color: white;
     font-family: 'Inter';
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     border-radius: 15px;
 }
 
