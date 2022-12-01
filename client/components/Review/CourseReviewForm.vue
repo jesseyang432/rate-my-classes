@@ -61,7 +61,7 @@
             
             <h3>Ratings</h3>
             <p>
-                <em>A '*' rating indicates that no rating has been provided (all ratings are optional)</em>
+                <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
             </p>
             <section class="course-ratings">
                 <div class="input-elem">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="input-elem">
                     <label for="rating">Overall Rating: <b>({{rating}})</b></label>
-                    <input type="range" v-model="rating" min="1" max="5">
+                    <input type="range" v-model="rating" min="1" max="5" required>
                 </div>
             </section>
             
@@ -113,7 +113,7 @@ export default {
       grade: null,
       content: '',
       difficulty: '*',
-      rating: '*',
+      rating: 3,
       method: 'POST',
       url: `/api/reviews/${this.course.name}`
     };

@@ -14,15 +14,15 @@
         <p><em>Similarity Score: TODO</em></p>
       </section>
       
-      <section class="author-term" v-if="review.term">Term: {{review.term}}</section>
+      <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
 
-      <section class="author-instructor" v-if="review.instructor">Instructor: {{review.instructor}}</section>
+      <section class="author-experience" v-if="review.instructor"><b>Instructor</b>: {{review.instructor}}</section>
 
-      <section class="author-hours" v-if="review.hours">Hours/Week: {{review.hours}}</section>
+      <section class="author-experience" v-if="review.hours"><b>Hours/Week</b>: {{review.hours}}</section>
 
-      <section class="author-knowledge" v-if="review.knowledge">Previous Knowledge: {{review.knowledge}}</section>
+      <section class="author-experience" v-if="review.knowledge"><b>Prior Knowledge</b>: {{review.knowledge}}</section>
 
-      <section class="author-grade" v-if="review.grade">Grade: {{review.grade}}</section>
+      <section class="author-experience" v-if="review.grade"><b>Grade</b>: {{review.grade}}</section>
       
     </header>
     <textarea
@@ -37,6 +37,12 @@
     >
       {{ review.content }}
     </p>
+
+    <section class="ratings-info">
+      <section class="rating" v-if="review.overallRating"><b>Overall Rating</b>: {{review.overallRating}}/5</section>
+
+      <section class="rating" v-if="review.difficulty"><b>Difficulty</b>: {{review.difficulty}}/5</section>
+    </section>
     <section class="footer">
       <p class="date">Posted at {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
@@ -185,8 +191,8 @@ export default {
 
 header {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  /* justify-content: space-between; */
 }
 
 .author-info {
@@ -202,10 +208,25 @@ header {
   margin: 0px;
   font-size: small;
 }
+
+.author-experience {
+  margin: 8px 40px;
+  font-size: smaller;
+}
 .review {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+}
+
+.ratings-info {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.rating {
+  margin: 8px 64px 8px 0px;
+  font-size: smaller;
 }
 
 .footer {
