@@ -6,7 +6,20 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm class = "form" />
+      <section class = 'top'>
+        <CreateReactionForm class = "form" />
+        <article class="info">
+          <div class="row">
+            <div>
+              <img src="./mitlogo.png" alt="MIT logo" width="200">
+            </div>
+            <div>
+              <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
+              <p> You can post your thoughts on classes, write full-reviews, and read what other students have published as well. Learn more about the different classes at MIT.</p>
+            </div>
+          </div>
+          </article>
+        </section>
     </section>
     <section v-else>
       <header>
@@ -99,5 +112,31 @@ section .scrollbox {
 
 .form {
   width: 500px;
+}
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
+  gap: 20px;
+
+}
+.top {
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.info {
+    border: 1px solid #111;
+    border-radius: 16px;
+    margin-left: 150px;
+    padding: 20px;
+    position: relative;
+    flex-direction: row;
+    right: 20px;
+    font-family: 'Inter';
+  
 }
 </style>
