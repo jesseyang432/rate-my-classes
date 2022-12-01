@@ -6,7 +6,22 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm class = "form" />
+      <section class="reaction-input">
+        <CreateReactionForm class = "form" />
+        <section class="reaction-info">
+          <section class="mit-logo">
+            <img src="../../public/mit-logo.png">
+          </section>
+          <p class="reaction-info-text">
+            Welcome to your peers’ class reaction page! Reactions are a means of short, immediate (&lt 140 characters) expression regarding how you feel about a course you're enrolled in.<br/><br/>
+
+            Simply choose your course using the dropdown menus, type in a message, and submit your honest feedback. <br/><br/>
+
+            Enjoy!
+          </p>
+        </section>
+      </section>
+      
     </section>
     <section v-else>
       <header>
@@ -67,7 +82,7 @@ export default {
   name: 'ReactionPage',
   components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
   mounted() {
-    this.$refs.getReactionsForm.submit();
+    // this.$refs.getReactionsForm.submit();
     this.$store.commit('refreshEnrollments');
   }
 };
@@ -77,6 +92,47 @@ export default {
 section {
   display: flex;
   flex-direction: column;
+}
+
+.reaction-input {
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'Inter';
+  font-weight: normal;
+}
+
+.mit-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.reaction-info {
+  margin-left: 96px;
+  width: 100%;
+  border: 1px solid #A9A9A9;
+  background-color: #F6F6F6;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+  font-size: smaller;
+}
+
+
+.reaction-info img {
+  width: 160px;
+  margin: 32px;
+}
+
+.reaction-info-text {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header, header > * {
