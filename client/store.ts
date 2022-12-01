@@ -11,7 +11,7 @@ const store = new Vuex.Store({
   state: {
     filter: null, // Username to filter shown reactions by (null = show all)
     reactions: [], // All reactions created in the app
-    reviews: [],
+    reviews: [], // All reviews created in the app
     courses: [], // All courses in the app
     enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
@@ -72,7 +72,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available reviews.
        */
-      const url = state.filter ? `/api/users/${state.filter}/reviews` : '/api/reviews';
+      const url = '/api/reviews';
       const res = await fetch(url).then(async r => r.json());
       state.reviews = res;
     },

@@ -1,13 +1,14 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
+import type {Course} from '../course/model';
 
 /**
- * This file defines the properties stored in a Reaction
+ * This file defines the properties stored in a Review
  * DO NOT implement operations here ---> use collection file
  */
 
-// Type definition for Reactions on the backend
+// Type definition for Reviews on the backend
 export type Review = {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     student: User,
@@ -15,7 +16,7 @@ export type Review = {
     term: string, 
     instructor: string,
     hours: number,
-    knowledge: number,
+    knowledge: string,
     grade: string,
     content: string,
     difficulty: number,
@@ -35,42 +36,42 @@ const ReviewSchema = new Schema<Review>({
     ref: 'User'
   },
   course: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   term: {
-    type: Schema.Types.String,
-    required: true
+    type: String,
+    required: false
   },
   instructor: {
-    type: Schema.Types.String,
-    required: true
+    type: String,
+    required: false
   },
   hours: {
-    type: Schema.Types.Number,
-    required: true
+    type: Number,
+    required: false
   },
   knowledge: {
-    type: Schema.Types.Number,
-    required: true
+    type: String,
+    required: false
   },
   grade: {
-    type: Schema.Types.String,
-    required: true
+    type: String,
+    required: false
   },
   content: {
-    type: Schema.Types.String,
-    required: true
+    type: String,
+    required: false
   },
   difficulty: {
-    type: Schema.Types.Number,
-    required: true
+    type: Number,
+    required: false
   },
   overallRating: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
-  // The date the reaction was created
+  // The date the review was created
   dateCreated: {
     type: Date,
     required: true

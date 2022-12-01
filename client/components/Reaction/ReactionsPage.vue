@@ -32,12 +32,12 @@
           </h2>
         </div>
         <div class="right">
-          <GetReactionsForm
+          <!-- <GetReactionsForm
             ref="getReactionsForm"
             value="author"
             placeholder="🔍 Filter by author (optional)"
             button="🔄 Get reactions"
-          />
+          /> -->
         </div>
       </header>
       <section

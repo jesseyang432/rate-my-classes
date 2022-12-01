@@ -1,16 +1,18 @@
 <template>
     <section>
-        <form v-if="!formExpanded">
+        <form v-if="!editing && !formExpanded">
             <h2>Course Review Form</h2>
             <div class="expand-button">
                 <button @click="() => {formExpanded = true;}">+</button>
             </div>
         </form>
         <form v-else @submit.prevent="submit">
-            <h2>Course Review Form</h2>
-            <div class="expand-button">
-                <button @click="() => {formExpanded = false;}">-</button>
-            </div>
+            <section v-if="!editing">
+                <h2>Course Review Form</h2>
+                <div class="expand-button">
+                    <button @click="() => {formExpanded = false;}">-</button>
+                </div>
+            </section>
             <section class="course-info">
                 <div class="input-elem">
                     <label for="term">Term Taken: </label>
@@ -60,6 +62,9 @@
 
             
             <h3>Ratings</h3>
+            <p>
+                <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
+            </p>
             <section class="course-ratings">
                 <div class="input-elem">
                     <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
@@ -67,7 +72,7 @@
                 </div>
                 <div class="input-elem">
                     <label for="rating">Overall Rating: <b>({{rating}})</b></label>
-                    <input type="range" v-model="rating" min="1" max="5">
+                    <input type="range" v-model="rating" min="1" max="5" required>
                 </div>
             </section>
             
@@ -77,11 +82,18 @@
             v-model="content"
             placeholder="Compose your review..."
             />
-            <p style="text-align: right;">
+            <p v-if="!editing" style="text-align: right;">
                 <button
                 type="submit"
                 >
                     Submit Review
+                </button>
+            </p>
+            <p v-else style="text-align: right;">
+                <button
+                type="submit"
+                >
+                    Edit Review
                 </button>
             </p>
         </form>
@@ -98,6 +110,14 @@ export default {
     course: {
       type: Object,
       required: true,
+    },
+    review: {
+      type: Object,
+      required: false,
+    },
+    editing: {
+      type: Boolean,
+      required: true,
     }
   },
   data() {
@@ -109,9 +129,21 @@ export default {
       knowledge: null,
       grade: null,
       content: '',
-      difficulty: 'Not Rated',
-      rating: 'Not Rated'
+      difficulty: '*',
+      rating: 3,
+      method: 'POST',
+      url: `/api/reviews/${this.course.name}`
     };
+  },
+  created() {
+    this.term = this.review.term ? this.review.term : null;
+    this.instructor = this.review.instructor ? this.review.instructor: null;
+    this.hours = this.review.hours ? this.review.hours : null;
+    this.knowledge = this.review.knowledge ? this.review.knowledge: null;
+    this.grade = this.review.grade ? this.review.grade : null;
+    this.content = this.review.content ? this.review.content : '';
+    this.difficulty = this.review.difficulty !== '*' ? this.review.difficulty : '*';
+    this.rating = this.review.overallRating;
   },
   methods: {
       async submit() {
@@ -126,14 +158,30 @@ export default {
         console.log(this.content);
         console.log(this.difficulty);
         console.log(this.rating);
-        return;
+        // return;
+
+        if (this.editing) {
+            this.method = 'PATCH';
+            this.url = `/api/reviews/${this.review._id}`;
+        } else {
+            this.method = 'POST';
+            this.url = `/api/reviews/${this.course.name}`;
+        }
 
         const options = {
           method: this.method,
           headers: {'Content-Type': 'application/json'},
           credentials: 'same-origin' // Sends express-session credentials with request
         };
-        options.body = JSON.stringify(Object.fromEntries([['courseToEnroll', this.course], ['enrollmentType', this.joiningAs]]));
+        options.body = JSON.stringify(Object.fromEntries([
+            ['term', this.term],
+            ['instructor', this.instructor],
+            ['hours', this.hours],
+            ['knowledge', this.knowledge],
+            ['grade', this.grade],
+            ['content', this.content],
+            ['difficulty', this.difficulty],
+            ['overallRating', this.rating]]));
 
   
         try {
@@ -145,8 +193,9 @@ export default {
           }
 
           // Perform Callback
-          this.$store.commit('refreshEnrollments');
-          this.modalOpen = false;
+          this.$store.commit('refreshReviews');
+          this.$emit('stopEditing');
+          this.formExpanded = false;
 
         } catch (e) {
         }
@@ -212,16 +261,20 @@ section {
 .course-info {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .course-ratings {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .course-ratings input {
     width: 200px;
+}
+
+.input-elem {
+    margin: 8px;
 }
 
 .input-elem label {

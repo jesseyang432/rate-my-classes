@@ -17,7 +17,7 @@ type ReactionResponse = {
  * @param {Date} date - A date object
  * @returns {string} - formatted date as string
  */
-const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:mm:ss a');
+const formatDate = (date: Date): string => moment(date).format('MMM DD');
 
 /**
  * Transform a raw Reaction object from the database into an object

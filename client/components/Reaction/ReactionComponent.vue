@@ -7,31 +7,37 @@
   >
     <header>
       <h3 class="author">
+        {{ reaction.course }}
+      </h3>
+    </header>
+    <header>
+      <h3 class="author">
         @{{ reaction.student }}
       </h3>
       <div
         v-if="$store.state.username === reaction.student"
         class="actions"
       >
-        <button
+        <button class="button"
           v-if="editing"
           @click="submitEdit"
         >
           ✅ Save changes
         </button>
-        <button
+        <button class="button"
           v-if="editing"
           @click="stopEditing"
         >
           🚫 Discard changes
         </button>
-        <button
+        <button class="button"
           v-if="!editing"
           @click="startEditing"
         >
           ✏️ Edit
         </button>
-        <button @click="deleteReaction">
+        <button class="button"
+        @click="deleteReaction">
           🗑️ Delete
         </button>
       </div>
@@ -49,7 +55,7 @@
       {{ reaction.content }}
     </p>
     <p class="info">
-      Posted at {{ reaction.dateCreated }}
+      {{ reaction.dateCreated }}
       <i v-if="reaction.edited">(edited)</i>
     </p>
     <section class="alerts">
@@ -78,7 +84,8 @@ export default {
     return {
       editing: false, // Whether or not this reaction is in edit mode
       draft: this.reaction.content, // Potentially-new content for this reaction
-      alerts: {} // Displays success/error messages encountered during reaction modification
+      alerts: {}, // Displays success/error messages encountered during reaction modification
+      courseTitle: this.reaction.course,
     };
   },
   methods: {
@@ -167,9 +174,41 @@ export default {
 </script>
 
 <style scoped>
+
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter';
+    font-weight: bold;
+  }
+.author {
+  font-size: 30px;
+}
+
+.info {
+  font-size: 13px;
+}
+
+.button {
+  background-color: white; /* Green */
+  border-radius: 5px;
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  margin: 5px
+}
+
 .reaction {
     border: 1px solid #111;
-    padding: 20px;
+    font-family: 'Inter';
+    padding: 10px 30px;
     position: relative;
+    /* background-color: lightgrey; */
+    margin-bottom: 10px;
+    border-radius: 15px;
 }
 </style>
