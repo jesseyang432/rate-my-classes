@@ -63,7 +63,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #A9A9A9;
 }
 
 .title {
