@@ -25,14 +25,7 @@
       <section class="author-experience" v-if="review.grade"><b>Grade</b>: {{review.grade}}</section>
       
     </header>
-    <textarea
-      v-if="editing"
-      class="content"
-      :value="draft"
-      @input="draft = $event.target.value"
-    />
     <p
-      v-else
       class="content"
     >
       {{ review.content }}
@@ -43,6 +36,9 @@
 
       <section class="rating" v-if="review.difficulty"><b>Difficulty</b>: {{review.difficulty}}/5</section>
     </section>
+
+    <CourseReviewForm v-if="editing" :course="course" :editing="true" :review="review" v-on:stopEditing="stopEditing()"/>
+
     <section class="footer">
       <p class="date">Posted at {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
@@ -50,12 +46,12 @@
         v-if="$store.state.username === review.student.username"
         class="actions"
       >
-        <button
+        <!-- <button
           v-if="editing"
           @click="submitEdit"
         >
           ✅ Save changes
-        </button>
+        </button> -->
         <button
           v-if="editing"
           @click="stopEditing"
@@ -86,11 +82,18 @@
 </template>
 
 <script>
+import CourseReviewForm from '@/components/Review/CourseReviewForm.vue';
+
 export default {
   name: 'ReviewComponent',
+  components: {CourseReviewForm},
   props: {
     // Data from the stored review
     review: {
+      type: Object,
+      required: true
+    },
+    course: {
       type: Object,
       required: true
     }
@@ -98,7 +101,6 @@ export default {
   data() {
     return {
       editing: false, // Whether or not this review is in edit mode
-      draft: this.review.content, // Potentially-new content for this review
       alerts: {} // Displays success/error messages encountered during review modification
     };
   },
@@ -108,14 +110,12 @@ export default {
        * Enables edit mode on this review.
        */
       this.editing = true; // Keeps track of if a review is being edited
-      this.draft = this.review.content; // The content of our current "draft" while being edited
     },
     stopEditing() {
       /**
        * Disables edit mode on this review.
        */
       this.editing = false;
-      this.draft = this.review.content;
     },
     deleteReview() {
       /**
