@@ -57,13 +57,13 @@ export default {
 
 <style scoped>
 nav {
-    padding: 1vw 2vw;
-    background-color: rgb(255, 255, 255);
+    padding: 3vw 2vw;
+    background-color: salmon;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
 }
 
 .title {
@@ -72,6 +72,7 @@ nav {
     font-weight: bold;
     font-size: 40px;
     line-height: 48px;
+    color: white;
 }
 
 .link {
@@ -79,6 +80,7 @@ nav {
   font-family: 'Inter';
   font-weight: normal;
   font-size: 24px;
+  color: white;
 }
 
 img {
