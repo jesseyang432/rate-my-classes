@@ -14,29 +14,31 @@
         <p><em>Similarity Score: TODO</em></p>
       </section>
       
-      <section class="author-term" v-if="review.term">Term: {{review.term}}</section>
+      <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
 
-      <section class="author-instructor" v-if="review.instructor">Instructor: {{review.instructor}}</section>
+      <section class="author-experience" v-if="review.instructor"><b>Instructor</b>: {{review.instructor}}</section>
 
-      <section class="author-hours" v-if="review.hours">Hours/Week: {{review.hours}}</section>
+      <section class="author-experience" v-if="review.hours"><b>Hours/Week</b>: {{review.hours}}</section>
 
-      <section class="author-knowledge" v-if="review.knowledge">Previous Knowledge: {{review.knowledge}}</section>
+      <section class="author-experience" v-if="review.knowledge"><b>Prior Knowledge</b>: {{review.knowledge}}</section>
 
-      <section class="author-grade" v-if="review.grade">Grade: {{review.grade}}</section>
+      <section class="author-experience" v-if="review.grade"><b>Grade</b>: {{review.grade}}</section>
       
     </header>
-    <textarea
-      v-if="editing"
-      class="content"
-      :value="draft"
-      @input="draft = $event.target.value"
-    />
     <p
-      v-else
       class="content"
     >
       {{ review.content }}
     </p>
+
+    <section class="ratings-info">
+      <section class="rating" v-if="review.overallRating"><b>Overall Rating</b>: {{review.overallRating}}/5</section>
+
+      <section class="rating" v-if="review.difficulty"><b>Difficulty</b>: {{review.difficulty}}/5</section>
+    </section>
+
+    <CourseReviewForm v-if="editing" :course="course" :editing="true" :review="review" v-on:stopEditing="stopEditing()"/>
+
     <section class="footer">
       <p class="date">Posted at {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
@@ -44,12 +46,12 @@
         v-if="$store.state.username === review.student.username"
         class="actions"
       >
-        <button
+        <!-- <button
           v-if="editing"
           @click="submitEdit"
         >
           ✅ Save changes
-        </button>
+        </button> -->
         <button
           v-if="editing"
           @click="stopEditing"
@@ -80,11 +82,18 @@
 </template>
 
 <script>
+import CourseReviewForm from '@/components/Review/CourseReviewForm.vue';
+
 export default {
   name: 'ReviewComponent',
+  components: {CourseReviewForm},
   props: {
     // Data from the stored review
     review: {
+      type: Object,
+      required: true
+    },
+    course: {
       type: Object,
       required: true
     }
@@ -92,7 +101,6 @@ export default {
   data() {
     return {
       editing: false, // Whether or not this review is in edit mode
-      draft: this.review.content, // Potentially-new content for this review
       alerts: {} // Displays success/error messages encountered during review modification
     };
   },
@@ -102,14 +110,12 @@ export default {
        * Enables edit mode on this review.
        */
       this.editing = true; // Keeps track of if a review is being edited
-      this.draft = this.review.content; // The content of our current "draft" while being edited
     },
     stopEditing() {
       /**
        * Disables edit mode on this review.
        */
       this.editing = false;
-      this.draft = this.review.content;
     },
     deleteReview() {
       /**
@@ -185,8 +191,8 @@ export default {
 
 header {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  /* justify-content: space-between; */
 }
 
 .author-info {
@@ -202,10 +208,25 @@ header {
   margin: 0px;
   font-size: small;
 }
+
+.author-experience {
+  margin: 8px 40px;
+  font-size: smaller;
+}
 .review {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+}
+
+.ratings-info {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.rating {
+  margin: 8px 64px 8px 0px;
+  font-size: smaller;
 }
 
 .footer {

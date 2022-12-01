@@ -35,16 +35,17 @@
 
       <section class="review-section">
         <section v-if="getEnrollment(course.name)" viewer-review>
-          <CourseReviewForm v-if="!getReview(course.name)" :course="course"/>
+          <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
             <h2>Your Review</h2>
-            <ReviewComponent :review="userReview"/>
+            <ReviewComponent :review="userReview" :course="course"/>
           </section>
         </section>
         
         <h2>Course Reviews</h2>
         <ReviewComponent v-for="review in $store.state.reviews"
           v-if="review.course === course.name && review.content"
+          :course="course"
           :key="review._id"
           :review="review"/>
       </section>
