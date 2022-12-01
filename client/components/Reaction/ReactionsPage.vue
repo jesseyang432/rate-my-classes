@@ -97,6 +97,7 @@ export default {
   components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
   mounted() {
     // this.$refs.getReactionsForm.submit();
+    this.$store.commit('refreshReactions');
     this.$store.commit('refreshEnrollments');
   }
 };

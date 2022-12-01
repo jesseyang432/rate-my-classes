@@ -64,7 +64,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available reactions.
        */
-      const url = state.filter ? `/api/users/${state.filter}/reactions` : '/api/reactions';
+      const url = '/api/reactions';
       const res = await fetch(url).then(async r => r.json());
       state.reactions = res;
     },

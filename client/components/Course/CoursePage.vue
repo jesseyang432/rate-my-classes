@@ -43,6 +43,11 @@
         </section>
         
         <h2>Course Reviews</h2>
+        <section class="review-explanation">
+          <em>
+            Reviews are a means of leaving feedback and ratings on courses you've taken. You can also leave ratings without writing a specific review.
+          </em>
+        </section>
         <ReviewComponent v-for="review in $store.state.reviews"
           v-if="review.course === course.name && review.content"
           :course="course"
@@ -140,6 +145,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+  }
+
+  .review-explanation {
+    margin: 0px 32px 16px 32px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
   }
   
   button {
