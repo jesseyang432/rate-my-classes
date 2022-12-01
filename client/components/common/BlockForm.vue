@@ -236,6 +236,7 @@ button {
   color: white;
   block-size: fit-content;
   width: fit-content;
+  cursor:pointer;
 }
 input {
   border: 0px;
