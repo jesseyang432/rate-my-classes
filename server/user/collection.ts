@@ -94,6 +94,16 @@ class UserCollection {
     const user = await UserModel.deleteOne({_id: userId});
     return user !== null;
   }
+
+
+/**
+   * Get All Users in DB .
+   *
+   * @return {Promise<Array<HydratedDocument<User>>> | Promise<null>} 
+   */
+ static async findAll(): Promise<Array<HydratedDocument<User>>> {
+  return UserModel.find({});
+  }
 }
 
 export default UserCollection;
