@@ -2,10 +2,15 @@
 
 <template>
   <main>
-
+    <section class="row">
+      <h2 v-if="$store.state.username">Hello @{{$store.state.username}}</h2> 
+      <router-link class = "button" to="/account">
+          Edit Profile
+      </router-link>
+    </section>
     <div class = "page" v-if="$store.state.username">
       <div class = "sideBar">
-        <h2>@{{ $store.state.username }}</h2>
+        <h2>Info</h2>
         <article class="info">
           <p><strong>Class Year: </strong>{{$store.state.profile.classYear}}</p>
           <p><strong>Major: </strong>{{$store.state.profile.major}}</p>
@@ -41,7 +46,7 @@
       </div>
 
       <div class = "content">
-        <h2>Enrolled Courses</h2>
+        <h2>Contributions</h2>
         <section v-if="$store.state.enrollments.length">
           <CourseComponent v-for="enrollment in $store.state.enrollments"
             :key="enrollment.toCourse.id"
@@ -51,12 +56,6 @@
         </section>
       </div>
       
-      
-      <div>
-        <router-link to="/account">
-          Account Settings
-        </router-link>
-      </div>
     </div>
   </main>
 </template>
@@ -145,6 +144,28 @@ section .scrollbox {
   font-family: 'Inter'; 
   margin-top: 10px;
   text-align: left;
+}
+
+.button {
+  background-color: salmon; /* Green */
+  border: 1px solid #111;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Inter';
+  /* font-size: 13px; */
+  /* margin: 5px */
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: 30px;
+  gap: 20px; */
 }
 
 </style>

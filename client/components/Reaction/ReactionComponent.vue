@@ -6,14 +6,13 @@
     class="reaction"
   >
     <header>
-      <h3 class="author">
+      <section class="course">
         {{ reaction.course }}
-      </h3>
+      </section>
     </header>
-    <header>
-      <h3 class="author">
+    <section class="reaction-content">
+      <section class="author">
         @{{ reaction.student }}
-      </h3>
       <div
         v-if="$store.state.username === reaction.student"
         class="actions"
@@ -41,7 +40,7 @@
           🗑️ Delete
         </button>
       </div>
-    </header>
+    </section>
     <textarea
       v-if="editing"
       class="content"
@@ -66,6 +65,7 @@
       >
         <p>{{ alert }}</p>
       </article>
+    </section>
     </section>
   </article>
 </template>
@@ -177,16 +177,30 @@ export default {
 
 header {
     display: flex;
+    background-color: #fcaca3;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+.author {
+    display: flex;
+    font-size: 20px;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     font-family: 'Inter';
     font-weight: bold;
   }
-.author {
+  
+.course {
   font-size: 30px;
+  padding: 20px;
+  color: white;
 }
-
 .info {
   font-size: 13px;
 }
@@ -203,12 +217,16 @@ header {
 }
 
 .reaction {
-    border: 1px solid #111;
+    /* border: 2px solid #111; */
+    box-shadow: 5px 10px #f2f2f2;
+    background-color: white;
     font-family: 'Inter';
-    padding: 10px 30px;
     position: relative;
-    /* background-color: lightgrey; */
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     border-radius: 15px;
+}
+
+.reaction-content {
+  margin: 10px 30px;
 }
 </style>

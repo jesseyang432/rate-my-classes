@@ -10,22 +10,22 @@
       </h1>
     </div>
     <div class="right">
-      <router-link to="/">
+      <router-link style="text-decoration: none;" to="/">
         <div class="link">
           Home
         </div>
       </router-link>
-      <router-link to="/courses">
+      <router-link style="text-decoration: none;"  to="/courses">
         <div class="link">
           Courses
         </div>
       </router-link>
-      <router-link v-if="$store.state.username" to="/profile">
-        <div @click = "setProfile" class="link">
+      <router-link style="text-decoration: none;"  v-if="$store.state.username" to="/profile">
+        <div @click = "setProfile" class="link2">
           Profile
         </div>
       </router-link>
-      <router-link
+      <router-link style="text-decoration: none;" 
         v-else
         to="/login"
       >
@@ -80,6 +80,17 @@ nav {
   font-family: 'Inter';
   font-weight: normal;
   font-size: 24px;
+  color: white;
+}
+
+.link2 {
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 24px;
+  font-weight: bold;
   color: white;
 }
 
