@@ -50,7 +50,8 @@ class ReactionCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Reaction>>> {
     // Retrieves reactions and sorts them from most to least recent
-    return ReactionModel.find({}).sort({dateModified: -1}).populate('student');
+    // return ReactionModel.find({}).sort({dateModified: -1}).populate('student');
+    return ReactionModel.find({}).populate('student');
   }
 
   /**
@@ -61,7 +62,8 @@ class ReactionCollection {
    */
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Reaction>>> {
     const student = await UserCollection.findOneByUsername(username);
-    return ReactionModel.find({student: student._id}).sort({dateModified: -1}).populate('student');
+    // return ReactionModel.find({student: student._id}).sort({dateModified: -1}).populate('student');
+    return ReactionModel.find({student: student._id}).populate('student');
   }
 
   /**
