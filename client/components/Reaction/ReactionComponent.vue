@@ -189,6 +189,7 @@ header {
     font-family: 'Inter';
     font-weight: bold;
     border-radius: 15px 15px 0px 0px;
+    height: 60px;
   }
 
 .author {
@@ -228,7 +229,7 @@ header {
     /* border: 2px solid #111; */
     font-size: small;
     width: 400px;
-    height: 240px;
+    height: 260px;
     box-shadow: 5px 10px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
@@ -241,7 +242,7 @@ header {
 .reaction-content {
   padding: 8px;
   margin: 10px 30px;
-  height: 75%;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
