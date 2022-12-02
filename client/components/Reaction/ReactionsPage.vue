@@ -71,6 +71,7 @@
       </header>
       <section
         v-if="$store.state.reactions.length"
+        class="reaction-display"
       >
         <ReactionComponent
           v-for="reaction in $store.state.reactions"
@@ -160,6 +161,12 @@ header, header > * {
 
 button {
     margin-right: 10px;
+}
+
+.reaction-display {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
 }
 
 section .scrollbox {

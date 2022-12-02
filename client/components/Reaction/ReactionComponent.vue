@@ -11,61 +11,66 @@
       </section>
     </header>
     <section class="reaction-content">
-      <section class="author">
-        @{{ reaction.student }}
-      <div
-        v-if="$store.state.username === reaction.student"
-        class="actions"
+      <section class="upper-reaction-content">
+        <section class="author">
+          @{{ reaction.student }}
+        <div
+          v-if="$store.state.username === reaction.student"
+          class="actions"
+        >
+          <button class="button"
+            v-if="editing"
+            @click="submitEdit"
+          >
+            ✅ Save changes
+          </button>
+          <button class="button"
+            v-if="editing"
+            @click="stopEditing"
+          >
+            🚫 Discard changes
+          </button>
+          <button class="button"
+            v-if="!editing"
+            @click="startEditing"
+          >
+            ✏️ Edit
+          </button>
+          <button class="button"
+          @click="deleteReaction">
+            🗑️ Delete
+          </button>
+        </div>
+      </section>
+      <textarea
+        v-if="editing"
+        class="content"
+        :value="draft"
+        @input="draft = $event.target.value"
+      />
+      <p
+        v-else
+        class="content"
       >
-        <button class="button"
-          v-if="editing"
-          @click="submitEdit"
-        >
-          ✅ Save changes
-        </button>
-        <button class="button"
-          v-if="editing"
-          @click="stopEditing"
-        >
-          🚫 Discard changes
-        </button>
-        <button class="button"
-          v-if="!editing"
-          @click="startEditing"
-        >
-          ✏️ Edit
-        </button>
-        <button class="button"
-        @click="deleteReaction">
-          🗑️ Delete
-        </button>
-      </div>
+        {{ reaction.content }}
+      </p>
     </section>
-    <textarea
-      v-if="editing"
-      class="content"
-      :value="draft"
-      @input="draft = $event.target.value"
-    />
-    <p
-      v-else
-      class="content"
-    >
-      {{ reaction.content }}
-    </p>
-    <p class="info">
-      {{ reaction.dateCreated }}
-      <i v-if="reaction.edited">(edited)</i>
-    </p>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
+    <section>
+      <p class="info">
+        {{ reaction.dateCreated }}
+        <i v-if="reaction.edited">(edited)</i>
+      </p>
+      <section class="alerts">
+        <article
+          v-for="(status, alert, index) in alerts"
+          :key="index"
+          :class="status"
+        >
+          <p>{{ alert }}</p>
+        </article>
+      </section>
     </section>
+    
     </section>
   </article>
 </template>
@@ -197,9 +202,12 @@ header {
   }
   
 .course {
-  font-size: 30px;
+  font-size: 16px;
   padding: 20px;
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .info {
   font-size: 13px;
@@ -218,15 +226,24 @@ header {
 
 .reaction {
     /* border: 2px solid #111; */
+    font-size: small;
+    width: 400px;
+    height: 240px;
     box-shadow: 5px 10px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
     position: relative;
-    margin-bottom: 25px;
+    margin: 32px 8px;
     border-radius: 15px;
+    overflow-wrap: break-word;
 }
 
 .reaction-content {
+  padding: 8px;
   margin: 10px 30px;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>
