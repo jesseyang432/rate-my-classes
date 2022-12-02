@@ -15,7 +15,7 @@
         <section class="author">
           @{{ reaction.student }}
         <div
-          v-if="$store.state.username === reaction.student"
+          v-if="$store.state.username === reaction.student && editable"
           class="actions"
         >
           <button class="button"
@@ -82,6 +82,11 @@ export default {
     // Data from the stored reaction
     reaction: {
       type: Object,
+      required: true
+    },
+    // Whether reaction is editable (not editable from profile)
+    editable: {
+      type: Boolean,
       required: true
     }
   },

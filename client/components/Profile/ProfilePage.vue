@@ -14,8 +14,8 @@
         <article class="info">
           <p><strong>Class Year: </strong>{{$store.state.profile.classYear}}</p>
           <p><strong>Major: </strong>{{$store.state.profile.major}}</p>
-          <p><strong>Revews: </strong></p>
-          <p><strong>Reactions: </strong></p>
+          <p><strong>Revews: </strong>{{reviews.length}}</p>
+          <p><strong>Reactions: </strong>{{reactions.length}}</p>
         </article>
         <article class="info">
           <p><strong>Current Courses: </strong></p>
@@ -47,11 +47,26 @@
 
       <div class = "content">
         <h2>Contributions</h2>
-        <section v-if="$store.state.enrollments.length">
-          <CourseComponent v-for="enrollment in $store.state.enrollments"
-            :key="enrollment.toCourse.id"
-            :course="enrollment.toCourse"
-            :enrolled="isEnrolled(enrollment.toCourse.name)"
+        <header class="contributions-tabs">
+          <button v-if="content === 'reviews'" class="selected-tab" @click="() => {content = 'reviews';}">Reviews</button>
+          <button v-else @click="() => {content = 'reviews';}">Reviews</button>
+          <button v-if="content === 'reactions'" class="selected-tab" @click="() => {content = 'reactions';}">Reactions</button>
+          <button v-else @click="() => {content = 'reactions';}">Reactions</button>
+        </header>
+
+        <section v-if="content === 'reviews'">
+          <ReviewComponent v-for="review in reviews"
+            :key="review._id"
+            :review="review"
+            :editable="false"
+          />
+        </section>
+
+        <section v-if="content === 'reactions'" class="reactions-display">
+          <ReactionComponent v-for="reaction in reactions"
+            :key="reaction._id"
+            :reaction="reaction"
+            :editable="false"
           />
         </section>
       </div>
@@ -62,14 +77,27 @@
 
 <script>
 import CourseComponent from '@/components/Course/CourseComponent.vue';
+import ReviewComponent from '@/components/Review/ReviewComponent.vue';
+import ReactionComponent from '@/components/Reaction/ReactionComponent.vue';
 import EnrollForm from '@/components/Enroll/EnrollForm.vue';
 
 export default {
   name: 'ProfilePage',
-  components: {CourseComponent, EnrollForm},
+  components: {CourseComponent, ReviewComponent, ReactionComponent, EnrollForm},
+  data() {
+    return {
+      content: 'reviews',
+      reviews: [],
+      reactions: [],
+    };
+  },
   mounted() {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
+  },
+  created() {
+    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$store.state.username);
+    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$store.state.username);
   },
   methods: {
     isEnrolled(course) {
@@ -130,6 +158,12 @@ section .scrollbox {
   right: 200px;
 }
 
+.content header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #status-button {
   border-radius: 8px;
   background-color: #e7e7e7;
@@ -168,4 +202,29 @@ section .scrollbox {
   gap: 20px; */
 }
 
+.contributions-tabs button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  font-family: 'Inter';
+  margin: 16px;
+  outline: none;
+}
+
+.contributions-tabs button:hover {
+  cursor: pointer;
+}
+
+.selected-tab {
+  font-weight: bold;
+  color: salmon;
+  text-underline-offset: 0.2em;
+  text-decoration: underline salmon;
+}
+
+.reactions-display {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
 </style>

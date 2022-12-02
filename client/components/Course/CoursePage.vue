@@ -38,7 +38,7 @@
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
             <h2>Your Review</h2>
-            <ReviewComponent :review="userReview" :course="course"/>
+            <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
         
@@ -52,7 +52,8 @@
           v-if="review.course === course.name && review.content"
           :course="course"
           :key="review._id"
-          :review="review"/>
+          :review="review"
+          :editable="true"/>
       </section>
     </section>
   </main>

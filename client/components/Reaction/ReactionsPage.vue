@@ -77,6 +77,7 @@
           v-for="reaction in $store.state.reactions"
           :key="reaction.id"
           :reaction="reaction"
+          :editable="true"
         />
       </section>
       <article

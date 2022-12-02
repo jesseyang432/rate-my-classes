@@ -5,8 +5,12 @@
   <article
     class="review"
   >
-    <header>
+    <!-- Display name of course if review always not editable, i.e. on profile page -->
+    <section class="course-name" v-if="!editable">
+      <h3>Review of {{ review.course }}</h3>
+    </section>
 
+    <header>
       <section class="author-info">
         <h3 class="author">
           @{{ review.student.username }}
@@ -43,7 +47,7 @@
       <p class="date">Posted at {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
       <div
-        v-if="$store.state.username === review.student.username"
+        v-if="$store.state.username === review.student.username && editable"
         class="actions"
       >
         <!-- <button
@@ -95,6 +99,10 @@ export default {
     },
     course: {
       type: Object,
+      required: false
+    },
+    editable: { // Whether the review should be editable -- make reviews not editable from profile page
+      type: Boolean,
       required: true
     }
   },
@@ -189,6 +197,16 @@ export default {
 
 <style scoped>
 
+.course-name {
+  margin-top: 0px;
+  color: salmon;
+  font-weight: bold;
+}
+
+.course-name h3 {
+  margin-top: 0px;
+}
+
 header {
   display: flex;
   flex-flow: row wrap;
@@ -217,6 +235,8 @@ header {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+    margin: 16px;
+    border-radius: 16px;
 }
 
 .ratings-info {
