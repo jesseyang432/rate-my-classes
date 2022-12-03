@@ -33,9 +33,9 @@ class EnrollCollection {
     /**
    * Update an enrollment with the new enrollment type
    */
-  static async updateOne(course: string, enrollmentType: string): Promise<HydratedDocument<Enroll>> {
+  static async updateOne(user: Types.ObjectId | string, course: string, enrollmentType: string): Promise<HydratedDocument<Enroll>> {
     const toCourse = await CourseCollection.findOneByName(course as string);
-    const enrollment = await EnrollModel.findOne({toCourse: toCourse._id});
+    const enrollment = await EnrollModel.findOne({fromStudent: user, toCourse: toCourse._id});
     enrollment.type = enrollmentType;
     await enrollment.save();
     return enrollment.populate('fromStudent toCourse');
