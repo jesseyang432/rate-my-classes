@@ -80,9 +80,10 @@ export default {
             throw new Error(res.error);
           }
 
-        // Perform Callback
-        this.$store.commit('refreshEnrollments');
-        this.modalOpen = false;
+            // Perform Callback
+            this.$store.commit('refreshEnrollments');
+            this.modalOpen = false;
+            this.$emit('updatingEnrollment');
 
         } catch (e) {
         }
@@ -102,24 +103,25 @@ export default {
             throw new Error(res.error);
           }
 
-        // Perform Callback
-        this.$store.commit('refreshEnrollments');
-        this.modalOpen = false;
+            // Perform Callback
+            this.$store.commit('refreshEnrollments');
+            this.modalOpen = false;
+            this.$emit('updatingEnrollment');
 
-        const similarity_options = {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          credentials: 'same-origin' // Sends express-session credentials with request
-        };
+            const similarity_options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'same-origin' // Sends express-session credentials with request
+            };
 
-        const similarity_r = await fetch('/api/similarities', similarity_options);
-        if (!similarity_r.ok) {
-        // If response is not okay, we throw an error and enter the catch block
-        const res = await similarity_r.json();
-        throw new Error(res.error);
-        }
+            const similarity_r = await fetch('/api/similarities', similarity_options);
+            if (!similarity_r.ok) {
+            // If response is not okay, we throw an error and enter the catch block
+            const res = await similarity_r.json();
+            throw new Error(res.error);
+            }
 
-        this.$store.commit('refreshSimilarities');
+            this.$store.commit('refreshSimilarities');
 
         } catch (e) {
         }

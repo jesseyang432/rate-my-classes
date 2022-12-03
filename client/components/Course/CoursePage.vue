@@ -83,6 +83,7 @@
     async mounted() {
         this.$store.commit('refreshSimilarities');
         this.$store.commit('refreshReviews');
+        this.$store.commit('refreshEnrollments');
         await this.getCourse();
         this.getEnrollment(this.course.name);
         this.loading = false;

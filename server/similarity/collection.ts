@@ -62,28 +62,30 @@ class SimilarityScoreCollection {
         (await allUsers).forEach( async user => {
             if (user._id !== student) {
                 const exists1 = await SimilarityScoreModel.findOne({student1: student, student2: user._id});
+                const score1 = await this.calculateScore(student, user._id);
                 if (!exists1) {
                     const SimScore1 = new SimilarityScoreModel({
                     student1: student,
                     student2: user._id,
-                    score: 50 // TODO: Calculate score                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                    score: score1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                     });
                     await SimScore1.save();
                 } else {
-                    exists1.score = 50; // TODO: Calculate score
+                    exists1.score = score1;
                     await exists1.save();
                 }  
 
                 const exists2 = await SimilarityScoreModel.findOne({student1: user._id, student2: student});
+                const score2 = await this.calculateScore(user._id, student);
                 if (!exists2) {
                     const SimScore2 = new SimilarityScoreModel({
                     student1: user._id,
                     student2: student,
-                    score: 50 // TODO: Calculate score                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                    score: score2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                     });
                     await SimScore2.save();
                 } else {
-                    exists2.score = 50; // TODO: Calculate score
+                    exists2.score = score2
                     await exists2.save();
                 }
             }
@@ -92,11 +94,11 @@ class SimilarityScoreCollection {
       }
     
     // calculate similarity score between 2 users. Currently simplified and asymmetric 
-    static async calculateScore(student1: Types.ObjectId | string, student2: Types.ObjectId | string): Promise<Number> {
-        const courses1 = await EnrollCollection.findAllbyStudent(student1); 
-        const courses2 = await EnrollCollection.findAllbyStudent(student2); 
+    static async calculateScore(student1: Types.ObjectId | string, student2: Types.ObjectId | string): Promise<number> {
+        const courses1 = (await EnrollCollection.findAllbyStudent(student1)).map((enrollment) => enrollment.toCourse._id.toString());
+        const courses2 = (await EnrollCollection.findAllbyStudent(student2)).map((enrollment) => enrollment.toCourse._id.toString());
         const commonCourses = courses1.filter(course => courses2.includes(course));
-        const score = 100*(commonCourses.length/courses1.length); 
+        const score = 50 + 50 * (commonCourses.length/(courses1.length + 1)); 
         return score; 
     }
      
