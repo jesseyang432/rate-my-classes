@@ -196,6 +196,7 @@ export default {
 
           // Perform Callback
           this.$store.commit('refreshReviews');
+          this.$store.commit('refreshSimilarities');
           this.$emit('stopEditing');
           this.formExpanded = false;
 

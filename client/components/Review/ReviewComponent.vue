@@ -185,6 +185,7 @@ export default {
 
         this.editing = false;
         this.$store.commit('refreshReviews');
+        this.$store.commit('refreshSimilarities');
 
         params.callback();
       } catch (e) {
