@@ -12,6 +12,7 @@ import {reactionRouter} from '../server/reaction/router';
 import {reviewRouter} from '../server/review/router';
 import {courseRouter} from '../server/course/router';
 import {enrollRouter} from '../server/enroll/router';
+import {similarityRouter} from '../server/similarity/router';
 import MongoStore from 'connect-mongo';
 
 // Load environmental variables
@@ -76,6 +77,7 @@ app.use('/api/reactions', reactionRouter);
 app.use('/api/reviews', reviewRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/enroll', enrollRouter);
+app.use('/api/similarities', similarityRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

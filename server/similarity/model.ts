@@ -11,16 +11,16 @@ import type {Course} from '../course/model';
 // Type definition for Enroll on the backend
 export type SimilarityScore = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  student1: String;
-  student2: String;
-  score: Number;
+  student1: Types.ObjectId;
+  student2: Types.ObjectId;
+  score: number;
 };
 
 export type PopulatedSimilarityScore = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   student1: User;
   student2: User;
-  score: Number;
+  score: number;
 }
 
 // Mongoose schema definition for interfacing with a MongoDB table
