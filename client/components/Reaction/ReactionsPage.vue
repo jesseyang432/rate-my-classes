@@ -6,7 +6,36 @@
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
-      <CreateReactionForm class = "form" />
+      <section class = 'top'>
+        <CreateReactionForm class = "form" />
+        <article class="info">
+          <div class="row">
+            <div>
+              <img src="./mitlogo.png" alt="MIT logo" width="200">
+            </div>
+            <div>
+              <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
+              <p> You can post your thoughts on classes, write full-reviews, and read what other students have published as well. Learn more about the different classes at MIT.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+      <!-- <section class="reaction-input">
+        <CreateReactionForm class = "form" />
+        <section class="reaction-info">
+          <section class="mit-logo">
+            <img src="../../public/mit-logo.png">
+          </section>
+          <p class="reaction-info-text">
+            Welcome to your peers’ class reaction page! Reactions are a means of short, immediate (&lt 140 characters) expression regarding how you feel about a course you're enrolled in.<br/><br/>
+
+            Simply choose your course using the dropdown menus, type in a message, and submit your honest feedback. <br/><br/>
+
+            Enjoy!
+          </p>
+        </section>
+      </section> -->
+      
     </section>
     <section v-else>
       <header>
@@ -42,11 +71,13 @@
       </header>
       <section
         v-if="$store.state.reactions.length"
+        class="reaction-display"
       >
         <ReactionComponent
           v-for="reaction in $store.state.reactions"
           :key="reaction.id"
           :reaction="reaction"
+          :editable="true"
         />
       </section>
       <article
@@ -67,7 +98,8 @@ export default {
   name: 'ReactionPage',
   components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
   mounted() {
-    this.$refs.getReactionsForm.submit();
+    // this.$refs.getReactionsForm.submit();
+    this.$store.commit('refreshReactions');
     this.$store.commit('refreshEnrollments');
   }
 };
@@ -77,6 +109,47 @@ export default {
 section {
   display: flex;
   flex-direction: column;
+}
+
+.reaction-input {
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'Inter';
+  font-weight: normal;
+}
+
+.mit-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.reaction-info {
+  margin-left: 96px;
+  width: 100%;
+  border: 1px solid #A9A9A9;
+  background-color: #F6F6F6;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+  font-size: smaller;
+}
+
+
+.reaction-info img {
+  width: 160px;
+  margin: 32px;
+}
+
+.reaction-info-text {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header, header > * {
@@ -91,6 +164,12 @@ button {
     margin-right: 10px;
 }
 
+.reaction-display {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
 section .scrollbox {
   flex: 1 0 50vh;
   padding: 3%;
@@ -99,5 +178,31 @@ section .scrollbox {
 
 .form {
   width: 500px;
+}
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
+  gap: 20px;
+}
+.top {
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.info {
+    /* border: 1px solid #111; */
+    background-color: #f2f2f2;
+    border-radius: 16px;
+    margin-left: 150px;
+    padding: 20px;
+    position: relative;
+    flex-direction: row;
+    right: 20px;
+    font-family: 'Inter';
+  
 }
 </style>

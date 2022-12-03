@@ -43,7 +43,8 @@ router.post(
     enrollValidator.isValidEnrollmentType,
   ],
   async (req: Request, res: Response) => {
-    const enrollment = await EnrollCollection.updateOne(req.params.course, req.body.enrollmentType);
+    console.log(req.body.enrollmentType);
+    const enrollment = await EnrollCollection.updateOne(req.session.userId, req.params.course, req.body.enrollmentType);
     res.status(200).json({
       message: 'Your enrollment was updated successfully.',
       enroll: util.constructEnrollResponse(enrollment)

@@ -26,7 +26,7 @@
             </h2>
           </div>
           <EnrollButton v-if="!getEnrollment(course.name)" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name" :enrollmentType="enrollment ? enrollment.type : 'current'"/>
+          <EnrollStatus v-else :course="course.name" :enrollmentType="getEnrollment(course.name) ? enrollment.type : 'current'"/>
         </header>
         <p>
           {{ course.description }}
@@ -38,16 +38,22 @@
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
             <h2>Your Review</h2>
-            <ReviewComponent :review="userReview" :course="course"/>
+            <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
         
         <h2>Course Reviews</h2>
+        <section class="review-explanation">
+          <em>
+            Reviews are a means of leaving feedback and ratings on courses you've taken. You can also leave ratings without writing a specific review.
+          </em>
+        </section>
         <ReviewComponent v-for="review in $store.state.reviews"
           v-if="review.course === course.name && review.content"
           :course="course"
           :key="review._id"
-          :review="review"/>
+          :review="review"
+          :editable="true"/>
       </section>
     </section>
   </main>
@@ -75,7 +81,9 @@
         };
     },
     async mounted() {
+        this.$store.commit('refreshSimilarities');
         this.$store.commit('refreshReviews');
+        this.$store.commit('refreshEnrollments');
         await this.getCourse();
         this.getEnrollment(this.course.name);
         this.loading = false;
@@ -140,6 +148,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+  }
+
+  .review-explanation {
+    margin: 0px 32px 16px 32px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
   }
   
   button {

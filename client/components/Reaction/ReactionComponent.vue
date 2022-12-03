@@ -6,66 +6,73 @@
     class="reaction"
   >
     <header>
-      <h3 class="author">
-        {{ reaction.course }}
-      </h3>
+      <section class="course">
+        <router-link :to="`course/${reaction.course}`">
+          {{ reaction.course }}
+        </router-link>
+      </section>
     </header>
-    <header>
-      <h3 class="author">
-        @{{ reaction.student }}
-      </h3>
-      <div
-        v-if="$store.state.username === reaction.student"
-        class="actions"
+    <section class="reaction-content">
+      <section class="upper-reaction-content">
+        <section class="author">
+          @{{ reaction.student }}
+        <div
+          v-if="$store.state.username === reaction.student && editable"
+          class="actions"
+        >
+          <button class="button"
+            v-if="editing"
+            @click="submitEdit"
+          >
+            ✅ Save changes
+          </button>
+          <button class="button"
+            v-if="editing"
+            @click="stopEditing"
+          >
+            🚫 Discard changes
+          </button>
+          <button class="button"
+            v-if="!editing"
+            @click="startEditing"
+          >
+            ✏️ Edit
+          </button>
+          <button class="button"
+          @click="deleteReaction">
+            🗑️ Delete
+          </button>
+        </div>
+      </section>
+      <textarea
+        v-if="editing"
+        class="content"
+        :value="draft"
+        @input="draft = $event.target.value"
+      />
+      <p
+        v-else
+        class="content"
       >
-        <button class="button"
-          v-if="editing"
-          @click="submitEdit"
+        {{ reaction.content }}
+      </p>
+    </section>
+    <section>
+      <p class="info">
+        {{ reaction.dateCreated }}
+        <i v-if="reaction.edited">(edited)</i>
+      </p>
+      <section class="alerts">
+        <article
+          v-for="(status, alert, index) in alerts"
+          :key="index"
+          :class="status"
         >
-          ✅ Save changes
-        </button>
-        <button class="button"
-          v-if="editing"
-          @click="stopEditing"
-        >
-          🚫 Discard changes
-        </button>
-        <button class="button"
-          v-if="!editing"
-          @click="startEditing"
-        >
-          ✏️ Edit
-        </button>
-        <button class="button"
-        @click="deleteReaction">
-          🗑️ Delete
-        </button>
-      </div>
-    </header>
-    <textarea
-      v-if="editing"
-      class="content"
-      :value="draft"
-      @input="draft = $event.target.value"
-    />
-    <p
-      v-else
-      class="content"
-    >
-      {{ reaction.content }}
-    </p>
-    <p class="info">
-      {{ reaction.dateCreated }}
-      <i v-if="reaction.edited">(edited)</i>
-    </p>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
+          <p>{{ alert }}</p>
+        </article>
+      </section>
+    </section>
+    
     </section>
   </article>
 </template>
@@ -77,6 +84,11 @@ export default {
     // Data from the stored reaction
     reaction: {
       type: Object,
+      required: true
+    },
+    // Whether reaction is editable (not editable from profile)
+    editable: {
+      type: Boolean,
       required: true
     }
   },
@@ -177,16 +189,39 @@ export default {
 
 header {
     display: flex;
+    background-color: #fcaca3;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 60px;
+  }
+
+.author {
+    display: flex;
+    font-size: 20px;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     font-family: 'Inter';
     font-weight: bold;
   }
-.author {
-  font-size: 30px;
+  
+.course {
+  font-size: 16px;
+  padding: 20px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.course a {
+  text-decoration: none;
+  color: white;
+}
 .info {
   font-size: 13px;
 }
@@ -203,12 +238,25 @@ header {
 }
 
 .reaction {
-    border: 1px solid #111;
+    /* border: 2px solid #111; */
+    font-size: small;
+    width: 400px;
+    height: 260px;
+    box-shadow: 5px 10px #f2f2f2;
+    background-color: white;
     font-family: 'Inter';
-    padding: 10px 30px;
     position: relative;
-    /* background-color: lightgrey; */
-    margin-bottom: 10px;
+    margin: 32px 8px;
     border-radius: 15px;
+    overflow-wrap: break-word;
+}
+
+.reaction-content {
+  padding: 8px;
+  margin: 10px 30px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

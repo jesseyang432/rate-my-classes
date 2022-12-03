@@ -5,13 +5,18 @@
   <article
     class="review"
   >
-    <header>
+    <!-- Display name of course if review always not editable, i.e. on profile page -->
+    <section class="course-name" v-if="!editable">
+      <h3>Review of {{ review.course }}</h3>
+    </section>
 
+    <header>
       <section class="author-info">
         <h3 class="author">
           @{{ review.student.username }}
         </h3>
-        <p><em>Similarity Score: TODO</em></p>
+        <p>{{$store.state.similarities.size}}</p>
+        <p><em>Similarity Score: {{ $store.state.similarities[review.student.username] ?? 'N/A'}}</em></p>
       </section>
       
       <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
@@ -43,7 +48,7 @@
       <p class="date">Posted at {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
       <div
-        v-if="$store.state.username === review.student.username"
+        v-if="$store.state.username === review.student.username && editable"
         class="actions"
       >
         <!-- <button
@@ -95,6 +100,10 @@ export default {
     },
     course: {
       type: Object,
+      required: false
+    },
+    editable: { // Whether the review should be editable -- make reviews not editable from profile page
+      type: Boolean,
       required: true
     }
   },
@@ -176,6 +185,7 @@ export default {
 
         this.editing = false;
         this.$store.commit('refreshReviews');
+        this.$store.commit('refreshSimilarities');
 
         params.callback();
       } catch (e) {
@@ -188,6 +198,16 @@ export default {
 </script>
 
 <style scoped>
+
+.course-name {
+  margin-top: 0px;
+  color: salmon;
+  font-weight: bold;
+}
+
+.course-name h3 {
+  margin-top: 0px;
+}
 
 header {
   display: flex;
@@ -205,18 +225,20 @@ header {
 }
 
 .author-info p {
-  margin: 0px;
+  margin: 0px 40px 8px 0px;
   font-size: small;
 }
 
 .author-experience {
-  margin: 8px 40px;
+  margin: 8px 40px 8px 0px;
   font-size: smaller;
 }
 .review {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+    margin: 16px;
+    border-radius: 16px;
 }
 
 .ratings-info {

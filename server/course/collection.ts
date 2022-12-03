@@ -1,6 +1,7 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Course} from './model';
 import CourseModel from './model';
+import EnrollModel from '../enroll/model';
 
 /**
  * This files contains a class that has the functionality to explore courses

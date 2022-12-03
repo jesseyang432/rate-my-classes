@@ -1,7 +1,7 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import ReviewCollection from './collection';
-import CourseCollection from '../course/collection';
+import SimilarityScoreCollection from '../similarity/collection';
 import * as userValidator from '../user/middleware';
 import * as courseValidator from '../course/middleware';
 import * as enrollValidator from '../enroll/middleware';
@@ -72,13 +72,15 @@ router.post(
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     // const course = await CourseCollection.findOneByName(req.params.course);
-    console.log(req.body.instructor);
-    console.log(req.body.instructor ?? '');
+    // console.log(req.body.instructor);
+    // console.log(req.body.instructor ?? '');
     const review = await ReviewCollection.addOne(userId, req.params.course, req.body.term ?? '', req.body.instructor ?? '', req.body.hours ?? 0, req.body.knowledge ?? '', req.body.grade ?? '', req.body.content, req.body.difficulty === '*' ? 0 : req.body.difficulty, req.body.overallRating === '*' ? 0 : req.body.overallRating);
+    const updated = await SimilarityScoreCollection.updatePairings(req.session.userId);
 
     res.status(201).json({
       message: 'Your review was created successfully.',
-      review: util.constructReviewResponse(review)
+      review: util.constructReviewResponse(review),
+      similarityUpdated: updated 
     });
   }
 );
@@ -102,8 +104,10 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     await ReviewCollection.deleteOne(req.params.reviewId);
+    const updated = await SimilarityScoreCollection.updatePairings(req.session.userId);
     res.status(200).json({
-      message: 'Your Review was deleted successfully.'
+      message: 'Your Review was deleted successfully.',
+      similarityUpdated: updated,
     });
   }
 );
@@ -131,9 +135,11 @@ router.patch(
   ],
   async (req: Request, res: Response) => {
     const review = await ReviewCollection.updateOne(req.params.reviewId, req.body.term, req.body.instructor, req.body.hours, req.body.knowledge, req.body.grade, req.body.content, req.body.difficulty, req.body.overallRating);
+    const updated = await SimilarityScoreCollection.updatePairings(req.session.userId);
     res.status(200).json({
       message: 'Your Review was updated successfully.',
-      review: util.constructReviewResponse(review)
+      review: util.constructReviewResponse(review),
+      similarityUpdated: updated
     });
   }
 );
