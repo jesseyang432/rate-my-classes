@@ -17,7 +17,7 @@ class SimilarityScoreCollection {
     static async newPairings(student: Types.ObjectId | string): Promise<boolean> {
         const allUsers = UserCollection.findAll(); 
         (await allUsers).forEach( async user => {
-            if (user._id !== student) {
+            if (user._id.toString() !== student.toString()) {
                 const exists1 = await SimilarityScoreModel.findOne({student1: student, student2: user._id});
                 if (!exists1) {
                     const SimScore1 = new SimilarityScoreModel({
@@ -60,7 +60,7 @@ class SimilarityScoreCollection {
         // return true; 
         const allUsers = UserCollection.findAll(); 
         (await allUsers).forEach( async user => {
-            if (user._id !== student) {
+            if (user._id.toString() !== student.toString()) {
                 const exists1 = await SimilarityScoreModel.findOne({student1: student, student2: user._id});
                 const score1 = await this.calculateScore(student, user._id);
                 if (!exists1) {

@@ -83,7 +83,7 @@ export default {
             // Perform Callback
             this.$store.commit('refreshEnrollments');
             this.modalOpen = false;
-            this.$emit('updatingEnrollment');
+            // this.$emit('updatingEnrollment');
 
         } catch (e) {
         }
@@ -106,7 +106,7 @@ export default {
             // Perform Callback
             this.$store.commit('refreshEnrollments');
             this.modalOpen = false;
-            this.$emit('updatingEnrollment');
+            // this.$emit('updatingEnrollment');
 
             const similarity_options = {
             method: 'POST',

@@ -105,7 +105,7 @@ const store = new Vuex.Store({
           Vue.set(state.similarities, similarity.student2.username, similarity.score);
         }
       });
-      // console.log(state.similarities);
+      console.log(state.similarities);
     }
   },
   // Store data across page refreshes, only discard on browser close

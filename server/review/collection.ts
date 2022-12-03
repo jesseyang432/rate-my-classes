@@ -68,7 +68,7 @@ class ReviewCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Review>>> {
     // Retrieves reviews and sorts them from most to least recent
-    return ReviewModel.find({}).sort({dateModified: -1}).populate('student');
+    return ReviewModel.find({}).sort({dateCreated: -1}).populate('student');
   }
 
   /**
@@ -79,7 +79,7 @@ class ReviewCollection {
    */
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Review>>> {
     const student = await UserCollection.findOneByUsername(username);
-    return ReviewModel.find({student: student._id}).sort({dateModified: -1}).populate('student');
+    return ReviewModel.find({student: student._id}).sort({dateCreated: -1}).populate('student');
   }
 
   /**
@@ -90,7 +90,7 @@ class ReviewCollection {
    */
    static async findAllByCourse(courseName: string): Promise<Array<HydratedDocument<Review>>> {
     // const course = await CourseCollection.findOneByName(courseName);
-    return ReviewModel.find({course: courseName}).sort({dateModified: -1}).populate('student');
+    return ReviewModel.find({course: courseName}).sort({dateCreated: -1}).populate('student');
   }
 
 
