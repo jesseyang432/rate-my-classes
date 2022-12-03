@@ -15,6 +15,8 @@ const store = new Vuex.Store({
     courses: [], // All courses in the app
     enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
+    similarities: Object.create(null), // map of username to similarity score
+    gettingSimilarities: false, // Whether similarities are currently being updated
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
   },
@@ -91,6 +93,19 @@ const store = new Vuex.Store({
       const url = '/api/enroll';
       const res = await fetch(url).then(async r => r.json());
       state.enrollments = res;
+    },
+    async refreshSimilarities(state) {
+      /**
+       * Request the server for all similarity scores involving the user
+       */
+      const url = '/api/similarities'
+      const res = await fetch(url).then(async r => r.json());
+      res.forEach((similarity) => {
+        if (similarity.student1.username === state.username) {
+          Vue.set(state.similarities, similarity.student2.username, similarity.score);
+        }
+      });
+      console.log(state.similarities);
     }
   },
   // Store data across page refreshes, only discard on browser close

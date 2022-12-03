@@ -15,7 +15,8 @@
         <h3 class="author">
           @{{ review.student.username }}
         </h3>
-        <p><em>Similarity Score: TODO</em></p>
+        <p>{{$store.state.similarities.size}}</p>
+        <p><em>Similarity Score: {{ $store.state.similarities[review.student.username] ?? 'N/A'}}</em></p>
       </section>
       
       <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>

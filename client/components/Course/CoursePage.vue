@@ -81,6 +81,7 @@
         };
     },
     async mounted() {
+        this.$store.commit('refreshSimilarities');
         this.$store.commit('refreshReviews');
         await this.getCourse();
         this.getEnrollment(this.course.name);

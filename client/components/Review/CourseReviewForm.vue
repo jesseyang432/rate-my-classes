@@ -136,14 +136,16 @@ export default {
     };
   },
   created() {
-    this.term = this.review.term ? this.review.term : null;
-    this.instructor = this.review.instructor ? this.review.instructor: null;
-    this.hours = this.review.hours ? this.review.hours : null;
-    this.knowledge = this.review.knowledge ? this.review.knowledge: null;
-    this.grade = this.review.grade ? this.review.grade : null;
-    this.content = this.review.content ? this.review.content : '';
-    this.difficulty = this.review.difficulty !== '*' ? this.review.difficulty : '*';
-    this.rating = this.review.overallRating;
+    if (this.review) {
+        this.term = this.review.term ? this.review.term : null;
+        this.instructor = this.review.instructor ? this.review.instructor: null;
+        this.hours = this.review.hours ? this.review.hours : null;
+        this.knowledge = this.review.knowledge ? this.review.knowledge: null;
+        this.grade = this.review.grade ? this.review.grade : null;
+        this.content = this.review.content ? this.review.content : '';
+        this.difficulty = this.review.difficulty !== '*' ? this.review.difficulty : '*';
+        this.rating = this.review.overallRating;
+    }
   },
   methods: {
       async submit() {
