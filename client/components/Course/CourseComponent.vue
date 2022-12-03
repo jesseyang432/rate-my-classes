@@ -7,7 +7,7 @@
           {{ course.name }}
         </h3>
         <span style="text-align:right;" class="header-interact"> 
-          <span class="greenDot"></span> &nbsp; 4.2
+          <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
           <!-- <EnrollButton v-if="!enrolled" :course="course.name"/>
           <EnrollStatus v-else :course="course.name"/> -->
         </span>

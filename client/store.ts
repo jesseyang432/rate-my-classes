@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     username: null, // Username of the logged in user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
+    ratings: null,
   },
   mutations: {
     alert(state, payload) {
@@ -91,6 +92,20 @@ const store = new Vuex.Store({
       const url = '/api/enroll';
       const res = await fetch(url).then(async r => r.json());
       state.enrollments = res;
+    },
+    
+    async refreshAvgRatingsByClass(state) {
+      state.ratings = new Map();
+      for (const course of state.courses){
+        const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+        var total = 0;
+        for (const rating of ratings){
+          total += rating.overallRating;
+        }
+        state.ratings[course.name] = (total * 1.0) / ratings.length;
+        console.log(course.name);
+        console.log(state.ratings[course.name]);
+      }
     }
   },
   // Store data across page refreshes, only discard on browser close
