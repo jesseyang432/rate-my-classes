@@ -7,7 +7,9 @@
   >
     <header>
       <section class="course">
-        {{ reaction.course }}
+        <router-link :to="`course/${reaction.course}`">
+          {{ reaction.course }}
+        </router-link>
       </section>
     </header>
     <section class="reaction-content">
@@ -214,6 +216,11 @@ header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.course a {
+  text-decoration: none;
+  color: white;
 }
 .info {
   font-size: 13px;

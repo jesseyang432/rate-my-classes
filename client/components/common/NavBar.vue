@@ -5,9 +5,11 @@
 <template>
   <nav>
     <div class="left">
-      <h1 class="title">
-        Rate My Classes
-      </h1>
+      <router-link style="text-decoration: none;" to="/">
+        <h1 class="title">
+          Rate My Classes
+        </h1>
+      </router-link>
     </div>
     <div class="right">
       <router-link style="text-decoration: none;" to="/">

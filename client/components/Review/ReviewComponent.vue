@@ -224,12 +224,12 @@ header {
 }
 
 .author-info p {
-  margin: 0px;
+  margin: 0px 40px 8px 0px;
   font-size: small;
 }
 
 .author-experience {
-  margin: 8px 40px;
+  margin: 8px 40px 8px 0px;
   font-size: smaller;
 }
 .review {
