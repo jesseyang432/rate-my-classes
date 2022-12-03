@@ -26,7 +26,7 @@
             </h2>
           </div>
           <EnrollButton v-if="!getEnrollment(course.name)" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name" :enrollmentType="enrollment ? enrollment.type : 'current'"/>
+          <EnrollStatus v-else :course="course.name" :enrollmentType="getEnrollment(course.name) ? enrollment.type : 'current'"/>
         </header>
         <p>
           {{ course.description }}
