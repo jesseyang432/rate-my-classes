@@ -15,7 +15,7 @@
           v-if="field.id === 'content'"
           :name="field.id"
           :value="field.value"
-          placeholder= "Compose your message..."
+          :placeholder= "placeholderText"
           @input="field.value = $event.target.value"
         />
         <select required v-else-if="field.id === 'classYear'"
@@ -85,7 +85,7 @@
     </article>
     <p style="text-align: right;">
       <button type="submit">
-        {{ title }}
+        {{ buttonText }}
       </button>
     </p>
     <section class="alerts">
@@ -116,7 +116,8 @@ export default {
       refreshReactions: false, // Whether or not stored reactions should be updated after form submission
       refreshReviews: false, // Whether or not stored reviews should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
-      callback: null // Function to run after successful form submission
+      callback: null, // Function to run after successful form submission
+      placeholderText: "Compose your message..."
     };
   },
   methods: {

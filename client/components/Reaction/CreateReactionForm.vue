@@ -16,6 +16,8 @@ export default {
         {id: 'content', label: 'Content', value: '', placeholder: 'ree'}
       ],
       title: 'Create a Reaction',
+      placeholderText: "What's happening in class?",
+      buttonText: 'Post',
       refreshReactions: true,
       callback: () => {
         const message = 'Successfully created a reaction!';

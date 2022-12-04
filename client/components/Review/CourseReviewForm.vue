@@ -76,11 +76,11 @@
                 </div>
             </section>
             
-            <h3>Leave a Review</h3>
+            <h3>Additional Comments</h3>
             <textarea
             :name="content"
             v-model="content"
-            placeholder="Compose your review..."
+            placeholder="Anything else to share?"
             />
             <p v-if="!editing" style="text-align: right;">
                 <button

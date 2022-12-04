@@ -15,7 +15,7 @@
             </div>
             <div>
               <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
-              <p> You can post your thoughts on classes, write full-reviews, and read what other students have published as well. Learn more about the different classes at MIT.</p>
+              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. Thiss is your chance to learn more about the different classes at MIT.</p>
             </div>
           </div>
         </article>
@@ -52,23 +52,20 @@
     </section>
     <section>
       <header>
-        <div class="left">
+        <div>
           <h2>
-            Viewing all reactions
+            Reactions
             <span v-if="$store.state.filter">
               by @{{ $store.state.filter }}
             </span>
-          </h2>
-        </div>
-        <div class="right">
-          <!-- <GetReactionsForm
-            ref="getReactionsForm"
-            value="author"
-            placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get reactions"
-          /> -->
+          </h2>     
         </div>
       </header>
+        <section class="review-explanation">
+          <em>
+            Reactions are short informal comments from students.
+          </em>
+        </section>
       <section
         v-if="$store.state.reactions.length"
         class="reaction-display"
@@ -179,6 +176,13 @@ section .scrollbox {
 .form {
   width: 500px;
 }
+
+.review-explanation {
+    margin: 0px 32px 16px 32px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
 .row {
   display: flex;
   flex-flow: row nowrap;
