@@ -80,7 +80,10 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 
       Round(rating){
         // rounds number to 1 decimal place
-        return (Math.round(rating*10)/10); 
+        if (rating){
+          return ((Math.round(rating*10))/10); 
+        }
+        return rating; 
       }
     }
   };

@@ -16,7 +16,7 @@
           @{{ review.student.username }}
         </h3>
         <p>{{$store.state.similarities.size}}</p>
-        <p><em>Similarity Score: {{ $store.state.similarities[review.student.username] ?? 'N/A'}}</em></p>
+        <p><em> Similarity Score: {{ (Round($store.state.similarities[review.student.username])).toString() ?? 'N/A'}}</em></p>
       </section>
       
       <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
@@ -140,6 +140,10 @@ export default {
       };
       this.request(params);
     },
+    Round(score){
+        // rounds number to 1 decimal place
+        return (Math.round(score*10)/10); 
+      },
     submitEdit() {
       /**
        * Updates review to have the submitted draft content.
@@ -239,6 +243,7 @@ header {
     position: relative;
     margin: 16px;
     border-radius: 16px;
+    font-family: "Inter"; 
 }
 
 .ratings-info {

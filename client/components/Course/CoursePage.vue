@@ -37,7 +37,9 @@
         <section v-if="getEnrollment(course.name)" viewer-review>
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
-            <h2>Your Review</h2>
+            <header>
+              <h2>Your Review</h2>
+            </header>
             <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
