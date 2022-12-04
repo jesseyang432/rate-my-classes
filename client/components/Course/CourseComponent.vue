@@ -5,7 +5,9 @@
     <header>
       <section class="title">
         <router-link style="text-decoration: none;" :to="`course/${course.name}`">
-          {{ course.name }}
+          <div class="link">
+            {{ course.name }}
+        </div>
         </router-link>
       </section>
       <span style="text-align:right;" class="header-interact"> 
@@ -120,6 +122,14 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 
     border-radius: 15px;
     overflow-wrap: break-word;
+}
+
+.link {
+  margin: 0 5px;
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 24px;
+  color: white;
 }
 
   .description {
