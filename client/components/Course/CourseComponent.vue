@@ -11,7 +11,7 @@
         </router-link>
       </section>
       <span style="text-align:right;" class="header-interact"> 
-          <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
+          <span class="greenDot"></span> &nbsp; {{Round($store.state.ratings[course.name])}}
         </span>
     </header>
     
@@ -76,6 +76,11 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
         ); 
         const output = firstPart + "..."; 
         return output; 
+      },
+
+      Round(rating){
+        // rounds number to 1 decimal place
+        return (Math.round(rating*10)/10)
       }
     }
   };
@@ -89,6 +94,8 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-family: "Inter";
+      
   }
 
   /* header {

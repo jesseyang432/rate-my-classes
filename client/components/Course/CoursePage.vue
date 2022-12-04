@@ -41,8 +41,9 @@
             <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
-        
-        <h2>Course Reviews</h2>
+          <header>
+            <h2>Course Reviews</h2>
+          </header>
         <section class="review-explanation">
           <em>
             Reviews are a means of leaving feedback and ratings on courses you've taken. You can also leave ratings without writing a specific review.
@@ -148,6 +149,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-family: "Inter";
+      font-weight: bold;
+  }
+
+  p {
+    font-family: "Inter";
+    font-weight: normal;
   }
 
   .review-explanation {

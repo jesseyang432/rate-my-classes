@@ -1,14 +1,18 @@
 <template>
     <section>
         <form v-if="!editing && !formExpanded">
-            <h2>Course Review Form</h2>
+            <header>
+                <h2>Course Review Form</h2>
+            </header>
             <div class="expand-button">
                 <button @click="() => {formExpanded = true;}">+</button>
             </div>
         </form>
         <form v-else @submit.prevent="submit">
             <section v-if="!editing">
-                <h2>Course Review Form</h2>
+                <header>
+                    <h2>Course Review Form</h2>
+                </header>
                 <div class="expand-button">
                     <button @click="() => {formExpanded = false;}">-</button>
                 </div>
@@ -60,8 +64,9 @@
                 </div>
             </section>
 
-            
-            <h3>Ratings</h3>
+            <header>
+                <h3>Ratings</h3>
+            </header>
             <p>
                 <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
             </p>
@@ -75,8 +80,9 @@
                     <input type="range" v-model="rating" min="1" max="5" required>
                 </div>
             </section>
-            
-            <h3>Additional Comments</h3>
+            <header>
+                <h3>Additional Comments</h3>
+            </header>
             <textarea
             :name="content"
             v-model="content"
@@ -222,6 +228,16 @@ form {
 
 form h2 {
     margin-top: 8px;
+}
+
+header {
+    font-family: "Inter";
+    font-weight: bold;
+}
+
+label {
+    font-family: "Inter";
+    font-weight: normal;
 }
 
 textarea {
