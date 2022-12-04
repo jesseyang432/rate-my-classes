@@ -110,7 +110,9 @@ button {
   padding: 8px;
   outline: none;
   font-size: large;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter';
+  width: 50%;
+  border-radius: 10px;
 }
 
 .course-page-link {

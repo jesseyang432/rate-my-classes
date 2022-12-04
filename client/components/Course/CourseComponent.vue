@@ -80,7 +80,7 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 
       Round(rating){
         // rounds number to 1 decimal place
-        return (Math.round(rating*10)/10)
+        return (Math.round(rating*10)/10); 
       }
     }
   };
@@ -121,13 +121,15 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 
   .course {
     font-size: small;
-    box-shadow: 5px 10px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
     /* position: relative; */
     margin: 32px 32px;
 
     border-radius: 15px;
+    border-color: #A9A9A9; 
+    border-width: 1px; 
+    border-style: solid; 
     overflow-wrap: break-word;
 }
 
@@ -154,12 +156,14 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    margin: 20px; 
+    font-size: 15px;
   }
 
 .greenDot {
   height: 15px;
   width: 15px;
-  margin: 20px;
+  margin: 10px;
   background-color: rgb(20, 131, 24);
   border-radius: 50%;
   display: inline-block;
