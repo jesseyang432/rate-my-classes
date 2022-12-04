@@ -12,6 +12,7 @@
         </router-link>
       </section>
     </header>
+    
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">

@@ -2,16 +2,26 @@
     <article
       class="course"
     >
-      <header>
-        <h3 class="name">
+    <header>
+      <section class="title">
+        <router-link style="text-decoration: none;" :to="`course/${course.name}`">
+          {{ course.name }}
+        </router-link>
+      </section>
+      <span style="text-align:right;" class="header-interact"> 
+          <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
+        </span>
+    </header>
+    
+    <!-- <header>
+        <h3 class="course">
           {{ course.name }}
         </h3>
         <span style="text-align:right;" class="header-interact"> 
           <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
-          <!-- <EnrollButton v-if="!enrolled" :course="course.name"/>
-          <EnrollStatus v-else :course="course.name"/> -->
         </span>
-      </header>
+    </header> -->
+
       <p class="description">
         {{compress(course.description)}}
       </p>
@@ -70,25 +80,57 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
   </script>
   
   <style scoped>
-  .course {
-      border: 1px solid #111;
-      border-radius: 16px;
+  .title {
+      font-size: 25px;
       padding: 20px;
-      position: relative;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
   }
 
-  header {
+  /* header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     font-family: 'Inter';
     font-weight: bold;
+  } */
+
+  header {
+    display: flex;
+    background-color: #fcaca3;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 60px;
   }
+
+  .course {
+    font-size: small;
+    box-shadow: 5px 10px #f2f2f2;
+    background-color: white;
+    font-family: 'Inter';
+    /* position: relative; */
+    margin: 32px 32px;
+
+    border-radius: 15px;
+    overflow-wrap: break-word;
+}
 
   .description {
     font-family: 'Inter';
+    font-size: 15px;
     font-weight: normal;
+    padding: 30px;
+    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     
   }
   .header-interact {
@@ -100,6 +142,7 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
 .greenDot {
   height: 15px;
   width: 15px;
+  margin: 20px;
   background-color: rgb(20, 131, 24);
   border-radius: 50%;
   display: inline-block;
