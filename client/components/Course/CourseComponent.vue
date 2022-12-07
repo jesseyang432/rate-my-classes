@@ -129,11 +129,12 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     font-family: 'Inter';
     /* position: relative; */
     margin: 32px 32px;
+    box-shadow: 7px 7px #f2f2f2;
 
     border-radius: 15px;
     border-color: #A9A9A9; 
     border-width: 1px; 
-    border-style: solid; 
+    /*border-style: solid; */
     overflow-wrap: break-word;
 }
 

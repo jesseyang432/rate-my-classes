@@ -249,7 +249,7 @@ img {
     font-size: small;
     width: 400px;
     height: 260px;
-    box-shadow: 5px 10px #f2f2f2;
+    box-shadow: 7px 7px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
     position: relative;

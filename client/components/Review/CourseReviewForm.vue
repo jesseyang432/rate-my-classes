@@ -1,12 +1,14 @@
 <template>
     <section>
         <form v-if="!editing && !formExpanded">
-            <header>
-                <h2>Course Review Form</h2>
-            </header>
-            <div class="expand-button">
-                <button @click="() => {formExpanded = true;}">+</button>
-            </div>
+            <section>
+                <header>
+                    <h2>Course Review Form</h2>
+                </header>
+                <div class="expand-button">
+                    <button @click="() => {formExpanded = true;}">Start</button>
+                </div>
+            </section>
         </form>
         <form v-else @submit.prevent="submit">
             <section v-if="!editing">
@@ -14,7 +16,7 @@
                     <h2>Course Review Form</h2>
                 </header>
                 <div class="expand-button">
-                    <button @click="() => {formExpanded = false;}">-</button>
+                    <button @click="() => {formExpanded = false;}">Cancel</button>
                 </div>
             </section>
             <section class="course-info">
@@ -274,7 +276,7 @@ section {
 }
 
 .expand-button button {
-    width: 36px;
+    width: 70px;
 }
 
 .course-info {
