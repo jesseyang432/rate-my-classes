@@ -14,6 +14,7 @@ export type Reaction = {
   content: string;
   course: string;
   dateCreated: Date;
+  numLikes: number; 
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -38,6 +39,10 @@ const ReactionSchema = new Schema<Reaction>({
   // The date the reaction was created
   dateCreated: {
     type: Date,
+    required: true
+  },
+  numLikes: {
+    type: Number,
     required: true
   },
 });

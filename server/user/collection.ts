@@ -1,4 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
+import ReactionCollection from 'server/reaction/collection';
+import LikeCollection from 'server/like/collection';
 import type {User} from './model';
 import UserModel from './model';
 
@@ -92,6 +94,8 @@ class UserCollection {
    */
   static async deleteOne(userId: Types.ObjectId | string): Promise<boolean> {
     const user = await UserModel.deleteOne({_id: userId});
+    const likes = await LikeCollection.deleteMany(userId);
+    const freets = await ReactionCollection.deleteMany(userId);
     return user !== null;
   }
 

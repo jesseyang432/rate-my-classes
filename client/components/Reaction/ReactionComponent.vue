@@ -12,12 +12,14 @@
         </router-link>
       </section>
     </header>
-    
+
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">
-          @{{ reaction.student }}
-        <div
+          <div class="vertical-align">
+          <img src="./daniel.png" width="50px"> @{{ reaction.student }}
+          </div>
+          <div
           v-if="$store.state.username === reaction.student && editable"
           class="actions"
         >
@@ -209,6 +211,10 @@ header {
     font-family: 'Inter';
     font-weight: bold;
   }
+
+img {
+  border-radius: 50%;
+}
   
 .course {
   font-size: 16px;
