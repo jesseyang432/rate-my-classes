@@ -176,7 +176,8 @@ section .scrollbox {
 
 #status-button {
   border-radius: 8px;
-  background-color: #e7e7e7;
+  /* background-color: #e7e7e7; */
+  background-color: #fcaca3;
   color: black;
   border: none;
   padding: 8px 12px;

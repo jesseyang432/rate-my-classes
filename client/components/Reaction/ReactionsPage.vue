@@ -15,7 +15,7 @@
             </div>
             <div>
               <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
-              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. Thiss is your chance to learn more about the different classes at MIT.</p>
+              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. This is your chance to learn more about the different classes at MIT.</p>
             </div>
           </div>
         </article>
@@ -54,7 +54,7 @@
       <header>
         <div>
           <h2>
-            Reactions
+            Recent Activity
             <span v-if="$store.state.filter">
               by @{{ $store.state.filter }}
             </span>
@@ -198,8 +198,9 @@ section .scrollbox {
   padding: 10px;
 }
 .info {
-    /* border: 1px solid #111; */
     background-color: #f2f2f2;
+    color: white;
+    max-width: 700px;
     border-radius: 16px;
     margin-left: 150px;
     padding: 20px;
@@ -207,6 +208,10 @@ section .scrollbox {
     flex-direction: row;
     right: 20px;
     font-family: 'Inter';
+    background-image: url("mit.jpeg");
+    background-position: center;
+    background-color: grey;
+    background-blend-mode: multiply;
   
 }
 </style>

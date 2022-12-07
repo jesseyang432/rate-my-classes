@@ -25,6 +25,7 @@
     </header> -->
 
       <p class="description">
+        Description:
         {{compress(course.description)}}
       </p>
       <section class="alerts">
