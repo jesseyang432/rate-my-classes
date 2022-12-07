@@ -29,6 +29,7 @@
           <EnrollStatus v-else :course="course.name" :enrollmentType="getEnrollment(course.name) ? enrollment.type : 'current'"/>
         </header>
         <p>
+          Course description:
           {{ course.description }}
         </p>
       </section>
