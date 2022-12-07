@@ -19,6 +19,7 @@ export default {
         {id: 'major', label: 'Major', value: ''},
       ],
       title: 'Create account',
+      buttonText: 'Create account',
       callback: () => {
         const message = 'Successfully created an account!';
         this.$router.push({name: 'Reactions'});
