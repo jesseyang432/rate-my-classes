@@ -1,6 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
-import ReactionCollection from 'server/reaction/collection';
-import LikeCollection from 'server/like/collection';
+import ReactionCollection from '../reaction/collection';
+import LikeCollection from '../like/collection';
 import type {User} from './model';
 import UserModel from './model';
 

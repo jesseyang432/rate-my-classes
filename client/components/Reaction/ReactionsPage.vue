@@ -98,6 +98,7 @@ export default {
     // this.$refs.getReactionsForm.submit();
     this.$store.commit('refreshReactions');
     this.$store.commit('refreshEnrollments');
+    this.$store.commit('refreshLikes');
   }
 };
 </script>

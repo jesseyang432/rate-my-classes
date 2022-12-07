@@ -27,13 +27,13 @@
             v-if="editing"
             @click="submitEdit"
           >
-            ✅ Save changes
+            ✅ Save
           </button>
           <button class="button"
             v-if="editing"
             @click="stopEditing"
           >
-            🚫 Discard changes
+            🚫 Discard
           </button>
           <button class="button"
             v-if="!editing"
@@ -46,6 +46,9 @@
             🗑️ Delete
           </button>
         </div>
+        <LikeComponent
+        :reaction="reaction"
+        />
       </section>
       <textarea
         v-if="editing"
@@ -81,8 +84,10 @@
 </template>
 
 <script>
+import LikeComponent from '@/components/Like/LikeComponent.vue';
 export default {
   name: 'ReactionComponent',
+  components: {LikeComponent},
   props: {
     // Data from the stored reaction
     reaction: {

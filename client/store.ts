@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
     ratings: null,
+    likes: [], //all of the likes
   },
   mutations: {
     alert(state, payload) {
@@ -37,6 +38,13 @@ const store = new Vuex.Store({
        * @param username - new username to set
        */
       state.username = username;
+    },
+    setLikes(state, likes) {
+      /**
+       * Update the stored likes to the provided likes.
+       * @param likes - likes to store
+       */
+      state.likes = likes;
     },
    async updateProfile(state, username) {
       state.profile = await fetch(`/api/users/${username}`).then(async r => r.json());
@@ -63,6 +71,18 @@ const store = new Vuex.Store({
        */
       state.reviews = reviews;
     },
+    updateLikes(state, postId){ //NEW
+      const newFreets = state.reactions.map(reaction => {
+        if (reaction._id === postId) {
+          return {
+            ...reaction,
+            numLikes: reaction.numLikes + 1,
+          };
+        }
+        return reaction;
+      })
+      state.reactions = newFreets;
+    },
     async refreshReactions(state) {
       /**
        * Request the server for the currently available reactions.
@@ -86,6 +106,14 @@ const store = new Vuex.Store({
       const url = '/api/courses';
       const res = await fetch(url).then(async r => r.json());
       state.courses = res;
+    },
+    async refreshLikes(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = '/api/likes';
+      const res = await fetch(url).then(async r => r.json());
+      state.likes = res;
     },
     async refreshEnrollments(state) {
       /**
@@ -121,8 +149,9 @@ const store = new Vuex.Store({
         console.log(course.name);
         console.log(state.ratings[course.name]);
       }
-    }
+    },
   },
+
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
 });

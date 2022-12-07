@@ -1,7 +1,7 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
-import type {Freet} from '../freet/model';
+import type {Reaction} from '../reaction/model';
 
 /**
  * This file defines the properties stored in a User
@@ -11,7 +11,7 @@ import type {Freet} from '../freet/model';
 // Type definition for User on the backend
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  post: Freet
+  post: Reaction
   userPost: User;
   userLike: User;
   dateLiked: Date;
@@ -24,7 +24,7 @@ const LikeSchema  = new Schema<Like>({
   post: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Freet'
+    ref: 'Reaction'
   },
   userPost: {
     type: Schema.Types.ObjectId,
