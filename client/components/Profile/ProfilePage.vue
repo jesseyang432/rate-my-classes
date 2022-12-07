@@ -17,6 +17,15 @@
           <p><strong>Revews: </strong>{{reviews.length}}</p>
           <p><strong>Reactions: </strong>{{reactions.length}}</p>
         </article>
+        <br>
+        <div v-if = "!$store.state.enrollments.length">
+            <em>Go to
+              <router-link class="course-page-link" :to="`courses`">
+              <strong>Courses</strong>
+              </router-link>
+              to add courses
+            </em>
+        </div>
         <article class="info">
           <p><strong>Current Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'current'" :key="enrollment.toCourse.id" id = "status-button">
