@@ -16,6 +16,7 @@ export default {
         {id: 'username', label: 'Username', value: ''}
       ],
       title: 'Change username',
+      buttonText: 'Change username',
       callback: () => {
         const message = 'Successfully changed username!';
         this.$set(this.alerts, message, 'success');

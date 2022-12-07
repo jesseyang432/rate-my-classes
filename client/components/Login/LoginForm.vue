@@ -16,6 +16,7 @@ export default {
         {id: 'username', label: 'Username', value: ''},
         {id: 'password', label: 'Password', value: ''},
       ],
+      buttonText: 'Sign in',
       title: 'Sign in',
       callback: () => {
         this.$router.push({name: 'Reactions'});
