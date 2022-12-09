@@ -69,19 +69,22 @@
             <header>
                 <h3>Ratings</h3>
             </header>
-            <p>
+            <!-- <p>
                 <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
-            </p>
+            </p> -->
             <section class="course-ratings">
                 <div class="input-elem">
                     <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
-                    <input type="range" v-model="difficulty" min="1" max="5">
+                    <RatingComponent :stars="difficulty" v-on:rate="(stars) => this.difficulty = stars"/>
+                    <!-- <input type="range" v-model="difficulty" min="1" max="5"> -->
                 </div>
                 <div class="input-elem">
-                    <label for="rating">Overall Rating: <b>({{rating}})</b></label>
-                    <input type="range" v-model="rating" min="1" max="5" required>
+                    <label for="rating">Overall Rating<em>*</em>: <b>({{rating}})</b></label>
+                    <RatingComponent :stars="rating" v-on:rate="(stars) => this.rating = stars"/>
+                    <!-- <input type="range" v-model="rating" min="1" max="5" required> -->
                 </div>
             </section>
+            <p class="required-ratings"><em>*Required</em></p>
             <header>
                 <h3>Additional Comments</h3>
             </header>
@@ -111,9 +114,11 @@
 
 <script>
 // import ButtonForm from '@/components/common/ButtonForm.vue';
+import RatingComponent from '@/components/Review/RatingComponent.vue';
 
 export default {
   name: 'CourseReviewForm',
+  components: {RatingComponent},
   props: {
     course: {
       type: Object,
@@ -137,8 +142,9 @@ export default {
       knowledge: null,
       grade: null,
       content: '',
-      difficulty: '*',
+      difficulty: 0,
       rating: 3,
+      maxRating: 5,
       method: 'POST',
       url: `/api/reviews/${this.course.name}`
     };
@@ -210,6 +216,17 @@ export default {
 
         } catch (e) {
         }
+      },
+      rate(star) {
+        console.log(star);
+        console.log(this.maxStars);
+        console.log(star <= this.maxStars);
+        console.log(star >= 0);
+        if (star <= this.maxRating && star >= 0) {
+            console.log('huh');
+            this.stars = this.stars === star ? star - 1 : star;
+            console.log(this.stars);
+        }
       }
     }
 
@@ -254,6 +271,23 @@ textarea {
   margin-top: 10px;
 }
 
+.rating:hover .star {
+    color: #f3d23e;
+}
+
+.star {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.star:hover~.star:not(.active) {
+    color: inherit;
+}
+
+.active {
+    color: #f3d23e;
+}
+
 button {
   border: 0px;
   border-radius: 10px;
@@ -295,6 +329,9 @@ section {
 }
 
 .input-elem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin: 8px;
 }
 
@@ -310,6 +347,10 @@ section {
 .input-elem select {
     margin: 4px;
     outline: none;
+}
+
+.required-ratings {
+    font-size: small;
 }
 
 textarea {
