@@ -2,13 +2,13 @@
 
 <template>
   <main>
-    <section class="row">
-      <h2 v-if="$store.state.username">Hello @{{$store.state.username}}</h2> 
+    <section v-if="$store.state.username === $route.params.username" class="row">
+      <h2>Hello @{{$store.state.username}}</h2> 
       <router-link class = "button" to="/account">
           Edit Profile
       </router-link>
     </section>
-    <div class = "page" v-if="$store.state.username">
+    <div class = "page">
       <div class = "sideBar">
         <h2>Info</h2>
         <article class="info">
@@ -18,7 +18,7 @@
           <p><strong>Reactions: </strong>{{reactions.length}}</p>
         </article>
         <br>
-        <div v-if = "!$store.state.enrollments.length">
+        <div v-if = "!$store.state.enrollments.length && isUser">
             <em>Go to
               <router-link class="course-page-link" :to="`courses`">
               <strong>Courses</strong>
@@ -26,7 +26,7 @@
               to add courses
             </em>
         </div>
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Current Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'current'" :key="enrollment.toCourse.id" id = "status-button">
             <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
@@ -35,7 +35,7 @@
           </div>
         </article>
 
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Interest Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'interested'" :key="enrollment.toCourse.id" id = "status-button">
             <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
@@ -44,7 +44,7 @@
           </div>
         </article>
 
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Previous Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'previous'" :key="enrollment.toCourse.id" id = "status-button">
             <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
@@ -104,14 +104,27 @@ export default {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
     this.$store.commit('refreshAvgRatingsByClass');
+    // this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$route.params.username);
+    // this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$route.params.username);
   },
   created() {
-    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$store.state.username);
-    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$store.state.username);
+    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$route.params.username);
+    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$route.params.username);
+  },
+  computed: {
+    isUser() {
+      return this.$store.state.username === this.$route.params.username;
+    }
   },
   methods: {
     isEnrolled(course) {
       return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
+    }
+  },
+  watch: {
+    '$route.params.username'(newUsername, oldUsername) {
+      this.reviews = this.$store.state.reviews.filter((review) => review.student.username === newUsername);
+      this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === newUsername);
     }
   }
 };

@@ -13,9 +13,10 @@
     <header>
       <section class="author-info">
         <h3 class="author">
-          @{{ review.student.username }}
+          <router-link :to="`/profile/${review.student.username}`">
+            @{{ review.student.username }}
+          </router-link>
         </h3>
-        <p>{{$store.state.similarities.size}}</p>
         <p><em> Similarity Score: {{ (Round($store.state.similarities[review.student.username])).toString() ?? 'N/A'}}</em></p>
       </section>
       
@@ -226,6 +227,11 @@ header {
 
 .author {
   margin: 0px;
+}
+
+.author a {
+  text-decoration: none;
+  color: black;
 }
 
 .author-info p {

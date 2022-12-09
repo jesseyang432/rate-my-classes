@@ -16,9 +16,12 @@
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">
-          <div class="vertical-align">
-          <img src="./daniel.png" width="50px"> @{{ reaction.student }}
-          </div>
+          <router-link :to="`/profile/${reaction.student}`">
+            <div class="vertical-align">
+              <img src="./daniel.png" width="50px"> 
+              @{{ reaction.student }}
+            </div>
+          </router-link>
           <div
           v-if="$store.state.username === reaction.student && editable"
           class="actions"
@@ -216,6 +219,11 @@ header {
     font-family: 'Inter';
     font-weight: bold;
   }
+
+.author a {
+  text-decoration: none;
+  color: black;
+}
 
 img {
   border-radius: 50%;
