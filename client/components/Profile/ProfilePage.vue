@@ -94,6 +94,10 @@ import CourseComponent from '@/components/Course/CourseComponent.vue';
 import ReviewComponent from '@/components/Review/ReviewComponent.vue';
 import ReactionComponent from '@/components/Reaction/ReactionComponent.vue';
 import EnrollForm from '@/components/Enroll/EnrollForm.vue';
+// import 'vue-awesome/icons/star'
+// import 'vue-awesome/icons/star-o'
+
+// import Icon from 'vue-awesome/components/Icon'
 
 export default {
   name: 'ProfilePage',

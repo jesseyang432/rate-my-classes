@@ -75,7 +75,8 @@
             <section class="course-ratings">
                 <div class="input-elem">
                     <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
-                    <input type="range" v-model="difficulty" min="1" max="5">
+                    <RatingComponent :stars="stars" v-on:rate="(star) => this.stars = star"/>
+                    <!-- <input type="range" v-model="difficulty" min="1" max="5"> -->
                 </div>
                 <div class="input-elem">
                     <label for="rating">Overall Rating: <b>({{rating}})</b></label>
@@ -111,9 +112,11 @@
 
 <script>
 // import ButtonForm from '@/components/common/ButtonForm.vue';
+import RatingComponent from '@/components/Review/RatingComponent.vue';
 
 export default {
   name: 'CourseReviewForm',
+  components: {RatingComponent},
   props: {
     course: {
       type: Object,
@@ -139,6 +142,8 @@ export default {
       content: '',
       difficulty: '*',
       rating: 3,
+      maxRating: 5,
+      stars: 0,
       method: 'POST',
       url: `/api/reviews/${this.course.name}`
     };
@@ -210,6 +215,17 @@ export default {
 
         } catch (e) {
         }
+      },
+      rate(star) {
+        console.log(star);
+        console.log(this.maxStars);
+        console.log(star <= this.maxStars);
+        console.log(star >= 0);
+        if (star <= this.maxRating && star >= 0) {
+            console.log('huh');
+            this.stars = this.stars === star ? star - 1 : star;
+            console.log(this.stars);
+        }
       }
     }
 
@@ -252,6 +268,23 @@ textarea {
   font-size: .8em;
   background-color: #F6F6F6;
   margin-top: 10px;
+}
+
+.rating:hover .star {
+    color: #f3d23e;
+}
+
+.star {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.star:hover~.star:not(.active) {
+    color: inherit;
+}
+
+.active {
+    color: #f3d23e;
 }
 
 button {
