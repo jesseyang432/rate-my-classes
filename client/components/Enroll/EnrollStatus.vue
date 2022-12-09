@@ -3,7 +3,7 @@
 <template>
     <section>
         <button id="status-button" @click="() => {modalOpen = true;}">
-            Enrolled
+            {{display}}
         </button>
         <section v-if="modalOpen" class="modal-mask">
           <section class="modal-container">
@@ -55,6 +55,7 @@ export default {
   },
   data() {
     return {
+      display: this.enrollmentType === 'current' ? 'Currently Enrolled' : (this.enrollmentType === 'previous' ? 'Previously Enrolled' : 'Interested'),
       modalOpen: false,
       modifyUrl: `/api/enroll/${this.course}`,
       deleteUrl: `/api/enroll/${this.course}`,
@@ -83,6 +84,7 @@ export default {
             // Perform Callback
             this.$store.commit('refreshEnrollments');
             this.modalOpen = false;
+            this.display = this.enrollmentType === 'current' ? 'Currently Enrolled' : (this.enrollmentType === 'previous' ? 'Previously Enrolled' : 'Interested')
             // this.$emit('updatingEnrollment');
 
         } catch (e) {

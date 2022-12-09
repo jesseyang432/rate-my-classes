@@ -14,7 +14,7 @@ const routes = [
   {path: '/', name: 'Reactions', component: ReactionsPage},
   {path: '/courses', name: 'Courses', component: CoursesPage},
   {path: '/course/:name', name: 'Course', component: CoursePage},
-  {path: '/profile', name: 'Profile', component: ProfilePage},
+  {path: '/profile/:username', name: 'Profile', component: ProfilePage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '*', name: 'Not Found', component: NotFound}

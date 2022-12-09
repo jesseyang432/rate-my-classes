@@ -65,7 +65,7 @@ export default {
   mounted() {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
-    this.$store.commit('refreshAvgRatingsByClass');
+    // this.$store.commit('refreshAvgRatingsByClass');
   },
   methods: {
     toDisplay(courseName) {

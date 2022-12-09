@@ -1,3 +1,4 @@
+import { argThresholdOpts } from 'moment';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
@@ -16,10 +17,9 @@ const store = new Vuex.Store({
     enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
     similarities: Object.create(null), // map of username to similarity score
-    gettingSimilarities: false, // Whether similarities are currently being updated
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
-    ratings: null,
+    ratings: Object.create(null),
     likes: [], //all of the likes
   },
   mutations: {
@@ -106,6 +106,25 @@ const store = new Vuex.Store({
       const url = '/api/courses';
       const res = await fetch(url).then(async r => r.json());
       state.courses = res;
+      for (const course of state.courses){
+        const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+        var total = 0;
+        for (const rating of ratings){
+          total += rating.overallRating;
+        }
+        // let newRating = Object.create(null);
+        // newRating[course.name] = Math.round((total * 10.0) / ratings.length) / 10; // round to nearest tenth
+        // state.ratings = Object.assign(
+        //   {},
+        //   state.ratings,
+        //   newRating
+        // );
+        Vue.set(state.ratings, course.name, Math.round((total * 10.0) / ratings.length) / 10); // round to nearest tenth
+        console.log(state.ratings);
+        // state.ratings[course.name] = (total * 1.0) / ratings.length;
+        // console.log(course.name);
+        // console.log(state.ratings[course.name]);
+      }
     },
     async refreshLikes(state) {
       /**
@@ -131,25 +150,25 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       res.forEach((similarity) => {
         if (similarity.student1.username === state.username) {
-          Vue.set(state.similarities, similarity.student2.username, similarity.score);
+          Vue.set(state.similarities, similarity.student2.username, Math.round(similarity.score * 10.0) / 10); // round to nearest tenth
         }
       });
       console.log(state.similarities);
     },
     
-    async refreshAvgRatingsByClass(state) {
-      state.ratings = new Map();
-      for (const course of state.courses){
-        const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
-        var total = 0;
-        for (const rating of ratings){
-          total += rating.overallRating;
-        }
-        state.ratings[course.name] = (total * 1.0) / ratings.length;
-        console.log(course.name);
-        console.log(state.ratings[course.name]);
-      }
-    },
+    // async refreshAvgRatingsByClass(state) {
+    //   state.ratings = new Map();
+    //   for (const course of state.courses){
+    //     const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+    //     var total = 0;
+    //     for (const rating of ratings){
+    //       total += rating.overallRating;
+    //     }
+    //     state.ratings[course.name] = (total * 1.0) / ratings.length;
+    //     console.log(course.name);
+    //     console.log(state.ratings[course.name]);
+    //   }
+    // },
   },
 
   // Store data across page refreshes, only discard on browser close

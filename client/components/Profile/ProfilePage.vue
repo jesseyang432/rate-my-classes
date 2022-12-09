@@ -2,23 +2,27 @@
 
 <template>
   <main>
+    <section v-if="loading">
+      <h2>Loading... </h2>
+    </section>
+    <section v-else>
     <section class="row">
-      <h2 v-if="$store.state.username">Hello @{{$store.state.username}}</h2> 
-      <router-link class = "button" to="/account">
+      <h2>@{{$route.params.username}}</h2> 
+      <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
           Edit Profile
       </router-link>
     </section>
-    <div class = "page" v-if="$store.state.username">
+    <div class = "page">
       <div class = "sideBar">
         <h2>Info</h2>
         <article class="info">
-          <p><strong>Class Year: </strong>{{$store.state.profile.classYear}}</p>
-          <p><strong>Major: </strong>{{$store.state.profile.major}}</p>
-          <p><strong>Revews: </strong>{{reviews.length}}</p>
+          <p><strong>Class Year: </strong>{{profile.classYear}}</p>
+          <p><strong>Major: </strong>{{profile.major}}</p>
+          <p><strong>Reviews: </strong>{{reviews.length}}</p>
           <p><strong>Reactions: </strong>{{reactions.length}}</p>
         </article>
         <br>
-        <div v-if = "!$store.state.enrollments.length">
+        <div v-if = "!$store.state.enrollments.length && isUser">
             <em>Go to
               <router-link class="course-page-link" :to="`courses`">
               <strong>Courses</strong>
@@ -26,28 +30,28 @@
               to add courses
             </em>
         </div>
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Current Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'current'" :key="enrollment.toCourse.id" id = "status-button">
-            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+            <router-link class="course-page-link" :to="`/course/${enrollment.toCourse.name}`">
               {{enrollment.toCourse.name}}
             </router-link>
           </div>
         </article>
 
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Interest Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'interested'" :key="enrollment.toCourse.id" id = "status-button">
-            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+            <router-link class="course-page-link" :to="`/course/${enrollment.toCourse.name}`">
               {{enrollment.toCourse.name}}
             </router-link>
           </div>
         </article>
 
-        <article class="info">
+        <article v-if="isUser" class="info">
           <p><strong>Previous Courses: </strong></p>
           <div v-for="enrollment in $store.state.enrollments" v-if="enrollment.type === 'previous'" :key="enrollment.toCourse.id" id = "status-button">
-            <router-link class="course-page-link" :to="`course/${enrollment.toCourse.name}`">
+            <router-link class="course-page-link" :to="`/course/${enrollment.toCourse.name}`">
               {{enrollment.toCourse.name}}
             </router-link>
           </div>
@@ -81,6 +85,7 @@
       </div>
       
     </div>
+  </section>
   </main>
 </template>
 
@@ -98,20 +103,40 @@ export default {
       content: 'reviews',
       reviews: [],
       reactions: [],
+      profile: null,
+      loading: true,
     };
   },
-  mounted() {
+  async mounted() {
     this.$store.commit('refreshCourses');
     this.$store.commit('refreshEnrollments');
-    this.$store.commit('refreshAvgRatingsByClass');
+    this.$store.commit('refreshReviews');
+    this.$store.commit('refreshReactions');
+    this.profile = await fetch(`/api/users/${this.$route.params.username}`).then(async r => r.json());
+    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$route.params.username);
+    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$route.params.username);
+    this.loading = false;
+    // this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$route.params.username);
+    // this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$route.params.username);
   },
   created() {
-    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$store.state.username);
-    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$store.state.username);
+    this.reviews = this.$store.state.reviews.filter((review) => review.student.username === this.$route.params.username);
+    this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === this.$route.params.username);
+  },
+  computed: {
+    isUser() {
+      return this.$store.state.username === this.$route.params.username;
+    }
   },
   methods: {
     isEnrolled(course) {
       return this.$store.state.enrollments.some((enrollment) => enrollment.toCourse.name === course);
+    }
+  },
+  watch: {
+    '$route.params.username'(newUsername, oldUsername) {
+      this.reviews = this.$store.state.reviews.filter((review) => review.student.username === newUsername);
+      this.reactions = this.$store.state.reactions.filter((reaction) => reaction.student === newUsername);
     }
   }
 };

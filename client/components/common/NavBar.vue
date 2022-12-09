@@ -22,7 +22,7 @@
           Courses
         </div>
       </router-link>
-      <router-link style="text-decoration: none;"  v-if="$store.state.username" to="/profile">
+      <router-link style="text-decoration: none;"  v-if="$store.state.username" :to="`/profile/${$store.state.username}`">
         <div @click = "setProfile" class="link2">
           Profile
         </div>
