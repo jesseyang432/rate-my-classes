@@ -6,19 +6,53 @@
     class="reaction"
   >
     <header>
-      <section class="course">
+      <div v-if="reaction.course.startsWith('6.')"
+        class="header-6">
+        <section class="course">
+        <div class="author">
+          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+        </div>
         <router-link :to="`course/${reaction.course}`">
-          {{ reaction.course }}
+          <div class="link">
+            {{ reaction.course }}
+          </div>
         </router-link>
       </section>
+      </div>
+      <div v-if="reaction.course.startsWith('14.')"
+        class="header-14">
+        <section class="course">
+        <div class="author">
+          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+        </div>
+        <router-link :to="`course/${reaction.course}`">
+          <div class="link">
+            {{ reaction.course }}
+          </div>
+        </router-link>
+      </section>
+      </div>
+      <div v-if="reaction.course.startsWith('18.')"
+        class="header-18">
+        <section class="course">
+        <div class="author">
+          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+        </div>
+        <router-link :to="`course/${reaction.course}`">
+          <div class="link">
+            {{ reaction.course }}
+          </div>
+        </router-link>
+      </section>
+      </div>
     </header>
 
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">
-          <div class="vertical-align">
+          <!-- <div class="vertical-align">
           <img src="./daniel.png" width="50px"> @{{ reaction.student }}
-          </div>
+          </div> -->
           <div
           v-if="$store.state.username === reaction.student && editable"
           class="actions"
@@ -88,6 +122,17 @@ import LikeComponent from '@/components/Like/LikeComponent.vue';
 export default {
   name: 'ReactionComponent',
   components: {LikeComponent},
+  computed: {
+    getColor() {
+      if (reaction.course.startsWith("6.")){
+        return 6;
+      }
+      else if(reaction.course.startsWith("14.")){
+        return 14;
+      }
+
+    }
+  },
   props: {
     // Data from the stored reaction
     reaction: {
@@ -204,15 +249,55 @@ header {
     font-family: 'Inter';
     font-weight: bold;
     border-radius: 15px 15px 0px 0px;
-    height: 60px;
+    height: 90px;
+  }
+
+.header-6 {
+    display: flex;
+    background-color: lightsalmon;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 90px;
+    width: 400px;
+  }
+
+.header-18 {
+    display: flex;
+    background-color: lightpink;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 90px;
+    width: 400px;
+  }
+
+.header-14 {
+    display: flex;
+    background-color: lightblue;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 90px;
+    width: 400px;
   }
 
 .author {
     display: flex;
-    font-size: 20px;
+    font-size: 25px;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
+    vertical-align: left;
     font-family: 'Inter';
     font-weight: bold;
   }
@@ -251,7 +336,7 @@ img {
 
 .reaction {
     /* border: 2px solid #111; */
-    font-size: small;
+    font-size: medium;
     width: 400px;
     height: 260px;
     box-shadow: 7px 7px #f2f2f2;
@@ -263,10 +348,17 @@ img {
     overflow-wrap: break-word;
 }
 
+.link {
+  margin: 0 30px;
+  font-family: 'Inter';
+  font-weight: normal;
+  color: white;
+}
+
 .reaction-content {
   padding: 8px;
   margin: 10px 30px;
-  height: 200px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
