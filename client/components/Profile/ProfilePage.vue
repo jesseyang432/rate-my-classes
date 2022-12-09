@@ -9,7 +9,11 @@
     <section class="row">
       <h2>@{{$route.params.username}}</h2> 
       <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
-          Edit Profile
+          Sign Out
+      </router-link>
+      <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
+          Account<br>
+          Management
       </router-link>
     </section>
     <div class = "page">
@@ -218,7 +222,7 @@ section .scrollbox {
 
 .button {
   background-color: salmon; /* Green */
-  border: 1px solid #111;
+  /* border: 1px solid white; */
   border-radius: 5px;
   color: white;
   padding: 10px 10px;

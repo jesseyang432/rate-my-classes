@@ -240,17 +240,17 @@ export default {
 
 <style scoped>
 
-header {
-    display: flex;
-    background-color: #fcaca3;
-    flex-flow: row nowrap;
+/* header {
+    display: flex; */
+    /* background-color: #fcaca3; */
+    /* flex-flow: row nowrap;
     justify-content: space-between;
     align-items: stretch;
     font-family: 'Inter';
-    font-weight: bold;
-    border-radius: 15px 15px 0px 0px;
-    height: 90px;
-  }
+    font-weight: bold; */
+    /* border-radius: 15px 15px 0px 0px; */
+    /* height: 90px; */
+  /* } */
 
 .header-6 {
     display: flex;
