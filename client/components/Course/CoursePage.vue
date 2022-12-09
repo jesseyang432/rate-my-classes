@@ -51,7 +51,7 @@
       </section>
 
       <section class="review-section">
-        <section v-if="getEnrollment(course.name)" viewer-review>
+        <section v-if="(getEnrollment(course.name) && enrollment.type === 'previous')" viewer-review>
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
             <header>
@@ -110,8 +110,8 @@
     },
     methods: {
         /**
-         * Assigns the type of enrollment (if there is one) to enrollmentType
-         * Returns true or false, depending on if enrolled
+         * Assigns the enrollment (if there is one) to this.enrollment
+         * Returns true or false, depending on if enrolled 
          */
         getEnrollment(courseName) {
           for (const enrollment of this.$store.state.enrollments) {

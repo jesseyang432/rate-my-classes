@@ -118,11 +118,11 @@ const store = new Vuex.Store({
         var totalHours = 0;
         for (const review of reviews) {
           totalRating += review.overallRating;
-          if (review.difficulty !== 0) {
+          if (review.difficulty) {
             totalDifficulty += review.difficulty;
             numDifficultyReviews += 1;
           }
-          if (review.hours !== 0) {
+          if (review.hours) {
             totalHours += review.hours;
             numHourReviews += 1;
           }
@@ -134,7 +134,6 @@ const store = new Vuex.Store({
         Vue.set(state.difficulties, course.name, avgDifficulty);
         Vue.set(state.hours, course.name, avgHours);
         Vue.set(state.numReviewers, course.name, reviews.length);
-        console.log(state.ratings);
       }
     },
     async refreshLikes(state) {
@@ -164,7 +163,6 @@ const store = new Vuex.Store({
           Vue.set(state.similarities, similarity.student2.username, Math.round(similarity.score * 10.0) / 10); // round to nearest tenth
         }
       });
-      console.log(state.similarities);
     },
     
     // async refreshAvgRatingsByClass(state) {
