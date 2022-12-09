@@ -11,7 +11,7 @@
         </router-link>
       </section>
       <span style="text-align:right;" class="header-interact"> 
-          <span class="greenDot"></span> &nbsp; {{Round($store.state.ratings[course.name])}}
+          <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
         </span>
     </header>
     
@@ -62,6 +62,13 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
       return {
         alerts: {} // Displays success/error messages encountered during course modification
       };
+    },
+    computed: {
+        rating() {
+            return this.$store.state.ratings[this.course.name];
+            const val = this.$store.state.ratings[this.course.name];
+            return val ? ((Math.round(rating*10))/10) : val;
+        }
     },
     methods: {
       compress(description) {

@@ -17,7 +17,9 @@
             @{{ review.student.username }}
           </router-link>
         </h3>
-        <p><em> Similarity Score: {{ (Round($store.state.similarities[review.student.username])).toString() ?? 'N/A'}}</em></p>
+        <p v-if="$store.state.username && review.student.username !== $store.state.username">
+          <em> Similarity Score: {{ $store.state.similarities[review.student.username]}}</em>
+        </p>
       </section>
       
       <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
