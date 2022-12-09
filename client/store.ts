@@ -20,6 +20,9 @@ const store = new Vuex.Store({
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
     ratings: Object.create(null),
+    numReviewers: Object.create(null),
+    difficulties: Object.create(null),
+    hours: Object.create(null),
     likes: [], //all of the likes
   },
   mutations: {
@@ -107,23 +110,31 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       state.courses = res;
       for (const course of state.courses){
-        const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
-        var total = 0;
-        for (const rating of ratings){
-          total += rating.overallRating;
+        const reviews = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+        var totalRating = 0;
+        var numDifficultyReviews = 0;
+        var totalDifficulty = 0;
+        var numHourReviews = 0;
+        var totalHours = 0;
+        for (const review of reviews) {
+          totalRating += review.overallRating;
+          if (review.difficulty !== 0) {
+            totalDifficulty += review.difficulty;
+            numDifficultyReviews += 1;
+          }
+          if (review.hours !== 0) {
+            totalHours += review.hours;
+            numHourReviews += 1;
+          }
         }
-        // let newRating = Object.create(null);
-        // newRating[course.name] = Math.round((total * 10.0) / ratings.length) / 10; // round to nearest tenth
-        // state.ratings = Object.assign(
-        //   {},
-        //   state.ratings,
-        //   newRating
-        // );
-        Vue.set(state.ratings, course.name, Math.round((total * 10.0) / ratings.length) / 10); // round to nearest tenth
+        const avgRating = totalRating ? Math.round((totalRating * 10.0) / reviews.length) / 10 : "N/A"; // round to nearest tenth
+        const avgDifficulty = totalDifficulty ? Math.round((totalDifficulty * 10.0) / numDifficultyReviews) / 10 : "N/A"; // round to nearest tenth
+        const avgHours = totalHours ? Math.round((totalHours * 10.0) / numHourReviews) / 10 : "N/A"; // round to nearest tenth
+        Vue.set(state.ratings, course.name, avgRating);
+        Vue.set(state.difficulties, course.name, avgDifficulty);
+        Vue.set(state.hours, course.name, avgHours);
+        Vue.set(state.numReviewers, course.name, reviews.length);
         console.log(state.ratings);
-        // state.ratings[course.name] = (total * 1.0) / ratings.length;
-        // console.log(course.name);
-        // console.log(state.ratings[course.name]);
       }
     },
     async refreshLikes(state) {

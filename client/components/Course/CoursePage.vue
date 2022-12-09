@@ -18,7 +18,7 @@
       </header>
     </section>
     <section v-else>
-      <section>
+      <section class="course-header">
         <header>
           <div class="left">
             <h2>
@@ -28,10 +28,26 @@
           <EnrollButton v-if="!getEnrollment(course.name)" :course="course.name"/>
           <EnrollStatus v-else :course="course.name" :enrollmentType="getEnrollment(course.name) ? enrollment.type : 'current'"/>
         </header>
-        <p>
-          Course description:
-          {{ course.description }}
-        </p>
+        <section class="course-info">
+          <section class="course-description">
+            <p>
+            <em>Course description:</em>
+            {{ course.description }}
+            </p>
+          </section>
+          <section class="course-summary">
+            <section class="course-stats">
+              <p id="overall-rating"><b>Overall Rating:</b> {{$store.state.ratings[course.name]}} / 5</p>
+              <section class="additional-stats">
+                <p><b>Avg Hours:</b> {{$store.state.hours[course.name]}}</p>
+                <p><b>Avg Difficulty:</b> {{$store.state.difficulties[course.name]}}</p>
+              </section>
+            </section>
+            <p class="num-reviewers"># of Ratings/Reviewers: {{$store.state.numReviewers[course.name]}}</p>
+          </section>
+          
+
+        </section>
       </section>
 
       <section class="review-section">
@@ -159,6 +175,47 @@
   p {
     font-family: "Inter";
     font-weight: normal;
+  }
+
+  .course-description {
+    margin-right: 64px;
+  }
+
+  .course-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .course-stats {
+    min-width: 320px;
+    height: 128px;
+    border: solid black 1px;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 16px;
+    margin-bottom: 0px;
+    font-size: small;
+  }
+
+  .num-reviewers {
+    margin: 4px 16px;
+    font-size: small;
+    text-align: center;
+  }
+
+  #overall-rating {
+    font-size: 24px;
+    margin: 16px 0px;
+  }
+
+  .additional-stats {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .additional-stats p {
+    margin-right: 32px;
   }
 
   .review-explanation {
