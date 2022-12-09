@@ -2,9 +2,9 @@
 
 <template>
   <main>
-    <section v-if="$store.state.username === $route.params.username" class="row">
-      <h2>Hello @{{$store.state.username}}</h2> 
-      <router-link class = "button" to="/account">
+    <section class="row">
+      <h2>@{{$route.params.username}}</h2> 
+      <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
           Edit Profile
       </router-link>
     </section>
