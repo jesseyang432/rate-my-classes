@@ -69,20 +69,22 @@
             <header>
                 <h3>Ratings</h3>
             </header>
-            <p>
+            <!-- <p>
                 <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
-            </p>
+            </p> -->
             <section class="course-ratings">
                 <div class="input-elem">
                     <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
-                    <RatingComponent :stars="stars" v-on:rate="(star) => this.stars = star"/>
+                    <RatingComponent :stars="difficulty" v-on:rate="(stars) => this.difficulty = stars"/>
                     <!-- <input type="range" v-model="difficulty" min="1" max="5"> -->
                 </div>
                 <div class="input-elem">
-                    <label for="rating">Overall Rating: <b>({{rating}})</b></label>
-                    <input type="range" v-model="rating" min="1" max="5" required>
+                    <label for="rating">Overall Rating<em>*</em>: <b>({{rating}})</b></label>
+                    <RatingComponent :stars="rating" v-on:rate="(stars) => this.rating = stars"/>
+                    <!-- <input type="range" v-model="rating" min="1" max="5" required> -->
                 </div>
             </section>
+            <p class="required-ratings"><em>*Required</em></p>
             <header>
                 <h3>Additional Comments</h3>
             </header>
@@ -140,10 +142,9 @@ export default {
       knowledge: null,
       grade: null,
       content: '',
-      difficulty: '*',
+      difficulty: 0,
       rating: 3,
       maxRating: 5,
-      stars: 0,
       method: 'POST',
       url: `/api/reviews/${this.course.name}`
     };
@@ -328,6 +329,9 @@ section {
 }
 
 .input-elem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin: 8px;
 }
 
@@ -343,6 +347,10 @@ section {
 .input-elem select {
     margin: 4px;
     outline: none;
+}
+
+.required-ratings {
+    font-size: small;
 }
 
 textarea {

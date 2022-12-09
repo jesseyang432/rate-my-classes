@@ -24,9 +24,9 @@ export default {
     };
   },
   methods: {
-      rate(star) {
-        if (star <= this.maxRating && star >= 0) {
-            const newStars = this.stars === star ? star - 1 : star;
+      rate(stars) {
+        if (stars <= this.maxRating && stars >= 0) {
+            const newStars = this.stars === stars ? stars - 1 : stars;
             this.$emit("rate", newStars);
         }
       }
@@ -36,6 +36,11 @@ export default {
 </script>
 
 <style scoped>
+
+.rating {
+    padding: 0px;
+    margin-left: 8px;
+}
 
 .rating:hover .star {
     color: #f3d23e;

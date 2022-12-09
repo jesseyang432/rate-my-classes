@@ -37,7 +37,7 @@ const isValidReviewContent = (req: Request, res: Response, next: NextFunction) =
     return;
   }
 
-  if (req.body.overallRating === '*') {
+  if (req.body.overallRating === 0) {
     res.status(400).json({
       error: 'Overall rating must be provided to leave a review.'
     });

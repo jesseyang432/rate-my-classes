@@ -74,7 +74,7 @@ router.post(
     // const course = await CourseCollection.findOneByName(req.params.course);
     // console.log(req.body.instructor);
     // console.log(req.body.instructor ?? '');
-    const review = await ReviewCollection.addOne(userId, req.params.course, req.body.term ?? '', req.body.instructor ?? '', req.body.hours ?? 0, req.body.knowledge ?? '', req.body.grade ?? '', req.body.content, req.body.difficulty === '*' ? 0 : req.body.difficulty, req.body.overallRating === '*' ? 0 : req.body.overallRating);
+    const review = await ReviewCollection.addOne(userId, req.params.course, req.body.term ?? '', req.body.instructor ?? '', req.body.hours ?? 0, req.body.knowledge ?? '', req.body.grade ?? '', req.body.content, req.body.difficulty, req.body.overallRating);
     const updated = await SimilarityScoreCollection.updatePairings(req.session.userId);
 
     res.status(201).json({
