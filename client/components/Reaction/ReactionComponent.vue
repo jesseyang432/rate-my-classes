@@ -50,18 +50,9 @@
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">
-<<<<<<< HEAD
           <!-- <div class="vertical-align">
           <img src="./daniel.png" width="50px"> @{{ reaction.student }}
           </div> -->
-=======
-          <router-link :to="`/profile/${reaction.student}`">
-            <div class="vertical-align">
-              <img src="./daniel.png" width="50px"> 
-              @{{ reaction.student }}
-            </div>
-          </router-link>
->>>>>>> e4ab0058e7d46192d021ba938f278d07c5c2ad88
           <div
           v-if="$store.state.username === reaction.student && editable"
           class="actions"
