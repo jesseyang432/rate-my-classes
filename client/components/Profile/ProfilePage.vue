@@ -28,7 +28,7 @@
         <br>
         <div v-if = "!$store.state.enrollments.length && isUser">
             <em>Go to
-              <router-link class="course-page-link" :to="`courses`">
+              <router-link class="course-page-link" :to="`/courses`">
               <strong>Courses</strong>
               </router-link>
               to add courses

@@ -112,7 +112,7 @@ class ReactionCollection {
    * @param {string} authorId - The id of author of reactions
    */
   static async deleteMany(studentId: Types.ObjectId | string): Promise<void> {
-    await ReactionModel.deleteMany({studentId});
+    await ReactionModel.deleteMany({student: studentId});
   }
 }
 

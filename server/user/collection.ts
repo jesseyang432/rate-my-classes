@@ -3,6 +3,7 @@ import ReactionCollection from '../reaction/collection';
 import LikeCollection from '../like/collection';
 import type {User} from './model';
 import UserModel from './model';
+import ReviewCollection from '../review/collection';
 
 /**
  * This file contains a class with functionality to interact with users stored
@@ -95,7 +96,8 @@ class UserCollection {
   static async deleteOne(userId: Types.ObjectId | string): Promise<boolean> {
     const user = await UserModel.deleteOne({_id: userId});
     const likes = await LikeCollection.deleteMany(userId);
-    const freets = await ReactionCollection.deleteMany(userId);
+    const reactions = await ReactionCollection.deleteMany(userId);
+    const reviews = await ReviewCollection.deleteMany(userId);
     return user !== null;
   }
 
