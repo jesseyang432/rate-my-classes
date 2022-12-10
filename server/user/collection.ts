@@ -4,6 +4,7 @@ import LikeCollection from '../like/collection';
 import type {User} from './model';
 import UserModel from './model';
 import ReviewCollection from '../review/collection';
+import SimilarityScoreCollection from '../similarity/collection';
 
 /**
  * This file contains a class with functionality to interact with users stored
@@ -98,6 +99,7 @@ class UserCollection {
     const likes = await LikeCollection.deleteMany(userId);
     const reactions = await ReactionCollection.deleteMany(userId);
     const reviews = await ReviewCollection.deleteMany(userId);
+    const similarities = await SimilarityScoreCollection.deletePairings(userId);
     return user !== null;
   }
 
