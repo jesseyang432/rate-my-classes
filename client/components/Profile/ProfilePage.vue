@@ -8,9 +8,9 @@
     <section v-else>
     <section class="row">
       <h2>@{{$route.params.username}}</h2> 
-      <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
+      <!-- <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
           Sign Out
-      </router-link>
+      </router-link> -->
       <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
           Account<br>
           Management
