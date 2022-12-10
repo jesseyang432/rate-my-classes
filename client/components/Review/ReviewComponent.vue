@@ -193,6 +193,7 @@ export default {
         this.editing = false;
         this.$store.commit('refreshReviews');
         this.$store.commit('refreshSimilarities');
+        this.$store.commit('refreshCourses');
 
         params.callback();
       } catch (e) {

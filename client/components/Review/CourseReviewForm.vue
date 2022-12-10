@@ -40,7 +40,7 @@
                 </div>
                 <div class="input-elem">
                     <label for="hours">Hours/Week: </label>
-                    <input v-model="hours" step="0.1" type="number">
+                    <input v-model="hours" min="0" step="0.1" type="number">
                 </div>
                 <div class="input-elem">
                     <label for="knowledge">Prior Knowledge: </label>
@@ -211,6 +211,7 @@ export default {
           // Perform Callback
           this.$store.commit('refreshReviews');
           this.$store.commit('refreshSimilarities');
+          this.$store.commit('refreshCourses');
           this.$emit('stopEditing');
           this.formExpanded = false;
 
