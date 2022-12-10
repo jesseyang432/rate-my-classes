@@ -82,6 +82,10 @@ class ReviewCollection {
     return ReviewModel.find({student: student._id}).sort({dateCreated: -1}).populate('student');
   }
 
+  static async findAllByStudent(student: Types.ObjectId | string): Promise<Array<HydratedDocument<Review>>> {
+    return ReviewModel.find({student: student}).sort({dateCreated: -1}).populate('student');
+  }
+
   /**
    * Get the reviews for a given course 
    *

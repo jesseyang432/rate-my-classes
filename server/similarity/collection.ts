@@ -3,6 +3,7 @@ import type {SimilarityScore, PopulatedSimilarityScore} from './model';
 import SimilarityScoreModel from './model';
 import UserCollection from '../user/collection';
 import EnrollCollection from '../enroll/collection'; 
+import ReviewCollection from '../review/collection';
 
 class SimilarityScoreCollection {
     // find similarity score between current user and everyone else
@@ -49,15 +50,8 @@ class SimilarityScoreCollection {
         return (obsoletePairings1 && obsoletePairings2) !== null;
     }
 
-    // update pairings when student's enrollment changes 
+    // update pairings or creates new pairings if they don't already exist
     static async updatePairings(student: Types.ObjectId | string): Promise<Boolean> {
-        // const user = await UserCollection.findOneByUsername(student);
-        // const pairings = await SimilarityScoreCollection.find(student);
-        // (await pairings).forEach( pair => {
-        //     pair.score = 0;
-        //     pair.save();
-        // });
-        // return true; 
         const allUsers = UserCollection.findAll(); 
         (await allUsers).forEach( async user => {
             if (user._id.toString() !== student.toString()) {
@@ -93,13 +87,40 @@ class SimilarityScoreCollection {
         return true; 
       }
     
-    // calculate similarity score between 2 users. Currently simplified and asymmetric 
+    // calculate similarity score between 2 users. Asymmetric based on shared courses and past ratings
     static async calculateScore(student1: Types.ObjectId | string, student2: Types.ObjectId | string): Promise<number> {
         const courses1 = (await EnrollCollection.findAllbyStudent(student1)).map((enrollment) => enrollment.toCourse._id.toString());
         const courses2 = (await EnrollCollection.findAllbyStudent(student2)).map((enrollment) => enrollment.toCourse._id.toString());
         const commonCourses = courses1.filter(course => courses2.includes(course));
-        const score = 50 + 50 * (commonCourses.length/(courses1.length + 1)); 
-        return score; 
+        const reviews1 = (await ReviewCollection.findAllByStudent(student1));
+        const reviews2 = (await ReviewCollection.findAllByStudent(student2));
+        const courseToRating1 = new Map(
+            reviews1.map(review => {
+                return [review.course, review.overallRating];
+            }),
+        );
+        const courseToRating2 = new Map(
+            reviews2.map(review => {
+                return [review.course, review.overallRating];
+            }),
+        );
+        let commonlyRated = 0;
+        let totalSimilarlyRated = 0;
+        for (const [course, val1] of courseToRating1.entries()) {
+            if (courseToRating2.has(course)) {
+                const val2 = courseToRating2.get(course);
+                commonlyRated += 1;
+                if (val2 - 1 <= val1 && val1 <= val2 + 1) {
+                    totalSimilarlyRated += 1;
+                }
+            }
+        }
+        let similarityScore = 100 * (commonCourses.length/(courses1.length + 1));
+        if (commonlyRated > 0) {
+            similarityScore = (similarityScore + 100 * (totalSimilarlyRated / commonlyRated)) / 2; // weight with common ratings
+        }
+        similarityScore = 50 + 50 * (similarityScore / 100); 
+        return similarityScore; 
     }
      
 
