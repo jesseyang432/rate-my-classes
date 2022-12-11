@@ -10,7 +10,12 @@
         class="header-6">
         <section class="course">
         <div class="author">
-          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
         </div>
         <router-link :to="`course/${reaction.course}`">
           <div class="link">
@@ -23,7 +28,12 @@
         class="header-14">
         <section class="course">
         <div class="author">
-          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
         </div>
         <router-link :to="`course/${reaction.course}`">
           <div class="link">
@@ -36,7 +46,12 @@
         class="header-18">
         <section class="course">
         <div class="author">
-          <img src="./daniel.png" width="40px">  &nbsp @{{ reaction.student }}
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
         </div>
         <router-link :to="`course/${reaction.course}`">
           <div class="link">

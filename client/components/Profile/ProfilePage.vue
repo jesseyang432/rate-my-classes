@@ -20,6 +20,7 @@
       <div class = "sideBar">
         <h2>Info</h2>
         <article class="info">
+          <img src="../Reaction/daniel.png" width="112px">
           <p><strong>Class Year: </strong>{{profile.classYear}}</p>
           <p><strong>Major: </strong>{{profile.major}}</p>
           <p><strong>Reviews: </strong>{{reviews.length}}</p>
@@ -180,6 +181,10 @@ section .scrollbox {
     right: 20px;
     font-family: 'Inter';
   
+}
+
+.info img {
+  border-radius: 50%;
 }
 
 .page {
