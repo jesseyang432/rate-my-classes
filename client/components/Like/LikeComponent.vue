@@ -53,17 +53,15 @@ export default {
   },
   methods: {
     ownPost() {
-      return this.$store.state.username === this.reaction.student.username; 
+      return this.$store.state.username === this.reaction.student; 
     },
     isLiked() {
       /**
        * Returns whether the reaction is currently liked
        */
       const likes = this.$store.state.likes;
-      // console.log("filter likes");
-      // console.log(likes);
-      const likesForThisPost =  likes.filter(like => like.post._id == this.reaction._id);
-      const liked = likesForThisPost.filter(remainingLikes => remainingLikes.userLike.username === this.$store.state.username);
+      const likesForThisPost =  likes.filter(like => like.post._id === this.reaction._id);
+      const liked = likesForThisPost.filter(remainingLikes => remainingLikes.userLike === this.$store.state.username);
       return liked.length > 0;
 
     },
