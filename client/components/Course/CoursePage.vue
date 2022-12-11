@@ -60,12 +60,15 @@
             <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
-          <header>
-            <h2>Course Reviews</h2>
-          </header>
+          <div>
+            <header>
+              <h2>Course<span class="reviews-text">Reviews <div class="tooltiptext">Feedback containing past student experiences with courses</div></span>
+              </h2>
+            </header>
+          </div>
         <section class="review-explanation">
           <em>
-            Reviews are a means of leaving feedback and ratings on courses you've taken. You can also leave ratings without writing a specific review.
+            Read more about reviews at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
         <ReviewComponent v-for="review in $store.state.reviews"
@@ -167,7 +170,7 @@
   header, header > * {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       font-family: "Inter";
       font-weight: bold;
   }
@@ -218,11 +221,44 @@
     margin-right: 32px;
   }
 
+.reviews-text {
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px dotted black; /* If you want dots under the hoverable text */
+  margin-left: 6px;
+}
+
+/* Tooltip text */
+.reviews-text .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  top: 120%;
+  left: 50%;
+  margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: normal;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.reviews-text:hover .tooltiptext {
+  visibility: visible;
+}
+
   .review-explanation {
-    margin: 0px 32px 16px 32px;
+    margin-bottom: 16px;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    font-family: 'Inter';
   }
   
   button {

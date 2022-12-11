@@ -116,9 +116,7 @@ class SimilarityScoreCollection {
             }
         }
         let similarityScore = 100 * (commonCourses.length/(courses1.length + 1));
-        if (commonlyRated > 0) {
-            similarityScore = (similarityScore + 100 * (totalSimilarlyRated / commonlyRated)) / 2; // weight with common ratings
-        }
+        similarityScore = (similarityScore + 100 * (totalSimilarlyRated / (commonlyRated + 1))) / 2; // weight with common ratings
         similarityScore = 50 + 50 * (similarityScore / 100); 
         return similarityScore; 
     }

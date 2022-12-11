@@ -17,8 +17,9 @@
             @{{ review.student.username }}
           </router-link>
         </h3>
-        <p v-if="$store.state.username && review.student.username !== $store.state.username">
-          <em> Similarity Score: {{ $store.state.similarities[review.student.username]}}</em>
+        <p v-if="$store.state.username && review.student.username !== $store.state.username" class="similarity-tooltip">
+          <em> Similarity Score: {{ $store.state.similarities[review.student.username]}} </em>
+          <span class="tooltiptext">How similar your experiences might be, on a scale of 100. Read more via our FAQs.</span>
         </p>
       </section>
       
@@ -221,6 +222,36 @@ header {
   display: flex;
   flex-flow: row wrap;
   /* justify-content: space-between; */
+}
+
+.similarity-tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.similarity-tooltip .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  top: 120%;
+  left: 50%;
+  margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.similarity-tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 .author-info {
