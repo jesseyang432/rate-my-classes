@@ -38,17 +38,32 @@
       
     </section>
     <section v-else>
-      <header>
-        <h2>Welcome to Rate My Classes!</h2>
-      </header>
-      <article>
-        <h3>
-          <router-link to="/login">
-            Sign in
-          </router-link>
-          to create, edit, and delete reactions.
-        </h3>
-      </article>
+      <div class="row">
+      <div class="column">
+        <!-- <header>
+          <h2>Welcome to Rate My Classes!</h2>
+        </header> -->
+        <article>
+          <h3>
+            <router-link to="/login">
+              Sign in
+            </router-link>
+            to create, edit, and delete reactions.
+          </h3>
+        </article>
+      </div>
+      <article class="info">
+          <div class="row">
+            <div>
+              <img src="./mitlogo.png" alt="MIT logo" width="200">
+            </div>
+            <div>
+              <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
+              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. This is your chance to learn more about the different classes at MIT. Visit our <router-link to="/faqs">FAQs</router-link> to learn more!</p>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
     <section>
       <header>

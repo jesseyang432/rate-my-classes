@@ -14,7 +14,7 @@
       <section class="author-info">
         <h3 class="author">
           <router-link :to="`/profile/${review.student.username}`">
-            @{{ review.student.username }}
+            @{{ review.student.username }}&nbsp&nbsp
           </router-link>
         </h3>
         <p v-if="$store.state.username && review.student.username !== $store.state.username" class="similarity-tooltip">
