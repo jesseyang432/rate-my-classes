@@ -10,14 +10,13 @@
           v-if="!isLiked() && !ownPost()"
           @click="likePost"
         >
-          👍 Like
+          👍 Like!
         </button>
-
         <button
           v-if="isLiked() && !ownPost()"
           @click="unlikePost"
         >
-          👎 Unlike
+          👎 Unlike!
         </button>
 
         <p class="info">
@@ -61,7 +60,9 @@ export default {
        * Returns whether the reaction is currently liked
        */
       const likes = this.$store.state.likes;
-      const likesForThisPost =  likes.filter(like => like.post == this.reaction);
+      // console.log("filter likes");
+      // console.log(likes);
+      const likesForThisPost =  likes.filter(like => like.post._id == this.reaction._id);
       const liked = likesForThisPost.filter(remainingLikes => remainingLikes.userLike.username === this.$store.state.username);
       return liked.length > 0;
 

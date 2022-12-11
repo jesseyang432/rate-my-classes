@@ -8,8 +8,8 @@ import LikeCollection from './collection';
  * Checks that the post you're trying to like exists, by postId
  */
  const isPostExist = async (req: Request, res: Response, next: NextFunction) => {
-  const freet = await ReactionCollection.findOne(req.body.postId);
-  if (!freet) {
+  const reaction = await ReactionCollection.findOne(req.body.postId);
+  if (!reaction) {
     res.status(404).json({
       error: `Reaction with post ID ${req.body.postId} does not exist.`
     });
@@ -41,7 +41,7 @@ import LikeCollection from './collection';
   const post = await ReactionCollection.findOne(req.body.postId);
   const like = await LikeCollection.findOneByPostAndUserId(post._id, currentUser._id); 
   if (!like) {
-    res.status(404).json({
+    res.status(406).json({
       error: `This post wasn't liked. You can't unlike the post.`
     });
     return;
@@ -58,7 +58,7 @@ import LikeCollection from './collection';
   const like = await LikeCollection.findOneByPostAndUserId(post._id, currentUser._id); 
   // console.log(like);
   if (like) {
-    res.status(404).json({
+    res.status(402).json({
       error: `You already liked this post. You cannot like it again.`
     });
     return;

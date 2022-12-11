@@ -1,12 +1,12 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Like} from './model';
-import { Freet } from '../freet/model';
+import { Reaction } from '../reaction/model';
 
 // Update this if you add a property to the Freet type!
 type LikeResponse = {
   postedBy: string;
-  post: Freet; 
+  post: Reaction; 
   userLike: string;
   postContent: string; 
 };
