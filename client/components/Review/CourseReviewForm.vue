@@ -333,6 +333,16 @@ section {
     background-color: rgba(255, 160, 122, 0.2);
 }
 
+select, input {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: .8em;
+  background-color: #ffffff;
+  margin-top: 10px;
+  border-width: 1px;
+  border-color: black;
+}
+
 .course-ratings {
     display: flex;
     justify-content: center;
