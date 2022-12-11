@@ -232,7 +232,7 @@ button {
   border-radius: 10px;
   padding: 8px 12px;
   font-size: .8em;
-  background-color: #288BFF;
+  background-color: rgb(245, 95, 78);
   margin-top: 0px;
   color: white;
   block-size: fit-content;
