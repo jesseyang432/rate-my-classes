@@ -141,6 +141,7 @@ const store = new Vuex.Store({
        * Request the server for the currently available freets.
        */
       const url = '/api/likes';
+      console.log("refreshing likes");
       const res = await fetch(url).then(async r => r.json());
       state.likes = res;
     },

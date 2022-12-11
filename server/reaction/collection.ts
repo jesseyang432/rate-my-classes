@@ -85,14 +85,14 @@ class ReactionCollection {
     const reaction = await ReactionModel.findOne({_id: reactionId});
     reaction.numLikes += 1;
     await reaction.save();
-    return reaction.populate('authorId');
+    return reaction.populate('student');
   }
 
   static async deleteLike(reactionId: Types.ObjectId | string): Promise<HydratedDocument<Reaction>> {
     const reaction = await ReactionModel.findOne({_id: reactionId});
     reaction.numLikes -= 1;
     await reaction.save();
-    return reaction.populate('authorId');
+    return reaction.populate('student');
   }
 
   /**
@@ -109,7 +109,7 @@ class ReactionCollection {
   /**
    * Delete all the reactions by the given author
    *
-   * @param {string} authorId - The id of author of reactions
+   * @param {string} studentId - The id of author of reactions
    */
   static async deleteMany(studentId: Types.ObjectId | string): Promise<void> {
     await ReactionModel.deleteMany({student: studentId});
