@@ -28,16 +28,16 @@ const isReviewExists = async (req: Request, res: Response, next: NextFunction) =
  * 
  */
 const isValidReviewContent = (req: Request, res: Response, next: NextFunction) => {
-  const content = req.body.content;
+  // const content = req.body.content;
 
-  if (content.length > 400) {
-    res.status(413).json({
-      error: 'Review content must be no more than 400 characters.'
-    });
-    return;
-  }
+  // if (content.length > 400) {
+  //   res.status(413).json({
+  //     error: 'Review content must be no more than 400 characters.'
+  //   });
+  //   return;
+  // }
 
-  if (req.body.overallRating === '*') {
+  if (req.body.overallRating === 0) {
     res.status(400).json({
       error: 'Overall rating must be provided to leave a review.'
     });

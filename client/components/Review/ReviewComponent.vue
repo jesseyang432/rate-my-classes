@@ -13,10 +13,14 @@
     <header>
       <section class="author-info">
         <h3 class="author">
-          @{{ review.student.username }}
+          <router-link :to="`/profile/${review.student.username}`">
+            @{{ review.student.username }}
+          </router-link>
         </h3>
-        <p>{{$store.state.similarities.size}}</p>
-        <p><em> Similarity Score: {{ (Round($store.state.similarities[review.student.username])).toString() ?? 'N/A'}}</em></p>
+        <p v-if="$store.state.username && review.student.username !== $store.state.username" class="similarity-tooltip">
+          <em> Similarity Score: {{ $store.state.similarities[review.student.username]}} </em>
+          <span class="tooltiptext">How similar your experiences might be, on a scale of 100. Read more via our FAQs.</span>
+        </p>
       </section>
       
       <section class="author-experience" v-if="review.term"><b>Term</b>: {{review.term}}</section>
@@ -190,6 +194,7 @@ export default {
         this.editing = false;
         this.$store.commit('refreshReviews');
         this.$store.commit('refreshSimilarities');
+        this.$store.commit('refreshCourses');
 
         params.callback();
       } catch (e) {
@@ -219,6 +224,36 @@ header {
   /* justify-content: space-between; */
 }
 
+.similarity-tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.similarity-tooltip .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  top: 120%;
+  left: 50%;
+  margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.similarity-tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 .author-info {
   display: flex;
   flex-flow: column nowrap;
@@ -226,6 +261,11 @@ header {
 
 .author {
   margin: 0px;
+}
+
+.author a {
+  text-decoration: none;
+  color: black;
 }
 
 .author-info p {

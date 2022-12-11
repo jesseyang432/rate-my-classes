@@ -15,7 +15,7 @@
             </div>
             <div>
               <p><strong> Hi there! Welcome to "Rate My Classes", a peer class feedback forum.</strong></p>
-              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. This is your chance to learn more about the different classes at MIT.</p>
+              <p> You can post your reactions on classes, write full-reviews, and read what other students have published as well. This is your chance to learn more about the different classes at MIT. Visit our <router-link to="/faqs">FAQs</router-link> to learn more!</p>
             </div>
           </div>
         </article>
@@ -54,16 +54,16 @@
       <header>
         <div>
           <h2>
-            Recent Activity
-            <span v-if="$store.state.filter">
+            Recent<span class="reactions-text">Reactions <div class="tooltiptext">Short, informal comments on currently enrolled courses</div></span>
+            <!-- <span v-if="$store.state.filter">
               by @{{ $store.state.filter }}
-            </span>
+            </span> -->
           </h2>     
         </div>
       </header>
-        <section class="review-explanation">
+        <section class="reaction-explanation">
           <em>
-            Reactions are short informal comments from students.
+            Read more about reactions at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
       <section
@@ -98,6 +98,8 @@ export default {
     // this.$refs.getReactionsForm.submit();
     this.$store.commit('refreshReactions');
     this.$store.commit('refreshEnrollments');
+    this.$store.commit('refreshCourses');
+    this.$store.commit('refreshLikes');
   }
 };
 </script>
@@ -149,10 +151,42 @@ section {
   justify-content: center;
 }
 
+.reactions-text {
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px dotted black; /* If you want dots under the hoverable text */
+  margin-left: 6px;
+}
+
+/* Tooltip text */
+.reactions-text .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  top: 120%;
+  left: 50%;
+  margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: normal;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.reactions-text:hover .tooltiptext {
+  visibility: visible;
+}
+
 header, header > * {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     font-family: 'Inter';
     font-weight: normal;
 }
@@ -177,11 +211,13 @@ section .scrollbox {
   width: 500px;
 }
 
-.review-explanation {
-    margin: 0px 32px 16px 32px;
+.reaction-explanation {
+    margin-bottom: 16px;
+    /* margin: 0px 32px 16px 32px; */
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    font-family: 'Inter';
   }
 .row {
   display: flex;
@@ -212,6 +248,9 @@ section .scrollbox {
     background-position: center;
     background-color: grey;
     background-blend-mode: multiply;
-  
+}
+
+.info a {
+  color: white;
 }
 </style>

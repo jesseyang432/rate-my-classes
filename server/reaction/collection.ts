@@ -28,6 +28,7 @@ class ReactionCollection {
       course: course, 
       content: content,
       dateCreated: date,
+      numLikes: 0,
     });
     await Reaction.save(); // Saves Reaction to MongoDB
     return Reaction.populate('student');
@@ -80,6 +81,20 @@ class ReactionCollection {
     return Reaction.populate('student');
   }
 
+  static async addLike(reactionId: Types.ObjectId | string): Promise<HydratedDocument<Reaction>> {
+    const reaction = await ReactionModel.findOne({_id: reactionId});
+    reaction.numLikes += 1;
+    await reaction.save();
+    return reaction.populate('authorId');
+  }
+
+  static async deleteLike(reactionId: Types.ObjectId | string): Promise<HydratedDocument<Reaction>> {
+    const reaction = await ReactionModel.findOne({_id: reactionId});
+    reaction.numLikes -= 1;
+    await reaction.save();
+    return reaction.populate('authorId');
+  }
+
   /**
    * Delete a Reaction with given reactionId.
    *
@@ -97,7 +112,7 @@ class ReactionCollection {
    * @param {string} authorId - The id of author of reactions
    */
   static async deleteMany(studentId: Types.ObjectId | string): Promise<void> {
-    await ReactionModel.deleteMany({studentId});
+    await ReactionModel.deleteMany({student: studentId});
   }
 }
 

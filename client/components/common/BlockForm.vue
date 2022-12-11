@@ -117,6 +117,7 @@ export default {
       refreshReviews: false, // Whether or not stored reviews should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission
+      asyncCallback: null, // Async function to run after successful form submission
       placeholderText: "Compose your message..."
     };
   },
@@ -164,6 +165,10 @@ export default {
 
         if (this.callback) {
           this.callback();
+        }
+
+        if (this.asyncCallback) {
+          await this.asyncCallback();
         }
       } catch (e) {
         this.$set(this.alerts, e, 'error');

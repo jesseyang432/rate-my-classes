@@ -1,3 +1,4 @@
+import { argThresholdOpts } from 'moment';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
@@ -16,10 +17,13 @@ const store = new Vuex.Store({
     enrollments: [], // List of enrollments by a user
     username: null, // Username of the logged in user
     similarities: Object.create(null), // map of username to similarity score
-    gettingSimilarities: false, // Whether similarities are currently being updated
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     profile: null,
-    ratings: null,
+    ratings: Object.create(null),
+    numReviewers: Object.create(null),
+    difficulties: Object.create(null),
+    hours: Object.create(null),
+    likes: [], //all of the likes
   },
   mutations: {
     alert(state, payload) {
@@ -37,6 +41,13 @@ const store = new Vuex.Store({
        * @param username - new username to set
        */
       state.username = username;
+    },
+    setLikes(state, likes) {
+      /**
+       * Update the stored likes to the provided likes.
+       * @param likes - likes to store
+       */
+      state.likes = likes;
     },
    async updateProfile(state, username) {
       state.profile = await fetch(`/api/users/${username}`).then(async r => r.json());
@@ -63,6 +74,18 @@ const store = new Vuex.Store({
        */
       state.reviews = reviews;
     },
+    updateLikes(state, postId){ //NEW
+      const newFreets = state.reactions.map(reaction => {
+        if (reaction._id === postId) {
+          return {
+            ...reaction,
+            numLikes: reaction.numLikes + 1,
+          };
+        }
+        return reaction;
+      })
+      state.reactions = newFreets;
+    },
     async refreshReactions(state) {
       /**
        * Request the server for the currently available reactions.
@@ -86,6 +109,40 @@ const store = new Vuex.Store({
       const url = '/api/courses';
       const res = await fetch(url).then(async r => r.json());
       state.courses = res;
+      for (const course of state.courses){
+        const reviews = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+        var totalRating = 0;
+        var numDifficultyReviews = 0;
+        var totalDifficulty = 0;
+        var numHourReviews = 0;
+        var totalHours = 0;
+        for (const review of reviews) {
+          totalRating += review.overallRating;
+          if (review.difficulty) {
+            totalDifficulty += review.difficulty;
+            numDifficultyReviews += 1;
+          }
+          if (review.hours) {
+            totalHours += review.hours;
+            numHourReviews += 1;
+          }
+        }
+        const avgRating = totalRating ? Math.round((totalRating * 10.0) / reviews.length) / 10 : "N/A"; // round to nearest tenth
+        const avgDifficulty = totalDifficulty ? Math.round((totalDifficulty * 10.0) / numDifficultyReviews) / 10 : "N/A"; // round to nearest tenth
+        const avgHours = totalHours ? Math.round((totalHours * 10.0) / numHourReviews) / 10 : "N/A"; // round to nearest tenth
+        Vue.set(state.ratings, course.name, avgRating);
+        Vue.set(state.difficulties, course.name, avgDifficulty);
+        Vue.set(state.hours, course.name, avgHours);
+        Vue.set(state.numReviewers, course.name, reviews.length);
+      }
+    },
+    async refreshLikes(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = '/api/likes';
+      const res = await fetch(url).then(async r => r.json());
+      state.likes = res;
     },
     async refreshEnrollments(state) {
       /**
@@ -103,26 +160,26 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       res.forEach((similarity) => {
         if (similarity.student1.username === state.username) {
-          Vue.set(state.similarities, similarity.student2.username, similarity.score);
+          Vue.set(state.similarities, similarity.student2.username, Math.round(similarity.score * 10.0) / 10); // round to nearest tenth
         }
       });
-      console.log(state.similarities);
     },
     
-    async refreshAvgRatingsByClass(state) {
-      state.ratings = new Map();
-      for (const course of state.courses){
-        const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
-        var total = 0;
-        for (const rating of ratings){
-          total += rating.overallRating;
-        }
-        state.ratings[course.name] = (total * 1.0) / ratings.length;
-        console.log(course.name);
-        console.log(state.ratings[course.name]);
-      }
-    }
+    // async refreshAvgRatingsByClass(state) {
+    //   state.ratings = new Map();
+    //   for (const course of state.courses){
+    //     const ratings = await fetch(`/api/reviews/course/${course.name}`).then(async r => r.json());
+    //     var total = 0;
+    //     for (const rating of ratings){
+    //       total += rating.overallRating;
+    //     }
+    //     state.ratings[course.name] = (total * 1.0) / ratings.length;
+    //     console.log(course.name);
+    //     console.log(state.ratings[course.name]);
+    //   }
+    // },
   },
+
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
 });

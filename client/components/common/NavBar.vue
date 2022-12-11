@@ -3,7 +3,7 @@
 <!-- This navbar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
-  <nav>
+  <nav :class="$store.state.username ? 'expanded-nav' : 'unexpanded-nav'">
     <div class="left">
       <router-link style="text-decoration: none;" to="/">
         <h1 class="title">
@@ -22,11 +22,16 @@
           Courses
         </div>
       </router-link>
-      <router-link style="text-decoration: none;"  v-if="$store.state.username" to="/profile">
+      <section class="user-modification" v-if="$store.state.username">
+        <router-link style="text-decoration: none;" :to="`/profile/${$store.state.username}`">
         <div @click = "setProfile" class="link2">
           Profile
         </div>
-      </router-link>
+        </router-link>
+        <section class="log-out" @click="logout">
+          <em>Log Out</em>
+        </section>
+      </section>
       <router-link style="text-decoration: none;" 
         v-else
         to="/login"
@@ -52,6 +57,32 @@ export default {
   methods: {
     async setProfile() {
       this.$store.commit('updateProfile', this.$store.state.username);
+    },
+    async logout() {
+      const options = {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'same-origin' // Sends express-session credentials with request
+      };
+      try {
+        const r = await fetch('/api/users/session', options);
+        if (!r.ok) {
+          // If response is not okay, we throw an error and enter the catch block
+          const res = await r.json();
+          throw new Error(res.error);
+        }
+        const text = await r.text();
+        const res = text ? JSON.parse(text) : {user: null};
+        this.$store.commit('setUsername', res.user ? res.user.username : null);
+        this.$router.push({name: 'Reactions'}); // Goes to Home page after signing out
+        this.$store.commit('alert', {
+          message: 'You are now signed out!', status: 'success'
+        });
+  
+      } catch (e) {
+        this.$set(this.alerts, e, 'error');
+        setTimeout(() => this.$delete(this.alerts, e), 3000);
+      }
     }
   }
 }
@@ -59,13 +90,20 @@ export default {
 
 <style scoped>
 nav {
-    padding: 3vw 2vw;
     background-color: salmon;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     border-bottom: 1px solid #A9A9A9;
+}
+
+.expanded-nav {
+  padding: 1vw 2vw;
+}
+
+.unexpanded-nav {
+  padding: 3vw 2vw;
 }
 
 .title {
@@ -110,11 +148,29 @@ img {
     display: grid;
     gap: 16px;
     grid-auto-flow: column;
+    /* align-items: flex-start; */
     align-items: center;
 }
 
 .right a {
     margin-left: 5px;
+}
+
+.user-modification {
+  padding-top: 6px;
+}
+
+.log-out {
+  /* position: fixed;s */
+  margin: 12px 8px 0px 0px;
+  text-align: right;
+  font-family: 'Inter';
+  font-size: 16px;
+  color: white;
+}
+
+.log-out:hover {
+  cursor: pointer;
 }
 
 .alerts {

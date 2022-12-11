@@ -3,18 +3,46 @@
       class="course"
     >
     <header>
-      <section class="title">
-        <router-link style="text-decoration: none;" :to="`course/${course.name}`">
-          <div class="link">
-            {{ course.name }}
-        </div>
-        </router-link>
-      </section>
-      <span style="text-align:right;" class="header-interact"> 
-          <span class="greenDot"></span> &nbsp; {{Round($store.state.ratings[course.name])}}
-        </span>
+      <div v-if="course.name.startsWith('6.')"
+        class="header-6">
+        <section class="title">
+          <router-link style="text-decoration: none;" :to="`course/${course.name}`">
+            <div class="link">
+              {{ course.name }}
+          </div>
+          </router-link>
+        </section>
+        <span style="text-align:right;" class="header-interact"> 
+            <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
+          </span>
+      </div>
+      <div v-if="course.name.startsWith('14.')"
+        class="header-14">
+        <section class="title">
+          <router-link style="text-decoration: none;" :to="`course/${course.name}`">
+            <div class="link">
+              {{ course.name }}
+          </div>
+          </router-link>
+        </section>
+        <span style="text-align:right;" class="header-interact"> 
+            <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
+          </span>
+      </div>
+      <div v-if="course.name.startsWith('18.')"
+        class="header-18">
+        <section class="title">
+          <router-link style="text-decoration: none;" :to="`course/${course.name}`">
+            <div class="link">
+              {{ course.name }}
+          </div>
+          </router-link>
+        </section>
+        <span style="text-align:right;" class="header-interact"> 
+            <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
+          </span>
+      </div>
     </header>
-    
     <!-- <header>
         <h3 class="course">
           {{ course.name }}
@@ -62,6 +90,13 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
       return {
         alerts: {} // Displays success/error messages encountered during course modification
       };
+    },
+    computed: {
+        rating() {
+            return this.$store.state.ratings[this.course.name];
+            const val = this.$store.state.ratings[this.course.name];
+            return val ? ((Math.round(rating*10))/10) : val;
+        }
     },
     methods: {
       compress(description) {
@@ -111,9 +146,33 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     font-weight: bold;
   } */
 
-  header {
+  .header-6 {
     display: flex;
-    background-color: #fcaca3;
+    background-color: lightsalmon;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 60px;
+  }
+
+  .header-18 {
+    display: flex;
+    background-color: lightpink;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 60px;
+  }
+
+  .header-14 {
+    display: flex;
+    background-color: lightblue;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: stretch;
@@ -129,11 +188,12 @@ import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
     font-family: 'Inter';
     /* position: relative; */
     margin: 32px 32px;
+    box-shadow: 7px 7px #f2f2f2;
 
     border-radius: 15px;
     border-color: #A9A9A9; 
     border-width: 1px; 
-    border-style: solid; 
+    /*border-style: solid; */
     overflow-wrap: break-word;
 }
 

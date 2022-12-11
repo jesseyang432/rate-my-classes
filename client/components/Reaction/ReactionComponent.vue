@@ -6,18 +6,69 @@
     class="reaction"
   >
     <header>
-      <section class="course">
+      <div v-if="reaction.course.startsWith('6.')"
+        class="header-6">
+        <section class="course">
+        <div class="author">
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
+        </div>
         <router-link :to="`course/${reaction.course}`">
-          {{ reaction.course }}
+          <div class="link">
+            {{ reaction.course }}
+          </div>
         </router-link>
       </section>
+      </div>
+      <div v-if="reaction.course.startsWith('14.')"
+        class="header-14">
+        <section class="course">
+        <div class="author">
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
+        </div>
+        <router-link :to="`course/${reaction.course}`">
+          <div class="link">
+            {{ reaction.course }}
+          </div>
+        </router-link>
+      </section>
+      </div>
+      <div v-if="reaction.course.startsWith('18.')"
+        class="header-18">
+        <section class="course">
+        <div class="author">
+          <router-link :to="`/profile/${reaction.student}`">
+            <img src="./daniel.png" width="40px">
+          </router-link>
+          <router-link :to="`/profile/${reaction.student}`">
+            &nbsp @{{ reaction.student }}
+          </router-link>
+        </div>
+        <router-link :to="`course/${reaction.course}`">
+          <div class="link">
+            {{ reaction.course }}
+          </div>
+        </router-link>
+      </section>
+      </div>
     </header>
-    
+
     <section class="reaction-content">
       <section class="upper-reaction-content">
         <section class="author">
-          @{{ reaction.student }}
-        <div
+          <!-- <div class="vertical-align">
+          <img src="./daniel.png" width="50px"> @{{ reaction.student }}
+          </div> -->
+          <div
           v-if="$store.state.username === reaction.student && editable"
           class="actions"
         >
@@ -25,13 +76,13 @@
             v-if="editing"
             @click="submitEdit"
           >
-            ✅ Save changes
+            ✅ Save
           </button>
           <button class="button"
             v-if="editing"
             @click="stopEditing"
           >
-            🚫 Discard changes
+            🚫 Discard
           </button>
           <button class="button"
             v-if="!editing"
@@ -44,6 +95,9 @@
             🗑️ Delete
           </button>
         </div>
+        <LikeComponent
+        :reaction="reaction"
+        />
       </section>
       <textarea
         v-if="editing"
@@ -79,8 +133,21 @@
 </template>
 
 <script>
+import LikeComponent from '@/components/Like/LikeComponent.vue';
 export default {
   name: 'ReactionComponent',
+  components: {LikeComponent},
+  computed: {
+    getColor() {
+      if (reaction.course.startsWith("6.")){
+        return 6;
+      }
+      else if(reaction.course.startsWith("14.")){
+        return 14;
+      }
+
+    }
+  },
   props: {
     // Data from the stored reaction
     reaction: {
@@ -188,27 +255,76 @@ export default {
 
 <style scoped>
 
-header {
+/* header {
+    display: flex; */
+    /* background-color: #fcaca3; */
+    /* flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold; */
+    /* border-radius: 15px 15px 0px 0px; */
+    /* height: 90px; */
+  /* } */
+
+.header-6 {
     display: flex;
-    background-color: #fcaca3;
+    background-color: lightsalmon;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: stretch;
     font-family: 'Inter';
     font-weight: bold;
     border-radius: 15px 15px 0px 0px;
-    height: 60px;
+    height: 90px;
+    width: 400px;
+  }
+
+.header-18 {
+    display: flex;
+    background-color: lightpink;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 90px;
+    width: 400px;
+  }
+
+.header-14 {
+    display: flex;
+    background-color: lightblue;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    font-family: 'Inter';
+    font-weight: bold;
+    border-radius: 15px 15px 0px 0px;
+    height: 90px;
+    width: 400px;
   }
 
 .author {
     display: flex;
-    font-size: 20px;
+    font-size: 25px;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
+    vertical-align: left;
     font-family: 'Inter';
     font-weight: bold;
   }
+
+.author a {
+  text-decoration: none;
+  color: black;
+}
+
+img {
+  border-radius: 50%;
+}
   
 .course {
   font-size: 16px;
@@ -240,10 +356,10 @@ header {
 
 .reaction {
     /* border: 2px solid #111; */
-    font-size: small;
+    font-size: medium;
     width: 400px;
     height: 260px;
-    box-shadow: 5px 10px #f2f2f2;
+    box-shadow: 7px 7px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
     position: relative;
@@ -252,10 +368,17 @@ header {
     overflow-wrap: break-word;
 }
 
+.link {
+  margin: 0 30px;
+  font-family: 'Inter';
+  font-weight: normal;
+  color: white;
+}
+
 .reaction-content {
   padding: 8px;
   margin: 10px 30px;
-  height: 200px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

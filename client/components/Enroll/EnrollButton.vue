@@ -111,6 +111,7 @@ section {
 
 button {
   border-radius: 8px;
+  font-family: 'Inter';
 }
 
 #join-button {
@@ -123,7 +124,7 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter';
 }
 
 .modal-mask {

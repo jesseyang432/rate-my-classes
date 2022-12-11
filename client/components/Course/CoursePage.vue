@@ -18,7 +18,7 @@
       </header>
     </section>
     <section v-else>
-      <section>
+      <section class="course-header">
         <header>
           <div class="left">
             <h2>
@@ -28,14 +28,30 @@
           <EnrollButton v-if="!getEnrollment(course.name)" :course="course.name"/>
           <EnrollStatus v-else :course="course.name" :enrollmentType="getEnrollment(course.name) ? enrollment.type : 'current'"/>
         </header>
-        <p>
-          Course description:
-          {{ course.description }}
-        </p>
+        <section class="course-info">
+          <section class="course-description">
+            <p>
+            <em>Course description:</em>
+            {{ course.description }}
+            </p>
+          </section>
+          <section class="course-summary">
+            <section class="course-stats">
+              <p id="overall-rating"><b>Overall Rating:</b> {{$store.state.ratings[course.name]}} / 5</p>
+              <section class="additional-stats">
+                <p><b>Avg Hours:</b> {{$store.state.hours[course.name]}}</p>
+                <p><b>Avg Difficulty:</b> {{$store.state.difficulties[course.name]}}</p>
+              </section>
+            </section>
+            <p class="num-reviewers"># of Ratings/Reviewers: {{$store.state.numReviewers[course.name]}}</p>
+          </section>
+          
+
+        </section>
       </section>
 
       <section class="review-section">
-        <section v-if="getEnrollment(course.name)" viewer-review>
+        <section v-if="(getEnrollment(course.name) && enrollment.type === 'previous')" viewer-review>
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
             <header>
@@ -44,12 +60,15 @@
             <ReviewComponent :review="userReview" :course="course" :editable="true"/>
           </section>
         </section>
-          <header>
-            <h2>Course Reviews</h2>
-          </header>
+          <div>
+            <header>
+              <h2>Course<span class="reviews-text">Reviews <div class="tooltiptext">Feedback containing past student experiences with courses</div></span>
+              </h2>
+            </header>
+          </div>
         <section class="review-explanation">
           <em>
-            Reviews are a means of leaving feedback and ratings on courses you've taken. You can also leave ratings without writing a specific review.
+            Read more about reviews at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
         <ReviewComponent v-for="review in $store.state.reviews"
@@ -94,8 +113,8 @@
     },
     methods: {
         /**
-         * Assigns the type of enrollment (if there is one) to enrollmentType
-         * Returns true or false, depending on if enrolled
+         * Assigns the enrollment (if there is one) to this.enrollment
+         * Returns true or false, depending on if enrolled 
          */
         getEnrollment(courseName) {
           for (const enrollment of this.$store.state.enrollments) {
@@ -151,7 +170,7 @@
   header, header > * {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       font-family: "Inter";
       font-weight: bold;
   }
@@ -161,11 +180,85 @@
     font-weight: normal;
   }
 
-  .review-explanation {
-    margin: 0px 32px 16px 32px;
+  .course-description {
+    margin-right: 64px;
+  }
+
+  .course-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .course-stats {
+    min-width: 320px;
+    height: 128px;
+    border: solid black 1px;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 16px;
+    margin-bottom: 0px;
+    font-size: small;
+  }
+
+  .num-reviewers {
+    margin: 4px 16px;
+    font-size: small;
+    text-align: center;
+  }
+
+  #overall-rating {
+    font-size: 24px;
+    margin: 16px 0px;
+  }
+
+  .additional-stats {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+  }
+
+  .additional-stats p {
+    margin-right: 32px;
+  }
+
+.reviews-text {
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px dotted black; /* If you want dots under the hoverable text */
+  margin-left: 6px;
+}
+
+/* Tooltip text */
+.reviews-text .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  top: 120%;
+  left: 50%;
+  margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: normal;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.reviews-text:hover .tooltiptext {
+  visibility: visible;
+}
+
+  .review-explanation {
+    margin-bottom: 16px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    font-family: 'Inter';
   }
   
   button {
