@@ -15,85 +15,91 @@
                 <header>
                     <h2>Course Review Form</h2>
                 </header>
-                <div class="expand-button">
-                    <button @click="() => {formExpanded = false;}">Cancel</button>
-                </div>
             </section>
             <section class="course-info">
-                <div class="input-elem">
-                    <label for="term">Term Taken: </label>
-                    <select required
-                    :name="term"
-                    v-model="term">
-                    <option value="" disabled selected hidden>Term Taken</option>
-                    <option value="Fall 2022">Fall 2022</option>
-                    <option value="Spring 2022">Spring 2022</option>
-                    <option value="Fall 2021">Fall 2021</option>
-                    <option value="Spring 2021">Spring 2021</option>
-                    <option value="Fall 2021">Fall 2020</option>
-                    <option value="Spring 2021">Spring 2020</option>
-                    </select>
+                <div class = "group">
+                    <div class="input-elem">
+                        <label for="term">Term Taken: </label>
+                        <select required
+                        :name="term"
+                        v-model="term">
+                        <option value="" disabled selected hidden>Term Taken</option>
+                        <option value="Fall 2022">Fall 2022</option>
+                        <option value="Spring 2022">Spring 2022</option>
+                        <option value="Fall 2021">Fall 2021</option>
+                        <option value="Spring 2021">Spring 2021</option>
+                        <option value="Fall 2021">Fall 2020</option>
+                        <option value="Spring 2021">Spring 2020</option>
+                        </select>
+                    </div>
+                    <div class="input-elem">
+                        <label for="instructor">Instructor: </label>
+                        <input v-model="instructor">
+                    </div>
                 </div>
-                <div class="input-elem">
-                    <label for="instructor">Instructor: </label>
-                    <input v-model="instructor">
-                </div>
-                <div class="input-elem">
-                    <label for="hours">Hours/Week: </label>
-                    <input v-model="hours" min="0" step="0.1" type="number">
-                </div>
-                <div class="input-elem">
-                    <label for="knowledge">Prior Knowledge: </label>
-                    <select
-                    :name="knowledge"
-                    v-model="knowledge">
-                    <option value="None">None</option>
-                    <option value="Slight">Slight</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="High">High</option>
-                    </select>
-                </div>
-                <div class="input-elem">
-                    <label for="grade">Grade: </label>
-                    <select
-                    :name="grade"
-                    v-model="grade">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="F">F</option>
-                    </select>
-                </div>
-            </section>
 
-            <header>
-                <h3>Ratings</h3>
-            </header>
-            <!-- <p>
-                <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
-            </p> -->
-            <section class="course-ratings">
-                <div class="input-elem">
-                    <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
-                    <RatingComponent :stars="difficulty" v-on:rate="(stars) => this.difficulty = stars"/>
-                    <!-- <input type="range" v-model="difficulty" min="1" max="5"> -->
+                <div class = "group">
+                    <div class="input-elem">
+                        <label for="hours">Hours/Week: </label>
+                        <input v-model="hours" min="0" step="0.1" type="number">
+                    </div>
+                    <div class="input-elem">
+                        <label for="knowledge">Previous Experience: </label>
+                        <select
+                        :name="knowledge"
+                        v-model="knowledge">
+                        <option value="None">None</option>
+                        <option value="Slight">Slight</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="High">High</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="input-elem">
-                    <label for="rating">Overall Rating<em>*</em>: <b>({{rating}})</b></label>
-                    <RatingComponent :stars="rating" v-on:rate="(stars) => this.rating = stars"/>
-                    <!-- <input type="range" v-model="rating" min="1" max="5" required> -->
+                <div class = "group">
+                    <div class="input-elem">
+                        <label for="grade">Grade Received: </label>
+                        <select
+                        :name="grade"
+                        v-model="grade">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="F">F</option>
+                        </select>
+                    </div>
                 </div>
             </section>
+            <div>
+                <header>
+                    <h3>Ratings</h3>
+                </header>
+                <!-- <p>
+                    <em>A '*' rating indicates that no rating has been provided (all ratings are optional except Overall Rating, which is required)</em>
+                </p> -->
+                <section class="course-ratings">
+                    <div class="input-elem">
+                        <label for="difficulty">Difficulty <b>({{difficulty}})</b>: </label>
+                        <RatingComponent :stars="difficulty" v-on:rate="(stars) => this.difficulty = stars"/>
+                        <!-- <input type="range" v-model="difficulty" min="1" max="5"> -->
+                    </div>
+                    <div class="input-elem">
+                        <label for="rating">Overall Rating<em>*</em>: <b>({{rating}})</b></label>
+                        <RatingComponent :stars="rating" v-on:rate="(stars) => this.rating = stars"/>
+                        <!-- <input type="range" v-model="rating" min="1" max="5" required> -->
+                    </div>
+                </section>
+            </div>
             <p class="required-ratings"><em>*Required</em></p>
             <header>
-                <h3>Additional Comments</h3>
+                <h3>Review</h3>
             </header>
             <textarea
             :name="content"
             v-model="content"
-            placeholder="Anything else to share?"
+            placeholder="Share your thoughts!"
             />
             <p v-if="!editing" style="text-align: right;">
+                <button style = "margin-right: 20px;" @click="() => {formExpanded = false;}">Cancel</button>
                 <button
                 type="submit"
                 >
@@ -318,11 +324,20 @@ section {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    gap: 150px;
+}
+
+.group {
+    border-radius: 20px;
+    opacity: 1.0;
+    background-color: rgba(255, 160, 122, 0.2);
 }
 
 .course-ratings {
     display: flex;
     justify-content: center;
+    background-color: rgba(255, 160, 122, 0.2);
+    border-radius: 20px;
 }
 
 .course-ratings input {
