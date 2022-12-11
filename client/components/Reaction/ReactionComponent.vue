@@ -95,9 +95,6 @@
             🗑️ Delete
           </button>
         </div>
-        <LikeComponent
-        :reaction="reaction"
-        />
       </section>
       <textarea
         v-if="editing"
@@ -112,11 +109,14 @@
         {{ reaction.content }}
       </p>
     </section>
-    <section>
-      <p class="info">
+    <section class="info">
+      <p>
         {{ reaction.dateCreated }}
         <i v-if="reaction.edited">(edited)</i>
       </p>
+      <LikeComponent
+        :reaction="reaction"
+        />
       <section class="alerts">
         <article
           v-for="(status, alert, index) in alerts"
@@ -340,14 +340,19 @@ img {
   color: white;
 }
 .info {
+  display: flex;
   font-size: 13px;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: left;
 }
 
 .button {
   background-color: white; /* Green */
   border-radius: 5px;
   color: black;
-  padding: 10px 10px;
+  padding: 5px 5px;
   text-align: center;
   text-decoration: none;
   font-size: 13px;

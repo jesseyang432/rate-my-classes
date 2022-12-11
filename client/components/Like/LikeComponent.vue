@@ -6,22 +6,27 @@
     class="like"
   >
         <!-- {{ reaction._id}} -->
-        <button
+        <button class="button-own-post"
+          v-if="ownPost()"
+        >
+          {{ reaction.numLikes }} likes
+        </button>
+        <button class="button-like"
           v-if="!isLiked() && !ownPost()"
           @click="likePost"
         >
-          👍 Like!
+          ♡ {{ reaction.numLikes }} likes
         </button>
-        <button
+        <button class="button-unlike"
           v-if="isLiked() && !ownPost()"
           @click="unlikePost"
         >
-          👎 Unlike!
+          ♥ {{ reaction.numLikes }} likes
         </button>
-
+<!-- 
         <p class="info">
           Current Likes: {{ reaction.numLikes }}
-        </p>
+        </p> -->
 
     <section class="alerts">
       <article
@@ -53,17 +58,15 @@ export default {
   },
   methods: {
     ownPost() {
-      return this.$store.state.username === this.reaction.student.username; 
+      return this.$store.state.username === this.reaction.student; 
     },
     isLiked() {
       /**
        * Returns whether the reaction is currently liked
        */
       const likes = this.$store.state.likes;
-      // console.log("filter likes");
-      // console.log(likes);
-      const likesForThisPost =  likes.filter(like => like.post._id == this.reaction._id);
-      const liked = likesForThisPost.filter(remainingLikes => remainingLikes.userLike.username === this.$store.state.username);
+      const likesForThisPost =  likes.filter(like => like.post._id === this.reaction._id);
+      const liked = likesForThisPost.filter(remainingLikes => remainingLikes.userLike === this.$store.state.username);
       return liked.length > 0;
 
     },
@@ -137,8 +140,44 @@ export default {
 
 <style scoped>
 .like {
-    /* border: 1px solid #111; */
     padding: 5px;
     position: relative;
 }
+
+.button-own-post {
+  background-color: white; /* Green */
+  /* border-radius: 5px; */
+  /* color: black; */
+  border: none;
+  height: 30px;
+  width: 90px;
+  /* padding: 10px 10px; */
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+}
+.button-like {
+  background-color: white; /* Green */
+  border-radius: 5px;
+  color: black;
+  height: 30px;
+  width: 90px;
+  /* padding: 10px 10px; */
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.button-unlike {
+  background-color: salmon; /* Green */
+  border-radius: 5px;
+  color: white;
+  height: 30px;
+  width: 90px;
+  /* padding: 10px 10px; */
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+}
+
 </style>
