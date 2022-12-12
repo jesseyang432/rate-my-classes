@@ -103,7 +103,13 @@ class LikeCollection {
 
    static async deleteMany(userId: Types.ObjectId | string): Promise<boolean> {
     const user = await UserCollection.findOneByUserId(userId);
-    const like = await LikeModel.deleteMany({userPost: user});
+    const like = await LikeModel.deleteMany({userPost: userId});
+    return like !== null;
+  }
+
+  static async deleteByReaction(reactionId: Types.ObjectId | string): Promise<boolean> {
+    const reaction = await ReactionCollection.findOne(reactionId);
+    const like = await LikeModel.deleteMany({post: reaction._id});
     return like !== null;
   }
 

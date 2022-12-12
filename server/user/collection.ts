@@ -100,6 +100,7 @@ class UserCollection {
     const reactions = await ReactionCollection.deleteMany(userId);
     const reviews = await ReviewCollection.deleteMany(userId);
     const similarities = await SimilarityScoreCollection.deletePairings(userId);
+
     return user !== null;
   }
 

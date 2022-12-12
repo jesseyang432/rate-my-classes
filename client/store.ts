@@ -143,6 +143,7 @@ const store = new Vuex.Store({
       const url = '/api/likes';
       console.log("refreshing likes");
       const res = await fetch(url).then(async r => r.json());
+      console.log(res);
       state.likes = res;
     },
     async refreshEnrollments(state) {

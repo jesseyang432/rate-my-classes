@@ -2,6 +2,7 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {Reaction} from './model';
 import ReactionModel from './model';
 import UserCollection from '../user/collection';
+import LikeCollection from '../like/collection';
 
 /**
  * This files contains a class that has the functionality to explore reactions
@@ -102,6 +103,7 @@ class ReactionCollection {
    * @return {Promise<Boolean>} - true if the Reaction has been deleted, false otherwise
    */
   static async deleteOne(reactionId: Types.ObjectId | string): Promise<boolean> {
+    const likes = await LikeCollection.deleteByReaction(reactionId);
     const Reaction = await ReactionModel.deleteOne({_id: reactionId});
     return Reaction !== null;
   }
