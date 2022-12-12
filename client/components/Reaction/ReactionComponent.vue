@@ -116,7 +116,7 @@
       </p>
       <LikeComponent
         :reaction="reaction"
-        />
+      />
       <section class="alerts">
         <article
           v-for="(status, alert, index) in alerts"
@@ -367,7 +367,7 @@ img {
     /* border: 2px solid #111; */
     font-size: medium;
     width: 400px;
-    height: 260px;
+    /* height: 260px; */
     box-shadow: 7px 7px #f2f2f2;
     background-color: white;
     font-family: 'Inter';
@@ -386,7 +386,7 @@ img {
 
 .reaction-content {
   padding: 8px;
-  margin: 10px 30px;
+  margin: 16px 32px;
   height: 150px;
   display: flex;
   flex-direction: column;

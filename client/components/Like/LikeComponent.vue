@@ -6,10 +6,10 @@
     class="like"
   >
         <!-- {{ reaction._id}} -->
-        <button class="button-own-post"
+        <button class="button-own-post" disabled
           v-if="ownPost()"
         >
-          {{ reaction.numLikes }} likes
+         ♡ {{ reaction.numLikes }} likes
         </button>
         <button class="button-like"
           v-if="!isLiked() && !ownPost()"
@@ -146,15 +146,16 @@ export default {
 
 .button-own-post {
   background-color: white; /* Green */
-  /* border-radius: 5px; */
-  /* color: black; */
-  border: none;
+  border-radius: 5px;
+  color: black;
+  /* border: none; */
   height: 30px;
   width: 90px;
   /* padding: 10px 10px; */
   text-align: center;
   text-decoration: none;
   font-size: 15px;
+  opacity: 50%;
 }
 .button-like {
   background-color: white; /* Green */
@@ -178,6 +179,14 @@ export default {
   text-align: center;
   text-decoration: none;
   font-size: 15px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.button-own-post:hover {
+  cursor: not-allowed;
 }
 
 </style>
