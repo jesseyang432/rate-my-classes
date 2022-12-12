@@ -10,7 +10,7 @@
       <h3>Review of {{ review.course }}</h3>
     </section>
 
-    <header>
+    <header class = "top">
       <section class="author-info">
         <h3 class="author">
           <router-link :to="`/profile/${review.student.username}`">
@@ -275,7 +275,10 @@ header {
 
 .author-experience {
   margin: 8px 40px 8px 0px;
-  font-size: smaller;
+  font-size: small;
+  background-color: rgba(255, 160, 122, 0.25);
+  border-radius: 25px;
+  padding: 1%;
 }
 .review {
     border: 1px solid #111;
@@ -289,11 +292,15 @@ header {
 .ratings-info {
   display: flex;
   flex-flow: row wrap;
+  font-size: smaller;
 }
 
 .rating {
   margin: 8px 64px 8px 0px;
   font-size: smaller;
+  background-color: rgba(255, 160, 122, 0.25);
+  border-radius: 25px;
+  padding: 1%;
 }
 
 .footer {

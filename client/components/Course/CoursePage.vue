@@ -71,7 +71,7 @@
             Read more about reviews at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
-        <ReviewComponent v-for="review in $store.state.reviews"
+        <ReviewComponent class = "review-box" v-for="review in $store.state.reviews"
           v-if="review.course === course.name && review.content"
           :course="course"
           :key="review._id"
@@ -199,6 +199,12 @@
     margin: 16px;
     margin-bottom: 0px;
     font-size: small;
+  }
+
+  .review-box {
+    width: 60%;
+    margin-left: 20%;
+    background-color: rgba(255, 160, 122, 0.025);
   }
 
   .num-reviewers {
