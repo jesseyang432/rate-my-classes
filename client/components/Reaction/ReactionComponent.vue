@@ -359,6 +359,10 @@ img {
   margin: 5px
 }
 
+.button:hover {
+  cursor: pointer;
+}
+
 .reaction {
     /* border: 2px solid #111; */
     font-size: medium;

@@ -12,9 +12,9 @@
           </div>
           </router-link>
         </section>
-        <span style="text-align:right;" class="header-interact"> 
+        <!-- <span style="text-align:right;" class="header-interact"> 
             <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
-          </span>
+          </span> -->
       </div>
       <div v-if="course.name.startsWith('14.')"
         class="header-14">
@@ -25,9 +25,9 @@
           </div>
           </router-link>
         </section>
-        <span style="text-align:right;" class="header-interact"> 
+        <!-- <span style="text-align:right;" class="header-interact"> 
             <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
-          </span>
+          </span> -->
       </div>
       <div v-if="course.name.startsWith('18.')"
         class="header-18">
@@ -38,9 +38,9 @@
           </div>
           </router-link>
         </section>
-        <span style="text-align:right;" class="header-interact"> 
+        <!-- <span style="text-align:right;" class="header-interact"> 
             <span class="greenDot"></span> &nbsp; {{$store.state.ratings[course.name]}}
-          </span>
+          </span> -->
       </div>
     </header>
     <!-- <header>

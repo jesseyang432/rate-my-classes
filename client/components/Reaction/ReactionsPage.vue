@@ -43,7 +43,7 @@
         <!-- <header>
           <h2>Welcome to Rate My Classes!</h2>
         </header> -->
-        <article>
+        <article class="logged-out">
           <h3>
             <router-link to="/login">
               Sign in
@@ -65,6 +65,7 @@
         </article>
       </div>
     </section>
+
     <section>
       <header>
         <div>
@@ -81,23 +82,56 @@
             Read more about reactions at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
-      <section
-        v-if="$store.state.reactions.length"
-        class="reaction-display"
-      >
-        <ReactionComponent
-          v-for="reaction in $store.state.reactions"
-          :key="reaction.id"
-          :reaction="reaction"
-          :editable="true"
-        />
+
+      <header 
+          v-if="$store.state.username" 
+          class="reaction-tabs">
+          <button v-if="content === 'All Classes'" class="selected-tab" @click="() => {content = 'All Classes';}">All Classes</button>
+          <button v-else @click="() => {content = 'All Classes';}">All Classes</button>
+          <button v-if="content === 'Current Classes'" class="selected-tab" @click="() => {content = 'Current Classes';}">Current Classes</button>
+          <button v-else @click="() => {content = 'Current Classes';}">Current Classes</button>
+      </header>
+
+      <section 
+        v-if="content === 'All Classes'">
+        <section
+          v-if="$store.state.reactions.length "
+          class="reaction-display"
+        >
+          <ReactionComponent
+            v-for="reaction in $store.state.reactions"
+            :key="reaction.id"
+            :reaction="reaction"
+            :editable="true"
+          />
+        </section>
+          <article
+            v-else
+          >
+            <h3>No reactions found.</h3>
+          </article>
       </section>
-      <article
-        v-else
-      >
-        <h3>No reactions found.</h3>
-      </article>
+      <section v-else> 
+        <section
+          v-if="$store.state.reactions.length "
+          class="reaction-display"
+        >
+          <ReactionComponent
+            v-for="reaction in enrolledReactions"
+            :key="reaction.id"
+            :reaction="reaction"
+            :editable="true"
+          />
+        </section>
+        
+          <article v-else>
+            <h3>No reactions found.</h3>
+          </article>
+        
+      </section>
     </section>
+
+    
   </main>
 </template>
 
@@ -109,13 +143,36 @@ import GetReactionsForm from '@/components/Reaction/GetReactionsForm.vue';
 export default {
   name: 'ReactionPage',
   components: {ReactionComponent, GetReactionsForm, CreateReactionForm},
+  data() {
+    return {
+      content: 'All Classes', // or current
+      enrolledReactions: []
+    };
+  },
   mounted() {
     // this.$refs.getReactionsForm.submit();
     this.$store.commit('refreshReactions');
     this.$store.commit('refreshEnrollments');
     this.$store.commit('refreshCourses');
-    this.$store.commit('refreshLikes');
+    this.$store.commit('refreshLikes'); 
+    this.populateEnrolledReactions();
+  }, 
+  methods: {
+    populateEnrolledReactions(){
+      // get currently or previously enrolled classes from 
+      const currentClassObjs = this.$store.state.enrollments.filter( (enrollment) => {
+        return enrollment.type === "current" || enrollment.type === "interested"; 
+      });
+      const currentClassNames = currentClassObjs.map(enrollment => enrollment.toCourse.name); 
+      console.log(currentClassNames);
+      // get reactions with class in above and update
+      this.enrolledReactions = this.$store.state.reactions.filter( (reaction) => {
+        return currentClassNames.includes(reaction.course); 
+      }); 
+      
+    }
   }
+
 };
 </script>
 
@@ -123,6 +180,10 @@ export default {
 section {
   display: flex;
   flex-direction: column;
+}
+
+.logged-out {
+  font-family: 'Inter'; 
 }
 
 .reaction-input {
@@ -200,14 +261,38 @@ section {
 
 header, header > * {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    /*align-items: flex-start;*/
     font-family: 'Inter';
     font-weight: normal;
 }
 
 button {
     margin-right: 10px;
+}
+
+
+.reaction-tabs {
+  justify-content: center;
+}
+
+.reaction-tabs button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  font-family: 'Inter';
+  margin: 16px;
+  outline: none;
+}
+
+.reaction-tabs button:hover {
+  cursor: pointer;
+}
+
+.selected-tab {
+  font-weight: bold;
+  color: salmon;
+  text-underline-offset: 0.2em;
+  text-decoration: underline salmon;
 }
 
 .reaction-display {
@@ -241,6 +326,10 @@ section .scrollbox {
   align-items: center;
   margin: 30px;
   gap: 20px;
+}
+
+.row .column h3 {
+  font-family: 'Inter';
 }
 .top {
   flex-flow: row nowrap;

@@ -37,10 +37,10 @@
           </section>
           <section class="course-summary">
             <section class="course-stats">
-              <p id="overall-rating"><b>Overall Rating:</b> {{$store.state.ratings[course.name]}} / 5</p>
+              <p id="overall-rating"><b>Overall Rating:</b> {{$store.state.ratings[course.name]}}/5</p>
               <section class="additional-stats">
                 <p><b>Avg Hours:</b> {{$store.state.hours[course.name]}}</p>
-                <p><b>Avg Difficulty:</b> {{$store.state.difficulties[course.name]}}</p>
+                <p><b>Avg Difficulty:</b> {{$store.state.difficulties[course.name]}}/5</p>
               </section>
             </section>
             <p class="num-reviewers"># of Ratings/Reviewers: {{$store.state.numReviewers[course.name]}}</p>
@@ -191,9 +191,12 @@
   }
 
   .course-stats {
-    min-width: 320px;
+    min-width: 300px;
     height: 128px;
-    border: solid black 1px;
+    text-align: center;
+    /* border: solid black 1px; */
+    background-color: salmon;
+    color: white;
     padding: 16px;
     border-radius: 16px;
     margin: 16px;
@@ -220,7 +223,9 @@
 
   .additional-stats {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
+    /* align-items: center;
+    justify-content: center; */
   }
 
   .additional-stats p {

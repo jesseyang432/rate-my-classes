@@ -36,3 +36,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+header {
+  font-family: 'Inter';
+}
+</style>
