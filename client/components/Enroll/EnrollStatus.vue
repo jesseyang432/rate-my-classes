@@ -27,12 +27,14 @@
               <input type="radio" v-model="enrollmentType" value="interested">
               <label for="interested"> Interested</label>
             </div>
-            <button @click="modify">
-              Modify Status
-            </button>
-            <button @click="leave">
-              Leave Class
-            </button>
+            <section class="status-buttons">
+              <button @click="modify">
+                Modify Status
+              </button>
+              <button @click="leave">
+                Leave Class
+              </button>
+            </section>
           </section>
         </section>
     </section>
@@ -144,6 +146,10 @@ button {
   font-family: 'Inter';
 }
 
+label {
+  font-weight: normal;
+}
+
 #status-button {
   background-color: #e7e7e7;
   color: black;
@@ -194,6 +200,20 @@ button {
 
 .modal-container button {
   margin: 16px 8px 4px 8px;
+}
+
+.status-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.status-buttons button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: salmon;
+  color: white;
+  margin: 8px 32px;
 }
 
 #modal-close {

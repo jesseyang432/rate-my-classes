@@ -27,9 +27,11 @@
               <input type="radio" v-model="joiningAs" value="interested">
               <label for="interested"> Interested</label>
             </div>
-            <button @click="submit">
-              Join Class
-            </button>
+            <section class="status-buttons">
+              <button @click="submit">
+                Join Class
+              </button>
+            </section>
           </section>
         </section>
     </section>
@@ -114,6 +116,10 @@ button {
   font-family: 'Inter';
 }
 
+label {
+  font-weight: normal;
+}
+
 #join-button {
   background-color: #4CAF50; /* Green */
   border: none;
@@ -143,10 +149,10 @@ button {
 }
 
 .modal-container {
-  width: 300px;
+  width: 360px;
   
   margin: auto;
-  padding: 0px 16px 16px 16px;
+  padding: 0px 16px;
   background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -164,6 +170,20 @@ button {
 
 .modal-container button {
   margin: 16px 8px 4px 8px;
+}
+
+.status-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.status-buttons button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: salmon;
+  color: white;
+  margin: 8px 32px;
 }
 
 #modal-close {
