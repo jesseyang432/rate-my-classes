@@ -43,7 +43,7 @@
         <!-- <header>
           <h2>Welcome to Rate My Classes!</h2>
         </header> -->
-        <article>
+        <article class="logged-out">
           <h3>
             <router-link to="/login">
               Sign in
@@ -83,7 +83,9 @@
           </em>
         </section>
 
-      <header class="reaction-tabs">
+      <header 
+          v-if="$store.state.username" 
+          class="reaction-tabs">
           <button v-if="content === 'All Classes'" class="selected-tab" @click="() => {content = 'All Classes';}">All Classes</button>
           <button v-else @click="() => {content = 'All Classes';}">All Classes</button>
           <button v-if="content === 'Current Classes'" class="selected-tab" @click="() => {content = 'Current Classes';}">Current Classes</button>
@@ -159,7 +161,7 @@ export default {
     populateEnrolledReactions(){
       // get currently or previously enrolled classes from 
       const currentClassObjs = this.$store.state.enrollments.filter( (enrollment) => {
-        return enrollment.type === "current" || enrollment.type === "previous"; 
+        return enrollment.type === "current" || enrollment.type === "interested"; 
       });
       const currentClassNames = currentClassObjs.map(enrollment => enrollment.toCourse.name); 
       console.log(currentClassNames);
@@ -178,6 +180,10 @@ export default {
 section {
   display: flex;
   flex-direction: column;
+}
+
+.logged-out {
+  font-family: 'Inter'; 
 }
 
 .reaction-input {
