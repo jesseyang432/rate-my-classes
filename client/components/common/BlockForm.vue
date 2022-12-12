@@ -57,10 +57,11 @@
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value">
-          <option v-if = "!$store.state.enrollments.length" value="" selected>Currently not enrolled in any courses</option>
+          <option v-if = "!$store.state.enrollments.filter((enrollment) => enrollment.type === 'current').length" value="" selected>Not currently enrolled in any courses</option>
           <option v-else value="" disabled selected hidden>{{ field.label }}</option>
           <option
             v-for="course in $store.state.enrollments"
+            v-if="course.type === 'current'"
             :key="course.toCourse.id"
             :value=course.toCourse.name
           >
