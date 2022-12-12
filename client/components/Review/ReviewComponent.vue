@@ -208,6 +208,21 @@ export default {
 
 <style scoped>
 
+.actions button {
+  background-color: white; /* Green */
+  border-radius: 5px;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  margin: 5px
+}
+
+.actions button:hover {
+  cursor: pointer;
+}
+
 .course-name {
   margin-top: 0px;
   color: salmon;

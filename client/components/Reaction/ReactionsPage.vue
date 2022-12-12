@@ -321,6 +321,10 @@ section .scrollbox {
   margin: 30px;
   gap: 20px;
 }
+
+.row .column h3 {
+  font-family: 'Inter';
+}
 .top {
   flex-flow: row nowrap;
   justify-content: space-between;
