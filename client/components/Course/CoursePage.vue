@@ -68,7 +68,7 @@
           </div>
         <section class="review-explanation">
           <em>
-            Read more about reviews at our <router-link to="/faqs">FAQ page</router-link>.
+            Read more about reviews and similarity scores at our <router-link to="/faqs">FAQ page</router-link>.
           </em>
         </section>
         <ReviewComponent class = "review-box" v-for="review in $store.state.reviews"
@@ -195,8 +195,9 @@
     height: 128px;
     text-align: center;
     /* border: solid black 1px; */
-    background-color: salmon;
-    color: white;
+    /* background-color: salmon; */
+    background-color: rgba(255, 160, 122, 0.25);
+    color: black;
     padding: 16px;
     border-radius: 16px;
     margin: 16px;
@@ -224,12 +225,13 @@
   .additional-stats {
     display: flex;
     flex-flow: row;
+    justify-content: space-between;
     /* align-items: center;
     justify-content: center; */
   }
 
   .additional-stats p {
-    margin-right: 32px;
+    /* margin-right: 32px; */
   }
 
 .reviews-text {

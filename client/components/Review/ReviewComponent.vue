@@ -49,7 +49,7 @@
     <CourseReviewForm v-if="editing" :course="course" :editing="true" :review="review" v-on:stopEditing="stopEditing()"/>
 
     <section class="footer">
-      <p class="date">Posted at {{ review.dateCreated }}</p>
+      <p class="date">Posted on {{ review.dateCreated }}</p>
       <!-- <i v-if="reaction.edited">(edited)</i> -->
       <div
         v-if="$store.state.username === review.student.username && editable"
@@ -236,6 +236,7 @@ export default {
 header {
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
   /* justify-content: space-between; */
 }
 
@@ -293,7 +294,7 @@ header {
   font-size: small;
   background-color: rgba(255, 160, 122, 0.25);
   border-radius: 25px;
-  padding: 1%;
+  padding: 8px;
 }
 .review {
     border: 1px solid #111;
@@ -315,7 +316,7 @@ header {
   font-size: smaller;
   background-color: rgba(255, 160, 122, 0.25);
   border-radius: 25px;
-  padding: 1%;
+  padding: 8px;
 }
 
 .footer {

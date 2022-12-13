@@ -324,13 +324,15 @@ section {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    gap: 150px;
+    align-items: center;
+    gap: 120px;
 }
 
 .group {
     border-radius: 20px;
     opacity: 1.0;
     background-color: rgba(255, 160, 122, 0.2);
+    font-size: 16px;
 }
 
 select, input {
@@ -348,6 +350,7 @@ select, input {
     justify-content: center;
     background-color: rgba(255, 160, 122, 0.2);
     border-radius: 20px;
+    font-size: 16px;
 }
 
 .course-ratings input {
