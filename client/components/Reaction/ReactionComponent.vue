@@ -68,33 +68,6 @@
           <!-- <div class="vertical-align">
           <img src="./daniel.png" width="50px"> @{{ reaction.student }}
           </div> -->
-          <div
-          v-if="$store.state.username === reaction.student && editable"
-          class="actions"
-        >
-          <button class="button"
-            v-if="editing"
-            @click="submitEdit"
-          >
-            ✅ Save
-          </button>
-          <button class="button"
-            v-if="editing"
-            @click="stopEditing"
-          >
-            🚫 Discard
-          </button>
-          <button class="button"
-            v-if="!editing"
-            @click="startEditing"
-          >
-            ✏️ Edit
-          </button>
-          <button class="button"
-          @click="deleteReaction">
-            🗑️ Delete
-          </button>
-        </div>
       </section>
       <textarea
         v-if="editing"
@@ -108,6 +81,33 @@
       >
         {{ reaction.content }}
       </p>
+      <div
+          v-if="$store.state.username === reaction.student && editable"
+          class="actions"
+        >
+          <button class="button"
+            v-if="editing"
+            @click="submitEdit"
+          >
+            Save
+          </button>
+          <button class="button"
+            v-if="editing"
+            @click="stopEditing"
+          >
+            Discard
+          </button>
+          <button class="button"
+            v-if="!editing"
+            @click="startEditing"
+          >
+            Edit
+          </button>
+          <button class="button"
+          @click="deleteReaction">
+            Delete
+          </button>
+        </div>
     </section>
     <section class="info">
       <p>
@@ -377,11 +377,43 @@ img {
     overflow-wrap: break-word;
 }
 
+.actions {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
+.actions button {
+  border: 0px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  background-color: #fdc0b9;
+  margin-top: 0px;
+  color: black;
+  block-size: fit-content;
+  width: fit-content;
+}
+
 .link {
   margin: 0 30px;
   font-family: 'Inter';
   font-weight: normal;
   color: white;
+}
+
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    width: 100%;
+    border: 0px;
+    border-radius: 20px;
+    padding: 8px 12px;
+    padding-bottom: 24px;
+    font-size: .8em;
+    background-color: #F6F6F6;
+    margin-top: 8px;
+    outline: none;
 }
 
 .reaction-content {
