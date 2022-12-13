@@ -29,7 +29,7 @@
 
       <section class="author-experience" v-if="review.hours"><b>Hours/Week</b>: {{review.hours}}</section>
 
-      <section class="author-experience" v-if="review.knowledge"><b>Prior Knowledge</b>: {{review.knowledge}}</section>
+      <section class="author-experience" v-if="review.knowledge"><b>Previous Experience</b>: {{review.knowledge}}</section>
 
       <section class="author-experience" v-if="review.grade"><b>Grade</b>: {{review.grade}}</section>
       
