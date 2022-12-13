@@ -50,7 +50,17 @@
         </section>
       </section>
 
-      <section class="review-section">
+      <header 
+          class="review-reaction-tabs">
+          <button v-if="content === 'Reviews'" class="selected-tab" @click="() => {content = 'Reviews';}">Reviews</button>
+          <button v-else @click="() => {content = 'Reviews';}">Reviews</button>
+          <button v-if="content === 'Reactions'" class="selected-tab" @click="() => {content = 'Reactions';}">Reactions</button>
+          <button v-else @click="() => {content = 'Reactions';}">Reactions</button>
+      </header>
+
+      <section 
+        v-if="content==='Reviews'"
+        class="review-section">
         <section v-if="(getEnrollment(course.name) && enrollment.type === 'previous')" viewer-review>
           <CourseReviewForm v-if="!getReview(course.name)" :course="course" :editing="false"/>
           <section v-else>
@@ -78,6 +88,29 @@
           :review="review"
           :editable="true"/>
       </section>
+
+    <section v-else>
+      <header>
+        <h2>Course Reactions</h2>
+      </header>
+      <section
+          v-if="reactions.length "
+          class="reaction-display"
+        >
+          <ReactionComponent
+            v-for="reaction in reactions"
+            :key="reaction.id"
+            :reaction="reaction"
+            :editable="true"
+          />
+        </section>
+          <article
+            v-else
+          >
+            <h3>No reactions found.</h3>
+          </article>
+    </section>
+
     </section>
   </main>
 </template>
@@ -87,10 +120,11 @@
   import EnrollStatus from '@/components/Enroll/EnrollStatus.vue';
   import CourseReviewForm from '@/components/Review/CourseReviewForm.vue';
   import ReviewComponent from '@/components/Review/ReviewComponent.vue';
+  import ReactionComponent from '@/components/Reaction/ReactionComponent.vue';
   
   export default {
     name: 'CoursePage',
-    components: {EnrollButton, EnrollStatus, CourseReviewForm, ReviewComponent},
+    components: {EnrollButton, EnrollStatus, CourseReviewForm, ReviewComponent, ReactionComponent},
     data() {
         return {
             loading: true,
@@ -101,6 +135,7 @@
             userReview: null,
             reviews: [],
             reactions: [],
+            content: "Reviews"
         };
     },
     async mounted() {
@@ -110,6 +145,8 @@
         await this.getCourse();
         this.getEnrollment(this.course.name);
         this.loading = false;
+        console.log(this.course); 
+        await this.getReactions();
     },
     methods: {
         /**
@@ -138,6 +175,11 @@
           }
           return false;
         },
+        async getReactions(){
+          console.log(this.$store.state.reactions); 
+          this.reactions = this.$store.state.reactions.filter(reaction => {return this.course.name === reaction.course;});
+          console.log('hi', this.reactions); 
+        },
         async getCourse() {
             const url = `/api/courses/${this.$route.params.name}`;
             const r = await fetch(url);
@@ -160,6 +202,7 @@
 
   main {
     min-height: 100vh;
+    font-family: 'Inter';
   }
 
   section {
@@ -283,5 +326,36 @@
     padding: 3%;
     overflow-y: scroll;
   }
+
+.review-reaction-tabs {
+  justify-content: center;
+}
+
+.review-reaction-tabs button {
+  border: none;
+  background: none;
+  font-size: 32px; 
+  font-weight: "heavy";
+  margin: 16px;
+  padding: 16px; 
+  outline: none;
+}
+
+  .review-reaction-tabs button:hover {
+  cursor: pointer;
+}
+
+.selected-tab {
+  font-weight: bold;
+  color: salmon;
+  text-underline-offset: 0.2em;
+  text-decoration: underline salmon;
+}
+
+.reaction-display {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
   </style>
   
