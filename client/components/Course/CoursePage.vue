@@ -230,9 +230,9 @@
     justify-content: center; */
   }
 
-  .additional-stats p {
+  /* .additional-stats p { */
     /* margin-right: 32px; */
-  }
+  /* } */
 
 .reviews-text {
   position: relative;

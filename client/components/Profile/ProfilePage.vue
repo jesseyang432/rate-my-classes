@@ -11,16 +11,20 @@
       <!-- <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
           Sign Out
       </router-link> -->
-      <router-link class = "button" to="/account" v-if="$store.state.username === $route.params.username">
-          Account<br>
-          Management
+      <!-- <router-link class = "account-management" to="/account" v-if="$store.state.username === $route.params.username">
+          Account Management
+      </router-link> -->
+      <router-link class = "to-account" to="/account" v-if="$store.state.username === $route.params.username">
+          Edit My Account
       </router-link>
     </section>
     <div class = "page">
       <div class = "sideBar">
         <h2>Info</h2>
         <article class="info">
-          <img src="../Reaction/daniel.png" width="112px">
+          <section class="info-top-row">
+            <img src="../Reaction/daniel.png" width="112px">
+          </section>
           <p><strong>Class Year: </strong>{{profile.classYear}}</p>
           <p><strong>Major: </strong>{{profile.major}}</p>
           <p><strong>Reviews: </strong>{{reviews.length}}</p>
@@ -229,17 +233,32 @@ section .scrollbox {
   text-align: left;
 }
 
-.button {
-  background-color: salmon; /* Green */
+.account-management {
+  background-color: #fdc0b9; /* Green */
   /* border: 1px solid white; */
   border-radius: 5px;
-  color: white;
+  color: black;
   padding: 10px 10px;
   text-align: center;
   text-decoration: none;
   font-family: 'Inter';
-  /* font-size: 13px; */
-  /* margin: 5px */
+  font-size: 14px;
+  margin: 16px
+}
+
+.to-account {
+  font-family: 'Inter';
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: salmon;
+  font-weight: lighter;
+}
+
+.info-top-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
 .row {
@@ -249,6 +268,10 @@ section .scrollbox {
   align-items: center;
   /* margin: 30px;
   gap: 20px; */
+}
+
+.row a {
+  margin-right: 16px;
 }
 
 .contributions-tabs button {
