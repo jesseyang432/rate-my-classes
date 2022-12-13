@@ -300,9 +300,9 @@ button {
   border-radius: 10px;
   padding: 8px 12px;
   font-size: .8em;
-  background-color: #288BFF;
+  background-color: #fdc0b9;
   margin-top: 0px;
-  color: white;
+  color: black;
   block-size: fit-content;
   width: fit-content;
 }

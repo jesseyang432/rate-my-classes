@@ -65,16 +65,16 @@
           v-if="editing"
           @click="stopEditing"
         >
-          🚫 Discard changes
+          Discard changes
         </button>
         <button
           v-if="!editing"
           @click="startEditing"
         >
-          ✏️ Edit
+          Edit
         </button>
         <button @click="deleteReview">
-          🗑️ Delete
+          Delete
         </button>
       </div>
     </section>
@@ -217,6 +217,18 @@ export default {
   text-decoration: none;
   font-size: 13px;
   margin: 5px
+}
+
+.actions button {
+  border: 0px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #fdc0b9;
+  margin-top: 0px;
+  color: black;
+  block-size: fit-content;
+  width: fit-content;
 }
 
 .actions button:hover {
